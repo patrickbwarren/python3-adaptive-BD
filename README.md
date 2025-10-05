@@ -3,13 +3,10 @@
 ### Summary
 
 The code implements the rejection sampling with memory (RSwM3)
-adaptive time step Brownian dynamics algorithm from Sammüller and
-Schmidt, 
-[J. Chem. Phys. 155, 134107](2021(https://doi.org/10.1063/5.0062396).
-
-
-It uses an embedded Heun–Euler trial step.
-
+adaptive time step Brownian dynamics (BD) 'ALGORITHM 2' from Sammüller
+and Schmidt,
+[J. Chem. Phys. 155, 134107 (2021)](https://doi.org/10.1063/5.0062396), 
+using  embedded Heun–Euler trial steps.
 
 Equation numbers below refer to this paper.
 
