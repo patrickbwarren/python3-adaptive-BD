@@ -3,12 +3,16 @@
 ### Summary
 
 The code implements the rejection sampling with memory (RSwM3)
-adaptive time step Brownian dynamics (BD) 'ALGORITHM 2' from Sammüller
-and Schmidt,
-[J. Chem. Phys. 155, 134107 (2021)](https://doi.org/10.1063/5.0062396), 
+adaptive time step Brownian dynamics (BD) 'ALGORITHM 2' from 
+[Sammüller and Schmidt, J. Chem. Phys. 155, 134107 (2021)](https://doi.org/10.1063/5.0062396), 
 using  embedded Heun–Euler trial steps.
 
-Equation numbers below refer to this paper.
+Equation numbers in the code refer to this paper.
+
+In this initial commit, the code `lsjet_adaptive.py` contains both the
+algorithm and an application to the problem of particle trapping by
+diffusiophoresis in the vicinity of slender pipette injecting a salt
+solution.
 
 More to come...
 
