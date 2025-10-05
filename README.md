@@ -9,12 +9,10 @@ using embedded Heun–Euler trial steps.
 
 Equation numbers in the code refer to this paper.
 
-In this initial commit, the code `lsjet_adaptive.py` contains both the
+In the initial commit, the code `lsjet_adaptive.py` contains both the
 algorithm and an application to the problem of particle trapping by
 diffusiophoresis in the vicinity of slender pipette injecting a salt
 solution.
-
-More to come...
 
 The intent is to split off the actual algorithm, and demonstrate its
 use with some test cases:
@@ -22,7 +20,9 @@ use with some test cases:
 * Brownian motion in a linear drift field;
 * Brownian motion in a harmonic trap;
 * Brownian motion with confinement;
-* Brownian motion in a non-potential drift field (pipette injection problem).
+* Brownian motion with a non-potential drift field (pipette injection problem).
+
+More to come...
 
 ### Copying
 
