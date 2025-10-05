@@ -3,7 +3,7 @@
 ### Summary
 
 The code implements the rejection sampling with memory (RSwM3)
-adaptive time step Brownian dynamics algorithm ('ALGORITHM 2') from 
+adaptive time step Brownian dynamics (BD) algorithm ('ALGORITHM 2') from 
 [Sammüller and Schmidt, J. Chem. Phys. 155, 134107 (2021)](https://doi.org/10.1063/5.0062396), 
 using embedded Heun–Euler trial steps.
 
@@ -15,6 +15,14 @@ diffusiophoresis in the vicinity of slender pipette injecting a salt
 solution.
 
 More to come...
+
+The intent is to split off the actual algorithm, and demonstrate its
+use with some test cases:
+* pure Brownian motion;
+* Brownian motion in a linear drift field;
+* Brownian motion in a harmonic trap;
+* Brownian motion with confinement;
+* Brownian motion in a non-potential drift field (pipette injection problem).
 
 ### Copying
 
