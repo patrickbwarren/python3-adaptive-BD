@@ -5,22 +5,25 @@
 The code implements the rejection sampling with memory (RSwM3)
 adaptive time step Brownian dynamics (BD) algorithm ('ALGORITHM 2') from 
 [Sammüller and Schmidt, J. Chem. Phys. 155, 134107 (2021)](https://doi.org/10.1063/5.0062396), 
-using embedded Heun–Euler trial steps.
+using embedded Heun–Euler trial steps.  The implementation is for
+Brownian motion of a single particle in three dimensions, and is
+intended to be partly pedagogical, as well as providing a code
+repository for some simulations related to particle trapping by
+diffusiophoresis (DP).
 
 Equation numbers in the code refer to this paper.
 
 In the initial commit, the code `lsjet_adaptive.py` contains both the
-algorithm and an application to the problem of particle trapping by
-diffusiophoresis in the vicinity of slender pipette injecting a salt
-solution.
+algorithm and an application to DP trapping in the vicinity of slender
+pipette injecting a salt solution.
 
 The intent is to split off the actual algorithm, and demonstrate its
 use with some test cases:
 * pure Brownian motion;
 * Brownian motion in a linear drift field;
 * Brownian motion in a harmonic trap;
-* Brownian motion with confinement;
-* Brownian motion with a non-potential drift field (pipette injection problem).
+* Brownian motion with confinement (walls);
+* Brownian motion with a non-potential drift field (DP trapping).
 
 More to come...
 
