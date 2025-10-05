@@ -11,7 +11,7 @@ intended to be partly pedagogical, as well as providing a code
 repository for some simulations related to particle trapping by
 diffusiophoresis (DP).
 
-Equation numbers in the code refer to this paper.
+Equation numbers in the code refer to the above paper.
 
 In the initial commit, the code `lsjet_adaptive.py` contains both the
 algorithm and an application to DP trapping in the vicinity of slender
