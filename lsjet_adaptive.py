@@ -6,6 +6,7 @@ import argparse
 import numpy as np
 import pandas as pd
 from numpy import pi as π
+import adaptive_bd
 
 parser = argparse.ArgumentParser(description='LS jet adaptive BD simulator, units um and s')
 parser.add_argument('code', nargs='?', default='', help='code name for run')
@@ -30,7 +31,6 @@ parser.add_argument('-m', '--maxsteps', default=10000, type=int, help='max numbe
 parser.add_argument('-v', '--verbose', action='count', default=0, help='increasing verbosity')
 parser.add_argument('--cart', action='store_true', help='use cartesian drift field expressions')
 parser.add_argument('--info', action='store_true', help='provide info on computed quantities')
-parser.add_argument('--show', action='store_true', help='plot results')
 args = parser.parse_args()
 
 tf = eval(args.t_final) # final time
@@ -116,155 +116,50 @@ def drift_cartesian(r):
         u = np.array((A*x*z + B*x, A*y*z + B*y, A*(x**2 + y**2 + 2*z**2) + B*z))
     return u
 
-drift = drift_cartesian if args.cart else drift_spherical
+# Instantiate an adaptive Brownian dynamics trajectory simulator
 
-def l2norm(r): # standard vector norm
-    return np.sqrt(np.sum(r**2))
+adb = adaptive_bd.Simulator(seed=args.seed)
+
+adb.εabs, adb.εrel = eval(f'{args.eps}') # relative and absolute errors
+adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
+
+adb.drift = drift_cartesian if args.cart else drift_spherical
 
 # initial position on-axis (cartesian method) or off-axis (spherical polars)
 
 z0 = R1 if np.isnan(root[0]) else root[0]
 r0 = np.array([0, 0, z0]) if args.cart else np.array([1e-6, 2e-6, z0])
 
-rng = np.random.default_rng(seed=args.seed) # initialise RNG
-
-# Implement adaptive time step Brownian dynamics from
-# Sammüller and Schmidt, J. Chem. Phys. 155, 134107 (2021)
-# https://doi.org/10.1063/5.0062396
-# ALGORITHM 2: embedded Heun–Euler trial step.
-# Rejection Sampling with Memory (RSwM3) algorithm.
-# Equation numbers below refer to this paper.
-
-sqrt2Dp = np.sqrt(2*Dp) # for convenience
-
-εabs, εrel = eval(f'{args.eps}') # relative and absolute errors
-qmin, qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
-
-def heun_euler_trial_step(r, Δt, R):
-    u = drift(r)
-    Δrbar = u*Δt + sqrt2Dp*R # eq 8
-    ubar = drift(r + Δrbar)
-    Δr = 0.5*(u + ubar)*Δt + sqrt2Dp*R # eq 9
-    return Δr, Δrbar
-
-def adaptation_factor(Δr, Δrbar):
-    E = l2norm(Δrbar - Δr) # eq 10
-    τ = εabs + εrel * l2norm(Δr) # eq 11
-    normE = E / τ # eq 12
-    q = (1 / (2*normE))**2 if normE > 0 else qmax # eq 16 ; nominal adaptation factor
-    return min(qmax, max(qmin, q)) # eq 17 ; bounded adaptation factor
-
-def trial_step_details(traj, block, step, t, r, Δt, q, status): # returns a tuple capturing progress
-    return (traj, block, step, t, r[0], r[1], r[2], l2norm(r), Δt, q, status)
-
-progress = [] # used to accumulate progress data if requested
-results = [] # used to capture final step number, elapsed time, mean square displacement
-
+raw = [] # used to capture raw results
 for block in range(args.nblock):
     for traj in range(args.ntraj):
-
-        r, t, Δt = r0.copy(), 0.0, Δt_init # initial position, time, time step
-        future_stack, using_stack = [], [] # use python lists as stacks
-        R = rng.normal(0, np.sqrt(Δt), 3) # initial normally-distributed unscaled step size
-        using_stack.append((Δt, R)) # initialise using stack per appendix C of paper
-        reached_final_time = False
-        ntrial, nsuccess = 0, 0 # keep track of number of attempted and successful trial steps
-
-        if args.verbose > 2 or args.show:
-            progress.append(trial_step_details(traj, block, 0, t, r, Δt, 1, 'initial'))
-
-        for step in range(args.maxsteps):
-
-            ntrial = ntrial + 1 # keep track of the number of attempted steps
-
-            Δr, Δrbar = heun_euler_trial_step(r, Δt, R)
-            q = adaptation_factor(Δr, Δrbar)
-
-            if args.verbose > 3 or args.show:
-                status = 'accept' if q > 1 else 'reject'
-                progress.append(trial_step_details(traj, block, step, t, r, Δt, q, f'({status}) intermediate'))
-
-            # The following is taken almost verbatim from the paper.
-            # A stopping criterion has been added when a final time is reached.
-
-            if q < 1: # reject the trial step
-                reached_final_time = False # the step was rejected so won't reach final time this time
-                Δts, Rs = 0.0, np.zeros(3)
-                while using_stack: # the stack is not empty
-                    Δtu, Ru = using_stack.pop()
-                    Δts = Δts + Δtu ; Rs = Rs + Ru
-                    if Δts < (1-q)*Δt:
-                        future_stack.append((Δtu, Ru))
-                    else:
-                        ΔtM = Δts - (1-q)*Δt
-                        qM = ΔtM / Δtu
-                        Rbridge = qM*Ru + rng.normal(0, np.sqrt((1-qM)*qM*Δtu), 3)
-                        future_stack.append(((1-qM)*Δtu, Ru-Rbridge))
-                        using_stack.append((qM*Δtu, Rbridge))
-                        break
-                Δt = q*Δt ; R = R - Rs + Rbridge
-            else: # q > 1, accept the trial step
-                nsuccess = nsuccess + 1 # keep track of number of accepted trial steps
-                t = t + Δt ; r = r + Δr ; Δt = q*Δt # update the time, position, time step
-                if reached_final_time: # quit here if final time is now reached
-                    break
-                if t + Δt > tf: # next step would take us past the final time ..
-                    Δt = tf - t # .. use this smaller time step instead ..
-                    reached_final_time = True # .. and flag caught immediately above on the next cycle
-                in_use_stack = []
-                Δts, R = 0.0, np.zeros(3)
-                while future_stack: # the stack is not empty
-                    Δtf, Rf = future_stack.pop()
-                    if Δts + Δtf < Δt:
-                        Δts = Δts + Δtf ; R = R + Rf
-                        using_stack.append((Δtf, Rf))
-                    else:
-                        qM = (Δt - Δts) / Δtf
-                        Rbridge = qM*Rf + rng.normal(0, np.sqrt((1-qM)*qM*Δtf), 3)
-                        future_stack.append(((1-qM)*Δtf, Rf-Rbridge))
-                        using_stack.append((qM*Δtf, Rbridge))
-                        Δts = Δts + qM*Δtf ; R = R + Rbridge
-                        break
-                Δtgap = Δt - Δts
-                if Δtgap > 0:
-                    Rgap = rng.normal(0, np.sqrt(Δtgap), 3)
-                    R = R + Rgap
-                    using_stack.append((Δtgap, Rgap))
-
-        if args.verbose > 2 or args.show:
-            progress.append(trial_step_details(traj, block, step, t, r, Δt, q, 'final'))
-
+        r, t, Δt, ntrial, nsuccess = adb.run(r0, Δt_init, max_steps, t_final, Dp):
         Δr2 = np.sum((r-r0)**2) # mean square displacement for the present trajectory
-        results.append((traj, block, ntrial, nsuccess, t, Δr2, Δt)) # capture results
+        raw.append((traj, block, ntrial, nsuccess, t, Δt, Δr2)) # capture data
 
-columns = ['traj', 'block', 'ntrial', 'nsuccess', 't', 'Δr2', 'Δt_final']
-results = pd.DataFrame(results, columns=columns).set_index(['block', 'traj'])
-results['Δt_mean'] = results.t / results.nsuccess
-results['Δr'] = np.sqrt(results.Δr2)
+columns = ['traj', 'block', 'ntrial', 'nsuccess', 't', 'Δt_final', 'Δr2']
+data = pd.DataFrame(raw, columns=columns).set_index(['block', 'traj'])
+data['Δt_mean'] = data.t / data.nsuccess
+data['Δr'] = np.sqrt(data.Δr2)
 
-if progress:
-    columns = ['traj', 'block', 'step', 't', 'x', 'y', 'z', 'r', 'Δt', 'q', 'status']
-    progress = pd.DataFrame(progress, columns=columns).set_index(['traj', 'step'])
+selected_cols = ['ntrial', 'nsuccess', 't', 'Δt_mean', 'Δt_final', 'Δr2', 'Δr']
 
 if args.verbose > 1:
     pd.set_option('display.max_rows', None)
-    print(results[['ntrial', 'nsuccess', 't', 'Δt_mean', 'Δt_final', 'Δr2', 'Δr']])
+    print(data[selected_cols])
     
-if args.verbose > 2:
-    print(progress)
-
 if args.verbose:
-    print(results[['ntrial', 'nsuccess', 't', 'Δt_mean', 'Δt_final', 'Δr2', 'Δr']].mean())
+    print(data[selected_cols].mean())
     print('Q =', 1e-3*Q, 'pL/s')
     print('sqrt(α*Q*t) =', np.sqrt(α*Q*tf/(2*π**2*R1))) # estimate assuming deterministic advection
     print('sqrt(6 Dp t) =', np.sqrt(6*Dp*tf)) # estimate assuming pure Brownian motion
-    rms = np.sqrt(results.Δr2.mean()) # root mean square (rms) displacement
-    err = np.sqrt(results.Δr2.var() / args.ntraj) / (2*rms) # the error in the rms value
+    rms = np.sqrt(data.Δr2.mean()) # root mean square (rms) displacement
+    err = np.sqrt(data.Δr2.var() / args.ntraj) / (2*rms) # the error in the rms value
     print('rms Δr =', rms, '±', err, '(rc =', rc, ')')
 
 if args.code:
-    for block, traj in results.index:
-        row = results.loc[block, traj]
+    for block, traj in data.index:
+        row = data.loc[block, traj]
         if not any(row.isna()):
             data = (k, Γ, Ds, Dp, R1, α, Q*1e-3, rc, tf,
                     row.ntrial, row.nsuccess, row.t, row.Δt_final, row.Δr2,
@@ -273,22 +168,3 @@ if args.code:
                      '%i', '%i', '%g', '%e', '%e',
                      '%i', '%i', '%i', '%i', '%s')
             print('\t'.join(forms) % data)
-
-if args.show:
-    import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(figsize=(7, 7))
-    if Q > 0:
-        w = args.width
-        x, z = np.mgrid[-w:w:100j, -w:w:100j]
-        r = np.sqrt(x**2 + z**2)
-        cosθ, sinθ = z/r, x/r # note that θ is the angle to the polar (z) direction
-        ur = Q/(4*π*r**2) + Pbyη*cosθ/(4*π*r) - k*λ*Γ/(r*(r+k*λ))
-        uθ = - Pbyη*sinθ/(8*π*r)
-        ux = ur*sinθ + uθ*cosθ
-        uz = ur*cosθ - uθ*sinθ
-        ax.streamplot(z, x, uz, ux)
-        if not np.any(np.isnan(root)):
-            ax.scatter(root, [0, 0], [100, 100], color='r', marker='x')
-    for traj in progress.index.levels[0]:
-        ax.plot(progress.loc[traj].z, progress.loc[traj].x, 'xr-')
-    plt.show()
