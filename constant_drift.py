@@ -68,7 +68,7 @@ if args.verbose:
     rms = np.sqrt(results.Δr2.mean()) # root mean square (rms) displacement
     err = np.sqrt(results.Δr2.var() / args.ntraj) / (2*rms) # the error in the rms value
     print('rms Δr =', rms, '±', err)
-    print('expected rms Δr =', np.sqrt(6*Dp*tf))
+    print('expected rms Δr =', np.sqrt(6*Dp*tf + c**2*tf**2))
 
 if args.code:
     for block, traj in results.index:
