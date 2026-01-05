@@ -24,7 +24,7 @@ parser.add_argument('--rcut', default=None, help='cut off in um for regularisati
 parser.add_argument('--dt-init', default=0.05, type=float, help='initial time step, default 0.05 sec')
 parser.add_argument('--eps', default='0.05,0.05', help='absolute and relative error, default 0.05 um and 0.05')
 parser.add_argument('--q-lims', default='0.001,1.2', help='q limits, default as per article 0.001,1.2')
-parser.add_argument('-t', '--t-final', default='600', help='duration, default 600 sec')
+parser.add_argument('-t', '--tfinal', default='600', help='duration, default 600 sec')
 parser.add_argument('-n', '--ntraj', default=5, type=int, help='number of trajectories, default 5')
 parser.add_argument('-b', '--nblock', default=2, type=int, help='number of blocks, default 2')
 parser.add_argument('-m', '--maxsteps', default=10000, type=int, help='max number of trial steps, default 10000')
@@ -33,7 +33,7 @@ parser.add_argument('--cart', action='store_true', help='use cartesian drift fie
 parser.add_argument('--info', action='store_true', help='provide info on computed quantities')
 args = parser.parse_args()
 
-tf = eval(args.t_final) # final time
+tf = eval(args.tfinal) # final time
 
 k, Γ, Ds, Dp, R1, α, Δt_init = args.k, args.Gamma, args.Ds, args.Dp, args.R1, args.alpha, args.dt_init
 
@@ -130,36 +130,36 @@ adb.drift = drift_cartesian if args.cart else drift_spherical
 z0 = R1 if np.isnan(root[0]) else root[0]
 r0 = np.array([0, 0, z0]) if args.cart else np.array([1e-6, 2e-6, z0])
 
-raw = [] # used to capture raw results
+raw_results = [] # used to capture raw results
 for block in range(args.nblock):
     for traj in range(args.ntraj):
-        r, t, Δt, ntrial, nsuccess = adb.run(r0, Δt_init, max_steps, t_final, Dp):
+        r, t, Δt, ntrial, nsuccess = adb.run(r0, Δt_init, args.maxsteps, tf, Dp)
         Δr2 = np.sum((r-r0)**2) # mean square displacement for the present trajectory
-        raw.append((traj, block, ntrial, nsuccess, t, Δt, Δr2)) # capture data
+        raw_results.append((traj, block, ntrial, nsuccess, t, Δt, Δr2)) # capture data
 
 columns = ['traj', 'block', 'ntrial', 'nsuccess', 't', 'Δt_final', 'Δr2']
-data = pd.DataFrame(raw, columns=columns).set_index(['block', 'traj'])
-data['Δt_mean'] = data.t / data.nsuccess
-data['Δr'] = np.sqrt(data.Δr2)
+results = pd.DataFrame(raw_results, columns=columns).set_index(['block', 'traj'])
+results['Δt_mean'] = results.t / results.nsuccess
+results['Δr'] = np.sqrt(results.Δr2)
 
 selected_cols = ['ntrial', 'nsuccess', 't', 'Δt_mean', 'Δt_final', 'Δr2', 'Δr']
 
 if args.verbose > 1:
     pd.set_option('display.max_rows', None)
-    print(data[selected_cols])
+    print(results[selected_cols])
     
 if args.verbose:
-    print(data[selected_cols].mean())
+    print(results[selected_cols].mean())
     print('Q =', 1e-3*Q, 'pL/s')
     print('sqrt(α*Q*t) =', np.sqrt(α*Q*tf/(2*π**2*R1))) # estimate assuming deterministic advection
     print('sqrt(6 Dp t) =', np.sqrt(6*Dp*tf)) # estimate assuming pure Brownian motion
-    rms = np.sqrt(data.Δr2.mean()) # root mean square (rms) displacement
-    err = np.sqrt(data.Δr2.var() / args.ntraj) / (2*rms) # the error in the rms value
+    rms = np.sqrt(results.Δr2.mean()) # root mean square (rms) displacement
+    err = np.sqrt(results.Δr2.var() / args.ntraj) / (2*rms) # the error in the rms value
     print('rms Δr =', rms, '±', err, '(rc =', rc, ')')
 
 if args.code:
-    for block, traj in data.index:
-        row = data.loc[block, traj]
+    for block, traj in results.index:
+        row = results.loc[block, traj]
         if not any(row.isna()):
             data = (k, Γ, Ds, Dp, R1, α, Q*1e-3, rc, tf,
                     row.ntrial, row.nsuccess, row.t, row.Δt_final, row.Δr2,

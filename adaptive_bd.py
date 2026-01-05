@@ -27,8 +27,8 @@ class Simulator:
     def heun_euler_trial_step(self, r, Δt, R):
         u = self.drift(r)
         Δrbar = u*Δt + self.sqrt2Dp*R # eq 8
-        ubar = drift(r + Δrbar)
-        Δr = 0.5*(u + ubar)*Δt + sqrt2Dp*R # eq 9
+        ubar = self.drift(r + Δrbar)
+        Δr = 0.5*(u + ubar)*Δt + self.sqrt2Dp*R # eq 9
         return Δr, Δrbar
 
     def adaptation_factor(self, Δr, Δrbar):
@@ -48,8 +48,8 @@ class Simulator:
         ntrial, nsuccess = 0, 0 # keep track of number of attempted and successful trial steps
         for step in range(max_steps):
             ntrial = ntrial + 1 # number of attempted steps
-            Δr, Δrbar = heun_euler_trial_step(r, Δt, R, sqrt2Dp)
-            q = adaptation_factor(Δr, Δrbar)
+            Δr, Δrbar = self.heun_euler_trial_step(r, Δt, R)
+            q = self.adaptation_factor(Δr, Δrbar)
             # The following is taken almost verbatim from the paper.
             # A stopping criterion has been added when a final time is reached.
             if q < 1: # reject the trial step
