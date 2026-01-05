@@ -13,16 +13,16 @@ import numpy as np
 def l2norm(r): # standard vector norm
     return np.sqrt(np.sum(r**2))
 
+def zero_drift(r): # in case no drift is supplied
+    return np.zeros_like(r)
+
 class Simulator:
 
-    def __init__(self, seed=12345, eps_abs=0.05, eps_rel=0.05, q_min=0.001, q_max=1.2):
-        self.εabs, self.εrel = eps_abs, eps_rel
-        self.qmin, self.qmax = q_min, q_max
-        self.zero = np.zeros(3) # for convenience
+    def __init__(self, seed=12345, eps_abs=0.05, eps_rel=0.05, q_min=0.001, q_max=1.2, drift=None):
+        self.εabs, self.εrel = 0.05, 0.05 # defaults match the paper above
+        self.qmin, self.qmax = 0.001, 1.2 # -- ditto --
         self.rng = np.random.default_rng(seed=seed) # initialise RNG
-
-    def drift(self): # default here is no drift field
-        return self.zero
+        self.drift = drift if drift is not None else zero_drift
 
     def heun_euler_trial_step(self, r, Δt, R):
         u = self.drift(r)

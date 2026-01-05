@@ -119,14 +119,12 @@ def drift_cartesian(r):
 
 # Instantiate an adaptive Brownian dynamics trajectory simulator
 
-adb = adaptive_bd.Simulator(seed=args.seed)
-
+drift = drift_cartesian if args.cart else drift_spherical
+adb = adaptive_bd.Simulator(seed=args.seed, drift=drift)
 adb.εabs, adb.εrel = eval(f'{args.eps}') # relative and absolute errors
 adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 
-adb.drift = drift_cartesian if args.cart else drift_spherical
-
-# initial position on-axis (cartesian method) or off-axis (spherical polars)
+# initial position on-axis (cartesian method) or slightly off-axis (spherical polars)
 
 z0 = R1 if np.isnan(root[0]) else root[0]
 r0 = np.array([0, 0, z0]) if args.cart else np.array([1e-6, 2e-6, z0])
