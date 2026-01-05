@@ -27,13 +27,14 @@ parser.add_argument('--q-lims', default='0.001,1.2', help='q limits, default as 
 parser.add_argument('-t', '--tfinal', default='600', help='duration, default 600 sec')
 parser.add_argument('-n', '--ntraj', default=5, type=int, help='number of trajectories, default 5')
 parser.add_argument('-b', '--nblock', default=2, type=int, help='number of blocks, default 2')
-parser.add_argument('-m', '--maxsteps', default=10000, type=int, help='max number of trial steps, default 10000')
+parser.add_argument('-m', '--maxsteps', default='10000', help='max number of trial steps, default 10000')
 parser.add_argument('-v', '--verbose', action='count', default=0, help='increasing verbosity')
 parser.add_argument('--cart', action='store_true', help='use cartesian drift field expressions')
 parser.add_argument('--info', action='store_true', help='provide info on computed quantities')
 args = parser.parse_args()
 
 tf = eval(args.tfinal) # final time
+max_steps = eval(args.maxsteps) 
 
 k, Γ, Ds, Dp, R1, α, Δt_init = args.k, args.Gamma, args.Ds, args.Dp, args.R1, args.alpha, args.dt_init
 
@@ -71,7 +72,7 @@ if args.info:
              'max steps', '# traj', '# block', 'RNG seed']
     values = [k, Γ, Ds, Γ/Ds, Dp, 1e-3*Q, 1e-3*Qcrit, R1, α, 1e-3*v1, Pbyη,
               rc, rstar, root[0], root[1], λ, λstar, Pe, Pe*Ds/Dp, Δt_init, tf,
-              args.maxsteps, args.ntraj, args.nblock, args.seed]
+              max_steps, args.ntraj, args.nblock, args.seed]
     units = [none, umsqpers, umsqpers, none, umsqpers, 'pL/s', 'pL/s', um, none, 'mm/s', umsqpers,
              um, um, um, um, um, none, none, none, 's', 's',
              none, none, none, none]
@@ -133,7 +134,7 @@ r0 = np.array([0, 0, z0]) if args.cart else np.array([1e-6, 2e-6, z0])
 raw_results = [] # used to capture raw results
 for block in range(args.nblock):
     for traj in range(args.ntraj):
-        r, t, Δt, ntrial, nsuccess = adb.run(r0, Δt_init, args.maxsteps, tf, Dp)
+        r, t, Δt, ntrial, nsuccess = adb.run(r0, Δt_init, max_steps, tf, Dp)
         Δr2 = np.sum((r-r0)**2) # mean square displacement for the present trajectory
         raw_results.append((traj, block, ntrial, nsuccess, t, Δt, Δr2)) # capture data
 
