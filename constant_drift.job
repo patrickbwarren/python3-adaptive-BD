@@ -1,0 +1,18 @@
+#!/usr/bin/env condor_submit
+
+# submit with seed=<seed> name=<name> njobs=<njobs>
+
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+notification = never
+universe = vanilla
+transfer_input_files = adaptive_bd.py
+executable = constant_drift.py
+arguments = -n 100 -b 100 --seed $(seed) -p $(ProcId)/$(njobs) $(name)
+header = $(name)_$(ProcId)
+output = $(header).out
+error = $(header).err
+log = $(header).log
+
+queue $(njobs)
+
