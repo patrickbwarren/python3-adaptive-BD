@@ -18,10 +18,10 @@ def zero_drift(r): # in case no drift is supplied
 
 class Simulator:
 
-    def __init__(self, seed=12345, eps_abs=0.05, eps_rel=0.05, q_min=0.001, q_max=1.2, drift=None):
+    def __init__(self, rng=None, seed=12345, eps_abs=0.05, eps_rel=0.05, q_min=0.001, q_max=1.2, drift=None):
         self.εabs, self.εrel = 0.05, 0.05 # defaults match the paper above
         self.qmin, self.qmax = 0.001, 1.2 # -- ditto --
-        self.rng = np.random.default_rng(seed=seed) # initialise RNG
+        self.rng = np.random.default_rng(seed=seed) if rng is None else rng # initialise or copy RNG
         self.drift = drift if drift is not None else zero_drift
 
     def heun_euler_trial_step(self, r, Δt, R):
@@ -35,7 +35,7 @@ class Simulator:
         E = l2norm(Δrbar - Δr) # eq 10
         τ = self.εabs + self.εrel * l2norm(Δr) # eq 11
         normE = E / τ # eq 12
-        q = (1 / (2*normE))**2 if normE > 0 else qmax # eq 16 ; nominal adaptation factor
+        q = (1 / (2*normE))**2 if normE > 0 else self.qmax # eq 16 ; nominal adaptation factor
         return min(self.qmax, max(self.qmin, q)) # eq 17 ; bounded adaptation factor
 
     def run(self, r0, Δt_init=0.1, max_steps=100, t_final=10, Dp=1.0):
