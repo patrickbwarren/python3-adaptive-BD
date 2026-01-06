@@ -38,7 +38,8 @@ With diffusion coefficient $D$, starting from position $`z_0`$, and with
 elapsed time $t$, the probability distribution function for the
 trajectory end points is
 ```math
-p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>\exp\Bigl(-\frac{(z-z_0)^2}{4 D t}\Bigr)\,.
+p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
+\exp\Bigl(-\frac{(z-z_0)^2}{4 D t}\Bigr)\,.
 ```
 
 #### Linear drift
@@ -46,7 +47,8 @@ p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>\exp\Bigl(-\frac{(z-z_0)^2}{4 D t}\Bigr)\,.
 In a linear drift field with drift speed $`u_z=-\gamma`$, the corresponding
 expression is
 ```math
-p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,.
+p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
+\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,.
 ```
 #### Harmonic trap
 
@@ -55,7 +57,8 @@ This is the well-known
 process, whose solution can be found online.  With drift field $`u_z=-k z`$, 
 the distribution is
 ```math
-p(z, t)=\frac{1}{\sqrt{4\pi D s}}\>\exp\Bigl(-\frac{(z-z_0 e^{-k t})^2}{4 D s}\Bigr)\,,
+p(z, t)=\frac{1}{\sqrt{4\pi D s}}\>
+\exp\Bigl(-\frac{(z-z_0 e^{-k t})^2}{4 D s}\Bigr)\,,
 ```
 where the pseudo-time variable $`s=(1-e^{-2k t})/2k`$.
 
@@ -66,12 +69,12 @@ to the constant value $`s=(2k)^{-1}`$ for $k t\gg 1$.
 
 The drift field corresponds to motion in a harmonic trap potential
 $U=\kappa z^2/2$.  The corresponding force $`f_z=-\partial U/\partial
-z=-\kappa z`$ drives particles with a drift speed $`u_z=-\mu\kappa
-z`$, where $\mu=\beta D$ is the mobility and $\beta$ is inverse
-temperature in units of Boltzmann's constant.  Hence we identify
-$k=\beta D\kappa$, and the long-time limit of the above expression
-$p\sim\exp(-k z^2/2D)=\exp(-\beta\kappa x^2/2)$; this is
-Boltzmann-distributed, as expected.
+z=-\kappa z`$ drives particles with a drift speed 
+$`u_z=\mu f_z=-\mu\kappa z`$, where $\mu=\beta D$ is the mobility and
+$\beta$ is inverse temperature in units of Boltzmann's constant.
+Hence we identify $k=\beta D\kappa$, and the long-time limit of the
+above expression $p\sim\exp(-k z^2/2D)=\exp(-\beta\kappa x^2/2)$; this
+is Boltzmann-distributed, as expected.
 
 #### Bounded linear drift
 
@@ -88,17 +91,28 @@ p=p_1+p_2+p_3\,,
 ```
 where the three pieces are
 ```math
-p_1(z, t)=\frac{1}{\sqrt{4\pi D t}}\>\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,,
+p_1(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
+\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,,
 ```
 ```math
-p_2(z, t)=\frac{1}{\sqrt{4\pi D t}}\>\exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0+\gamma t)^2}{4 D t}\Bigr)\,,
+p_2(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
+\exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0+\gamma t)^2}{4 D t}\Bigr)\,,
 ```
 ```math
-p_3(z, t)=\frac{\gamma}{2D}e^{-\gamma z/D}\>\text{erfc}\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
+p_3(z, t)=\frac{\gamma}{2D}e^{-\gamma z/D}\>
+\text{erfc}\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
 ```
 One can show that this is normalised, $`\int_0^\infty \text{d}z\,p(z, t)=1`$ for all times.
 
-At late times, one has $`p_1\to0`$ and $`p_2\to0`$, as the 'centres' of the Gaussians drift further and further to $z<0$, whereas the final piece $`p_3\to (\gamma/D)e^{-\gamma z/D}`$.
+At late times, one has $`p_1\to0`$ and $`p_2\to0`$, as the 'centres'
+of the Gaussians drift further and further to $z<0$, whereas the final
+contribution $`p_3\to (\gamma/D)e^{-\gamma z/D}`$.  
+
+If we interpret the linear drift as corresponding to a gravitational
+potential $U=mgz$, then as in the harmonic trap, the drift speed
+$u_z=-\mu mg$, where $\mu=\beta D$ is the mobility as before. Hence we
+identify $\gamma=\beta Dmg$, and the late-stage steady state
+$`e^{-\gamma z/D}=e^{-\beta mg}`$ is the expected Boltzmann distribution.
 
 
 ### Copying
