@@ -57,14 +57,12 @@ the distribution is
 ```math
 p(z, t)=\frac{1}{\sqrt{4\pi D s}}\>\exp\Bigl(-\frac{(z-z_0 e^{-k t})^2}{4 D s}\Bigr)\,,
 ```
-where the pseudo-time variable is 
-```math
-s=\frac{1-e^{-2k t}}{2k}\,.
-```
+where the pseudo-time variable $`s=(1-e^{-2k t)/2k`$.
+
 Note that the solution remains Gaussian at all times, and 'forgets'
-the initial position with a decay constant $k$ (which has units of
+the initial position with decay constant $k$ (which has units of
 inverse time). The pseudo-time crosses over from $s=t$ at $k t\ll 1$
-to the constant value $s=1/(2k)$ for $k t\gg 1$.  The drift field
+to the constant value $`s=(2k)^{-1}`$ for $k t\gg 1$.  The drift field
 corresponds to motion in a harmonic trap potential $U=\kappa z^2/2$,
 and the corresponding force $`f_z=-\partial U/\partial z=-\kappa z`$
 drives particles with a drift speed $`u_z=-\mu\kappa z`$, where
