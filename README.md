@@ -69,7 +69,6 @@ p(z, t)=\frac{1}{\sqrt{4\pi D s}}\>
 \exp\Bigl(-\frac{(z-z_0 e^{-k t})^2}{4 D s}\Bigr)\,,
 ```
 where the pseudo-time variable $`s=(1-e^{-2k t})/2k`$.
-
 Note that the solution remains Gaussian at all times, and 'forgets'
 the initial position with decay constant $k$ (which has units of
 inverse time). The pseudo-time crosses over from $s=t$ at $k t\ll 1$
