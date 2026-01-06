@@ -39,6 +39,13 @@ elapsed time $t$, the probability distribution function for the
 trajectory end points is  
 $$p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0)^2}{4 D t}\Bigr)$$
 
+#### Linear drift
+
+In a linear drift field with drift speed $-\gamma$, the corresponding
+expression is  
+$$p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0+\gamma t)^2}{4 D t}\Bigr)$$
+
+
 ### Copying
 
 This program is free software: you can redistribute it and/or modify
