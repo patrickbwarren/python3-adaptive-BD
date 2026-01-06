@@ -34,28 +34,28 @@ supporting scripts are provided for this.
 
 #### Free diffusion
 
-With diffusion coefficient $D$, starting from position $`x_0`$, and with
+With diffusion coefficient $D$, starting from position $`z_0`$, and with
 elapsed time $t$, the probability distribution function for the
 trajectory end points is
 ```math
-p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0)^2}{4 D t}\Bigr)\,.
+p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(z-z_0)^2}{4 D t}\Bigr)\,.
 ```
 
 #### Linear drift
 
-In a linear drift field with drift speed $`u_x=-\gamma`$, the corresponding
+In a linear drift field with drift speed $`u_z=-\gamma`$, the corresponding
 expression is
 ```math
-p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0+\gamma t)^2}{4 D t}\Bigr)\,.
+p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,.
 ```
 #### Harmonic trap
 
 This is the well-known 
 [Ornstein-Uhlenbeck](https://en.wikipedia.org/wiki/Ornstein%E2%80%93Uhlenbeck_process) 
-process, whose solution can be found online.  With drift field $`u_x=-k x`$, 
+process, whose solution can be found online.  With drift field $`u_z=-k z`$, 
 the distribution is
 ```math
-p(z, t)=\frac{1}{\sqrt{4\pi D s}}\exp\Bigl(-\frac{(x-x_0 e^{-k t})^2}{4 D s}\Bigr)\,,
+p(z, t)=\frac{1}{\sqrt{4\pi D s}}\exp\Bigl(-\frac{(z-z_0 e^{-k t})^2}{4 D s}\Bigr)\,,
 ```
 where the pseudo-time variable is 
 ```math
@@ -63,22 +63,39 @@ s=\frac{1-e^{-2k t}}{2k}\,.
 ```
 Note that the solution remains Gaussian at all times, and 'forgets'
 the initial position with a decay constant $k$ (which has units of
-inverse time). The pseudo-time crosses over from $s=t$ at $t\ll
-k^{-1}$ to the constant value $s=1/(2k)$ for $t\gg k^{-1}$.  The drift
-field corresponds to motion in a harmonic trap potential $U=\kappa
-x^2/2$, and the corresponding force $f=-\partial U/\partial x=-\kappa
-x$ drives particles with a drift speed $`u_x=-\mu\kappa x`$, where
-$\mu=\beta D$ is the mobility ($\beta$ is inverse temperature in units
-of Boltzmann's constant).  Hence we identify $k=\beta D\kappa$, and in
-the long-time limit $p\sim\exp(-k x^2/2D)=\exp(-\beta U)$; this is
-Boltzmann-distributed, as expected.
+inverse time). The pseudo-time crosses over from $s=t$ at $k t\ll 1$
+to the constant value $s=1/(2k)$ for $k t\gg 1$.  The drift field
+corresponds to motion in a harmonic trap potential $U=\kappa z^2/2$,
+and the corresponding force $`f_z=-\partial U/\partial z=-\kappa z`$
+drives particles with a drift speed $`u_z=-\mu\kappa z`$, where
+$\mu=\beta D$ is the mobility and $\beta$ is inverse temperature in
+units of Boltzmann's constant.  Hence we identify $k=\beta D\kappa$,
+and the long-time limit of the above expression $p\sim\exp(-k
+z^2/2D)=\exp(-\beta U)$; this is Boltzmann-distributed, as expected.
 
 #### Bounded linear drift
 
 This is a model for the evolution of a sedimentation profile, where
 gravity corresponds to the linear drift, and the base of the contained
-provides a barrier wall.  The solution is somewhat more involved than the preceding problems, and can be found in Chandrasekhar's famous [1943 Rev Mod Phys article](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.15.1)
-
+provides a barrier wall.  The solution is somewhat more involved than
+the preceding problems, and can be found in Chandrasekhar's famous
+[Rev Mod Phys](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.15.1)
+article (1943).  The result is also given in 
+lecture notes (chapter 4) from Klaus Schulten 
+[here](https://www.ks.uiuc.edu/Services/Class/PHYS550/LectureNotes.html).  The solution is
+```math
+p=p_1+p+2+p_3\,,
+```
+where the three pieces are
+```math
+p_1(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,,
+```
+```math
+p_2(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0+\gamma t)^2}{4 D t}\Bigr)\,,
+```
+```math
+p_3(z, t)=\frac{\gamma}{2D}e^{\gamma x/D}\erfc\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
+```
 
 ### Copying
 
