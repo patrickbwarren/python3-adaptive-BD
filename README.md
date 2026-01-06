@@ -143,7 +143,7 @@ and reflecting those with end points in $z<0$.  The problem with this
 approach is that the drift field is (potentially) discontinuous
 through $z=0$.  In practice, perhaps particularly with the adaptive
 time step methodology, this does not seem to generate a bias or
-present a problem.
+present much of a problem.
 
 ### Copying
 
