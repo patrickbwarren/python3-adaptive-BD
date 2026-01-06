@@ -96,6 +96,8 @@ p_2(z, t)=\frac{1}{\sqrt{4\pi D t}}\>\exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0
 ```math
 p_3(z, t)=\frac{\gamma}{2D}e^{\gamma x/D}\>\text{erfc}\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
 ```
+One can show that this is normalised, $`\int_0^\infty \text{d}z\,p(z, t)=1`$ for all times.
+
 
 ### Copying
 
