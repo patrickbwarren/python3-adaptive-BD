@@ -29,14 +29,17 @@ class Simulator:
         Δrbar = u*Δt + self.sqrt2Dp*R # eq 8
         ubar = self.drift(r + Δrbar)
         Δr = 0.5*(u + ubar)*Δt + self.sqrt2Dp*R # eq 9
-        return Δr, Δrbar
+        return Δrbar, Δr
 
-    def adaptation_factor(self, Δr, Δrbar):
+    def adaptation_factor(self, Δrbar, Δr):
         E = l2norm(Δrbar - Δr) # eq 10
         τ = self.εabs + self.εrel * l2norm(Δr) # eq 11
         normE = E / τ # eq 12
         q = (1 / (2*normE))**2 if normE > 0 else self.qmax # eq 16 ; nominal adaptation factor
         return min(self.qmax, max(self.qmin, q)) # eq 17 ; bounded adaptation factor
+
+    def update(self, r, Δr):
+        return r + Δr
 
     def run(self, r0, Δt_init=0.1, max_steps=100, t_final=10, Dp=1.0):
         self.sqrt2Dp = np.sqrt(2*Dp) # for convenience in Heun-Euler function
@@ -48,8 +51,8 @@ class Simulator:
         ntrial, nsuccess = 0, 0 # keep track of number of attempted and successful trial steps
         for step in range(max_steps):
             ntrial = ntrial + 1 # number of attempted steps
-            Δr, Δrbar = self.heun_euler_trial_step(r, Δt, R)
-            q = self.adaptation_factor(Δr, Δrbar)
+            Δrbar, Δr = self.heun_euler_trial_step(r, Δt, R)
+            q = self.adaptation_factor(Δrbar, Δr)
             # The following is taken almost verbatim from the paper.
             # A stopping criterion has been added when a final time is reached.
             if q < 1: # reject the trial step
@@ -70,7 +73,8 @@ class Simulator:
                 Δt = q*Δt ; R = R - Rs + Rbridge
             else: # q > 1, accept the trial step
                 nsuccess = nsuccess + 1 # number of accepted trial steps
-                t = t + Δt ; r = r + Δr ; Δt = q*Δt # update the time, position, time step
+                r = self.update(r, Δr) # update the position
+                t = t + Δt ; Δt = q*Δt # update the time and time step
                 if reached_final_time: # quit here if final time is now reached
                     break
                 if t + Δt > t_final: # next step would take us past the final time ..

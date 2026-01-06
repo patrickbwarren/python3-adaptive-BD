@@ -7,7 +7,7 @@ import pandas as pd
 
 import adaptive_bd
 
-parser = argparse.ArgumentParser(description='Ornstein-Uhlenbeck adaptive BD simulator')
+parser = argparse.ArgumentParser(description='Free diffusion adaptive BD simulator')
 parser.add_argument('code', nargs='?', default='', help='code name for run')
 parser.add_argument('--seed', default=None, type=int, help='RNG seed')
 parser.add_argument('--Dp', default=1.0, type=float, help='particle diffusion coeff, default 1.0 um^2/s')
@@ -28,9 +28,10 @@ Dp, Δt_init = args.Dp, args.dt_init
 pid, njobs = map(int, args.procid.split('/')) # sort out process id and number of jobs
 local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a local RNG stream
 
-# Instantiate an adaptive Brownian dynamics trajectory simulator with zero drift
+# Instantiate an adaptive Brownian dynamics trajectory simulator with (default) zero drift.
 
 adb = adaptive_bd.Simulator(rng=local_rng)
+
 adb.εabs, adb.εrel = eval(f'{args.eps}') # relative and absolute errors
 adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 
