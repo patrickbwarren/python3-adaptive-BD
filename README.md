@@ -89,7 +89,7 @@ article (1943).  The result is also given in
 ```math
 p=p_1+p_2+p_3\,,
 ```
-where the three pieces are
+where
 ```math
 p_1(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
 \exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,,
@@ -106,13 +106,15 @@ One can show that this is normalised, $`\int_0^\infty \text{d}z\,p(z, t)=1`$ for
 
 At late times, one has $`p_1\to0`$ and $`p_2\to0`$, as the 'centres'
 of the Gaussians drift further and further to $z<0$, whereas the final
-contribution $`p_3\to \gamma e^{-\gamma z/D}/D`$.
+contribution $`p_3\to \gamma\, e^{-\gamma z/D}/D`$.
 
 If we interpret the linear drift as corresponding to a gravitational
-potential $U=mgz$, then as in the harmonic trap, the drift speed
-$u_z=-\mu mg$, where $\mu=\beta D$ is the mobility as before. Hence we
+potential $U=mgz$, then as in the harmonic trap case, the force 
+$`f_z=-\partial U/\partial z=-mg`$ and the drift speed
+$`u_z=-\mu mg`$ where $\mu=\beta D$ is the mobility as before. Hence we
 identify $\gamma=\beta mgD$, and the late-stage steady state
-$`p\to p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is the expected Boltzmann distribution.
+$`p\to p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is the expected 
+Boltzmann distribution.
 
 
 ### Copying
