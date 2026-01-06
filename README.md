@@ -21,9 +21,10 @@ following test cases are given:
 * bounded Brownian motion in a linear drift field (Chandrasekhar's sedimentation problem);
 * Brownian motion with a non-potential drift field (DP trapping).
 
-In the initial commit, the code `lsjet_adaptive.py` contains both the
-algorithm and an application to DP trapping in the vicinity of slender
-pipette injecting a salt solution.
+The code `orig_lsjet_adaptive.py` is retained for regression testing
+from the initial commit.  Itcontains both the algorithm and the
+application to DP trapping in the vicinity of slender pipette
+injecting a salt solution.
 
 ### Copying
 
