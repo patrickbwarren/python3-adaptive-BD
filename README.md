@@ -13,18 +13,17 @@ diffusiophoresis (DP).
 
 Equation numbers in the code refer to the above paper.
 
-In the initial commit, the code `lsjet_adaptive.py` contains both the
-algorithm and an application to DP trapping in the vicinity of slender
-pipette injecting a salt solution.
-
-The intent is to split off the actual algorithm, and demonstrate its
-use with some test cases:
+The algorithm is split off into `adaptive_bd.py` and drivers for the
+following test cases are given:
 * pure Brownian motion (free diffusion);
-* bounded Brownian motion (reflecting wall);
 * Brownian motion in a linear drift field;
 * Brownian motion in a harmonic trap (Ornstein-Uhlenbeck problem);
 * bounded Brownian motion in a linear drift field (Chandrasekhar's sedimentation problem);
 * Brownian motion with a non-potential drift field (DP trapping).
+
+In the initial commit, the code `lsjet_adaptive.py` contains both the
+algorithm and an application to DP trapping in the vicinity of slender
+pipette injecting a salt solution.
 
 ### Copying
 
