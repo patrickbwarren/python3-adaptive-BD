@@ -70,8 +70,8 @@ z=-\kappa z`$ drives particles with a drift speed $`u_z=-\mu\kappa
 z`$, where $\mu=\beta D$ is the mobility and $\beta$ is inverse
 temperature in units of Boltzmann's constant.  Hence we identify
 $k=\beta D\kappa$, and the long-time limit of the above expression
-$p\sim\exp(-k z^2/2D)=\exp(-\beta\kappa x^2/2)$; this is Boltzmann-distributed,
-as expected.
+$p\sim\exp(-k z^2/2D)=\exp(-\beta\kappa x^2/2)$; this is
+Boltzmann-distributed, as expected.
 
 #### Bounded linear drift
 
@@ -81,10 +81,10 @@ provides a barrier wall.  The solution is somewhat more involved than
 the preceding problems, and can be found in Chandrasekhar's famous
 [Rev Mod Phys](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.15.1)
 article (1943).  The result is also given in 
-lecture notes (chapter 4) from Klaus Schulten 
-[here](https://www.ks.uiuc.edu/Services/Class/PHYS550/LectureNotes.html).  The solution is
+[lecture notes](https://www.ks.uiuc.edu/Services/Class/PHYS550/LectureNotes.html) 
+(chapter 4) from Klaus Schulten.  The solution comprises three pieces, as
 ```math
-p=p_1+p+2+p_3\,,
+p=p_1+p_2+p_3\,,
 ```
 where the three pieces are
 ```math
