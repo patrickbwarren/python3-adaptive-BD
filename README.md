@@ -62,14 +62,16 @@ where the pseudo-time variable $`s=(1-e^{-2k t})/2k`$.
 Note that the solution remains Gaussian at all times, and 'forgets'
 the initial position with decay constant $k$ (which has units of
 inverse time). The pseudo-time crosses over from $s=t$ at $k t\ll 1$
-to the constant value $`s=(2k)^{-1}`$ for $k t\gg 1$.  The drift field
-corresponds to motion in a harmonic trap potential $U=\kappa z^2/2$.  
-The corresponding force $`f_z=-\partial U/\partial z=-\kappa z`$
-drives particles with a drift speed $`u_z=-\mu\kappa z`$, where
-$\mu=\beta D$ is the mobility and $\beta$ is inverse temperature in
-units of Boltzmann's constant.  Hence we identify $k=\beta D\kappa$,
-and the long-time limit of the above expression $p\sim\exp(-k
-z^2/2D)=\exp(-\beta U)$; this is Boltzmann-distributed, as expected.
+to the constant value $`s=(2k)^{-1}`$ for $k t\gg 1$.  
+
+The drift field corresponds to motion in a harmonic trap potential
+$U=\kappa z^2/2$.  The corresponding force $`f_z=-\partial U/\partial
+z=-\kappa z`$ drives particles with a drift speed $`u_z=-\mu\kappa
+z`$, where $\mu=\beta D$ is the mobility and $\beta$ is inverse
+temperature in units of Boltzmann's constant.  Hence we identify
+$k=\beta D\kappa$, and the long-time limit of the above expression
+$p\sim\exp(-k z^2/2D)=\exp(-\beta U)$; this is Boltzmann-distributed,
+as expected.
 
 #### Bounded linear drift
 
