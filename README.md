@@ -123,15 +123,30 @@ identify $\gamma=\beta mgD$, and the late-stage
 $`p\to p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is the expected 
 Boltzmann distribution.
 
-### Implementation note
+### Reflecting boundary
 
 In the bounded linear drift problem, it seems quite difficult to
 implement the effect of the wall, without introducing some bias in the
-adaptive Brownian dynamics algorithm.  What seems to work empirically
+adaptive Brownian dynamics algorithm.  What works at least empirically
 is to simulate in the full domain, with a 'reflected' drift speed,
 $`u_z=-\gamma`$ for $z>0$ and $`u_z=+\gamma`$ for $z < 0$.  Then, at
 the end one 'folds' trajectories which end with $z<0$ back into the
-$z>0$ half-space.
+$z>0$ half-space.  This seems to be because the reflected solution of
+the reflected problem is a solution of the original problem from a
+reflected starting position.  But if the drift field has a reflection
+symmetry, this is also a solution of the original problem.  Since the
+Fokker-Planck equation is linear, the superposition is also a
+solution, albeit with starting positions at $`z_0`$ and $`-z_0`$.  By
+symmetry, this superposition has zero flux through the $z=0$ plane and
+so keeping only that part with $z\ge 0$ and doubling it up for
+normalisation, one solves the original problem with a reflecting wall
+at $z=0$.  This superposition trick is enabled in the Brownian
+dynamics code by keeping _all_ trajectories, and reflecting those
+which end up with end points in $z<0$.  The problem with this approach
+is that the drift field is (potentially) discontinuous through $z=0$.
+In practice, perhaps particularly with the adaptive time step
+methodology, this does not seem to generate a bias or present a
+problem.
 
 ### Copying
 
