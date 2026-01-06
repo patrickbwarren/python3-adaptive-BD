@@ -109,15 +109,15 @@ p_3(z, t)=\frac{\gamma\, e^{-\gamma z/D}}{2D}\>
 One can show that the sum of these is normalised, 
 $`\int_0^\infty\text{d}z\,p(z, t)=1`$ for all times.
 
-At late times, one has $`p_1\to0`$ and $`p_2\to0`$, as the 'centres'
-of the Gaussians drift further and further to $z<0$, whereas the final
-contribution $`p_3\to \gamma\, e^{-\gamma z/D}/D`$.
-If we interpret the linear drift as corresponding to a gravitational
-potential $U=mgz$, then as in the harmonic trap case, the force 
-$`f_z=-\partial U/\partial z=-mg`$ and the drift speed
-$`u_z=-\mu mg`$ where $\mu=\beta D$ is the mobility as before. Hence we
-identify $\gamma=\beta mgD$, and the late-stage
-$`p\to p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is the expected 
+At late times, one has $`p_1\to0`$ and $`p_2\to0`$ as the 'centres' of
+the Gaussians drift further and further into the physically
+inaccesible region $z<0$, whereas the final contribution $`p_3\to
+\gamma\, e^{-\gamma z/D}/D`$.  If we interpret the linear drift as
+corresponding to a gravitational potential $U=mgz$, then as in the
+harmonic trap case, the force $`f_z=-\partial U/\partial z=-mg`$ and
+the drift speed $`u_z=-\mu mg`$ where $\mu=\beta D$ is the mobility as
+before. Hence we identify $\gamma=\beta mgD$, and the late-stage
+$`p\to p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is the expected
 Boltzmann distribution.
 
 ### Reflecting boundary
