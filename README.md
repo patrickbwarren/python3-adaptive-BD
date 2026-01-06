@@ -50,7 +50,9 @@ p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0+\gamma t)^2}{4 D t}\Big
 ```
 #### Harmonic trap
 
-This is the well-known [Ornstein-Uhlenbeck](https://en.wikipedia.org/wiki/Ornstein%E2%80%93Uhlenbeck_process) process, whose solution can be found online.  With drift field $`u_x=-k x`$, 
+This is the well-known 
+[Ornstein-Uhlenbeck](https://en.wikipedia.org/wiki/Ornstein%E2%80%93Uhlenbeck_process) 
+process, whose solution can be found online.  With drift field $`u_x=-k x`$, 
 the distribution is
 ```math
 p(z, t)=\frac{1}{\sqrt{4\pi D s}}\exp\Bigl(-\frac{(x-x_0 e^{-k t})^2}{4 D s}\Bigr)\,,
@@ -59,19 +61,23 @@ where the pseudo-time variable is
 ```math
 s=\frac{1-e^{-2k t}}{2k}\,.
 ```
-
 Note that the solution remains Gaussian at all times, and 'forgets'
-the initial position with a decay time $k$ (which has units of inverse
-time). The pseudo-time crosses over from $s=t$ at $t\ll k^{-1}$ to the
-constant value $s=1/(2k)$ for $t\gg k^{-1}$.  The drift field
-corresponds to motion in a harmonic trap potential $U=\kappa x^2/2$,
-and the corresponding force $f=-\partial U/\partial x=-\kappa x$
-drives particles with a drift speed $`u_x=-\mu\kappa x`$, where
+the initial position with a decay constant $k$ (which has units of
+inverse time). The pseudo-time crosses over from $s=t$ at $t\ll
+k^{-1}$ to the constant value $s=1/(2k)$ for $t\gg k^{-1}$.  The drift
+field corresponds to motion in a harmonic trap potential $U=\kappa
+x^2/2$, and the corresponding force $f=-\partial U/\partial x=-\kappa
+x$ drives particles with a drift speed $`u_x=-\mu\kappa x`$, where
 $\mu=\beta D$ is the mobility ($\beta$ is inverse temperature in units
-of Boltzmann's constant).  Hence we identify $k=\beta D\kappa$, and
-the long-time limit $p\sim\exp(-k x^2/2D)=\exp(-\beta U)$ is
+of Boltzmann's constant).  Hence we identify $k=\beta D\kappa$, and in
+the long-time limit $p\sim\exp(-k x^2/2D)=\exp(-\beta U)$; this is
 Boltzmann-distributed, as expected.
 
+#### Bounded linear drift
+
+This is a model for the evolution of a sedimentation profile, where
+gravity corresponds to the linear drift, and the base of the contained
+provides a barrier wall.  The solution is somewhat more involved than the preceding problems, and can be found in Chandrasekhar's famous [1943 Rev Mod Phys article](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.15.1)
 
 
 ### Copying
