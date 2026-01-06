@@ -1,13 +1,13 @@
 #!/usr/bin/env condor_submit
 
-# submit with seed=<seed> name=<name> njobs=<njobs>
+# submit with exec=<executable> seed=<seed> name=<name> njobs=<njobs>
 
 should_transfer_files = YES
 when_to_transfer_output = ON_EXIT
 notification = never
 universe = vanilla
 transfer_input_files = adaptive_bd.py
-executable = free_diffusion.py
+executable = $(exec)
 arguments = -n 100 -b 100 --seed $(seed) -p $(ProcId)/$(njobs) $(name)
 header = $(name)_$(ProcId)
 output = $(header).out

@@ -4,7 +4,6 @@
 import argparse
 import numpy as np
 import pandas as pd
-from numpy import pi as π
 
 import adaptive_bd
 
@@ -12,7 +11,7 @@ parser = argparse.ArgumentParser(description='Ornstein-Uhlenbeck adaptive BD sim
 parser.add_argument('code', nargs='?', default='', help='code name for run')
 parser.add_argument('--seed', default=None, type=int, help='RNG seed')
 parser.add_argument('--Dp', default=1.0, type=float, help='particle diffusion coeff, default 1.0 um^2/s')
-parser.add_argument('--c', default=0.1, type=float, help='constant drift speed in z direction, default 0.1 um/s')
+parser.add_argument('--gamma', default=0.1, type=float, help='constant drift speed in -z direction, default 0.1 um/s')
 parser.add_argument('--dt-init', default=0.05, type=float, help='initial time step, default 0.05 sec')
 parser.add_argument('--eps', default='0.05,0.05', help='absolute and relative error, default 0.05 um and 0.05')
 parser.add_argument('--q-lims', default='0.001,1.2', help='q limits, default as per article 0.001,1.2')
@@ -25,15 +24,15 @@ parser.add_argument('-v', '--verbose', action='count', default=0, help='increasi
 args = parser.parse_args()
 
 tf, max_steps = map(eval, [args.tfinal, args.maxsteps])
-Dp, Δt_init, c = args.Dp, args.dt_init, args.c
+Dp, Δt_init, γ = args.Dp, args.dt_init, args.gamma
 
 pid, njobs = map(int, args.procid.split('/')) # sort out process id and number of jobs
 local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a local RNG stream
 
-# Constant drift field
+# Constant drift field: γ in negative z direction.
  
 def constant_drift(r):
-    u = np.array([0.0, 0.0, c])
+    u = np.array([0, 0, -γ])
     return u
 
 # Instantiate an adaptive Brownian dynamics trajectory simulator with constant drift
