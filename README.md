@@ -62,12 +62,15 @@ s=\frac{1-e^{-2k t}}{2k}\,.
 
 Note that the solution remains Gaussian at all times, and 'forgets'
 the initial position with a decay time $k$ (which has units of inverse
-time). The pseudo-time crosses over from $s=t$ at $t\ll k^{-1}$ to
-the constant value $s=1/(2k)$ for $t\gg k^{-1}$.  The drift field
+time). The pseudo-time crosses over from $s=t$ at $t\ll k^{-1}$ to the
+constant value $s=1/(2k)$ for $t\gg k^{-1}$.  The drift field
 corresponds to motion in a harmonic trap potential $U=\kappa x^2/2$,
 and the corresponding force $f=-\partial U/\partial x=-\kappa x$
-drives particles with a drift speed $`u_x=-\mu\kappa x`$, where $\mu=\beta D$
-is the mobility ($\beta$ is inverse temperature in units of Boltzmann's constant).
+drives particles with a drift speed $`u_x=-\mu\kappa x`$, where
+$\mu=\beta D$ is the mobility ($\beta$ is inverse temperature in units
+of Boltzmann's constant).  Hence we identify $k=\beta D\kappa$, and
+the long-time limit $p\sim\exp(-\beta U)$ is Boltzmann-distributed, as
+expected.
 
 
 
