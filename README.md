@@ -94,8 +94,7 @@ p_1(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\B
 p_2(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0+\gamma t)^2}{4 D t}\Bigr)\,,
 ```
 ```math
-\newcommand{\erfc}{\mathop{\rm erfc}\nolimits}
-p_3(z, t)=\frac{\gamma}{2D}e^{\gamma x/D}\erfc\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
+p_3(z, t)=\frac{\gamma}{2D}e^{\gamma x/D}\text{erfc}\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
 ```
 
 ### Copying
