@@ -70,7 +70,7 @@ z=-\kappa z`$ drives particles with a drift speed $`u_z=-\mu\kappa
 z`$, where $\mu=\beta D$ is the mobility and $\beta$ is inverse
 temperature in units of Boltzmann's constant.  Hence we identify
 $k=\beta D\kappa$, and the long-time limit of the above expression
-$p\sim\exp(-k z^2/2D)=\exp(-\beta U)$; this is Boltzmann-distributed,
+$p\sim\exp(-k z^2/2D)=\exp(-\beta\kappa x^2/2)$; this is Boltzmann-distributed,
 as expected.
 
 #### Bounded linear drift
