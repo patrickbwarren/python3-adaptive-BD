@@ -86,7 +86,7 @@ is Boltzmann-distributed, as expected.
 #### Bounded linear drift
 
 This is a model for the evolution of a sedimentation profile, where
-gravity corresponds to the linear drift, and the base of the contained
+gravity corresponds to the linear drift, and the base of the container
 provides a barrier wall.  The solution is somewhat more involved than
 the preceding problems, and can be found in Chandrasekhar's famous
 [Rev Mod Phys](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.15.1)
