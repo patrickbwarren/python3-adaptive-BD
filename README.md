@@ -26,9 +26,17 @@ from the initial commit.  Itcontains both the algorithm and the
 application to DP trapping in the vicinity of slender pipette
 injecting a salt solution.
 
-Codes are designed to run as standalone python scripts and as batch
-jobs within the condor high-throughput computing environment.  Some
-supporting scripts are provided for this.
+The driver codes are designed to run as standalone python scripts, and
+as batch jobs within the condor high-throughput computing environment.
+Some supporting scripts are provided for this.  For example
+```bash
+condor_submit condor.job args="-n 100 -b 100" exec=harmonic_trap.py name=htest njobs=40
+```
+followed by
+```bash
+./cleanup.sh htest
+```
+submits 40 jobs, then consolidates the results into a single gzipped data file.
 
 ### Mathematical Results
 
