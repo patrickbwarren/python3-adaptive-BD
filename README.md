@@ -69,8 +69,8 @@ and the corresponding force $f=-\partial U/\partial x=-\kappa x$
 drives particles with a drift speed $`u_x=-\mu\kappa x`$, where
 $\mu=\beta D$ is the mobility ($\beta$ is inverse temperature in units
 of Boltzmann's constant).  Hence we identify $k=\beta D\kappa$, and
-the long-time limit $p\sim\exp(-\beta U)$ is Boltzmann-distributed, as
-expected.
+the long-time limit $p\sim\exp(-k x^2/2D)=\exp(-\beta U)$ is
+Boltzmann-distributed, as expected.
 
 
 
