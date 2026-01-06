@@ -50,16 +50,23 @@ p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0+\gamma t)^2}{4 D t}\Big
 ```
 #### Harmonic trap
 
-This is the well-known [Ornstein-Uhlenbeck](https://en.wikipedia.org/wiki/Ornstein%E2%80%93Uhlenbeck_process) process, whose solution can be found online.  With drift field $`u_x=-\kappa x`$, 
+This is the well-known [Ornstein-Uhlenbeck](https://en.wikipedia.org/wiki/Ornstein%E2%80%93Uhlenbeck_process) process, whose solution can be found online.  With drift field $`u_x=-k x`$, 
 the distribution is
 ```math
-p(z, t)=\frac{1}{\sqrt{4\pi D s}}\exp\Bigl(-\frac{(x-x_0 e^{-\gamma t})^2}{4 D s}\Bigr)\,,
+p(z, t)=\frac{1}{\sqrt{4\pi D s}}\exp\Bigl(-\frac{(x-x_0 e^{-k t})^2}{4 D s}\Bigr)\,,
 ```
 where the pseudo-time variable is 
 ```math
-s=\frac{1-e^{-2\kappa t}}{2\kappa}\,.
+s=\frac{1-e^{-2k t}}{2k}\,.
 ```
 
+Note that the solution remains Gaussian at all times, and 'forgets'
+the initial position with a decay time $k$ (which has units of inverse
+time). The pseudo-time crosses over from $s=t$ at $`t\ll k^{-1}`$ to
+the constant value $`s=1/(2k)`$ for $`t\gg k^{_1}`$.  The drift field
+corresponds to motion in a harmonic trap potential $`U=\kappa x^2/2`$;
+the corresponding force $`f=-\kappa x`$ drives particles with a drift
+speed $`u_x=-\mu\kappa x`$ where $\mu$ is the mobility.
 
 
 
