@@ -20,9 +20,11 @@ pipette injecting a salt solution.
 The intent is to split off the actual algorithm, and demonstrate its
 use with some test cases:
 * pure Brownian motion;
+* bounded Brownian motion (reflecting wall);
 * Brownian motion in a linear drift field;
 * Brownian motion in a harmonic trap (Ornstein-Uhlenbeck problem);
-* Brownian motion in a linear drift field with a wall (Chandrasekhar's sedimentation problem);
+* Brownian motion in a linear drift field with a reflecting wall 
+                          (Chandrasekhar's sedimentation problem);
 * Brownian motion with a non-potential drift field (DP trapping).
 
 More to come...
