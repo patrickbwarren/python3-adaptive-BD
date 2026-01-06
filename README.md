@@ -32,7 +32,7 @@ Some supporting scripts are provided for this.  For example
 ```bash
 condor_submit condor.job args="-n 100 -b 100" seed=12345 exec=harmonic_trap.py name=htest njobs=40
 ```
-followed by
+followed by (when all the jobs have completed)
 ```bash
 ./cleanup.sh htest
 ```
