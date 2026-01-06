@@ -36,14 +36,33 @@ supporting scripts are provided for this.
 
 With diffusion coefficient $D$, starting from position $`x_0`$, and with
 elapsed time $t$, the probability distribution function for the
-trajectory end points is  
-$$p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0)^2}{4 D t}\Bigr)$$
+trajectory end points is
+```math
+p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0)^2}{4 D t}\Bigr)
+```
 
 #### Linear drift
 
 In a linear drift field with drift speed $-\gamma$, the corresponding
-expression is  
-$$p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0+\gamma t)^2}{4 D t}\Bigr)$$
+expression is
+```math
+p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0+\gamma t)^2}{4 D t}\Bigr)
+```
+#### Harmonic trap
+
+This is the well-known [Ornstein-Uhlenbeck
+process](https://en.wikipedia.org/wiki/Ornstein%E2%80%93Uhlenbeck_process),
+whose solution can be found online.  With drift field $`u_x=-\kappa
+x`$, the distribution is
+```math
+p(z, t)=\frac{1}{\sqrt{4\pi D s}}\exp\Bigl(-\frac{(x-x_0 e^{-\gamma t})^2}{4 D s}\Bigr)
+```
+where the pseudo-time variable is 
+```math
+s=\frac{1-e^{-2\kappa t}}{2\kappa}
+```
+
+
 
 
 ### Copying
