@@ -112,7 +112,7 @@ If we interpret the linear drift as corresponding to a gravitational
 potential $U=mgz$, then as in the harmonic trap, the drift speed
 $u_z=-\mu mg$, where $\mu=\beta D$ is the mobility as before. Hence we
 identify $\gamma=\beta mgD$, and the late-stage steady state
-$`p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is the expected Boltzmann distribution.
+$`p\to p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is the expected Boltzmann distribution.
 
 
 ### Copying
