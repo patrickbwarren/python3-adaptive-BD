@@ -106,7 +106,7 @@ One can show that this is normalised, $`\int_0^\infty \text{d}z\,p(z, t)=1`$ for
 
 At late times, one has $`p_1\to0`$ and $`p_2\to0`$, as the 'centres'
 of the Gaussians drift further and further to $z<0$, whereas the final
-contribution $`p_3\to \gammae^{-\gamma z/D}/D`$.
+contribution $`p_3\to \gamma e^{-\gamma z/D}/D`$.
 
 If we interpret the linear drift as corresponding to a gravitational
 potential $U=mgz$, then as in the harmonic trap, the drift speed
