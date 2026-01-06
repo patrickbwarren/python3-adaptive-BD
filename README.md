@@ -106,7 +106,8 @@ p_2(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
 p_3(z, t)=\frac{\gamma\, e^{-\gamma z/D}}{2D}\>
 \text{erfc}\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
 ```
-One can show that this is normalised, $`\int_0^\infty \text{d}z\,p(z, t)=1`$ for all times.
+One can show that the sum of these is normalised, 
+$`\int_0^\infty\text{d}z\,p(z, t)=1`$ for all times.
 
 At late times, one has $`p_1\to0`$ and $`p_2\to0`$, as the 'centres'
 of the Gaussians drift further and further to $z<0$, whereas the final
