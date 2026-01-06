@@ -37,7 +37,7 @@ supporting scripts are provided for this.
 With diffusion coefficient $D$, starting from position $`x_0`$, and with
 elapsed time $t$, the probability distribution function for the
 trajectory end points is  
-$$p(z, t)=\frac{1}{\sqrt{4\pi D t}\exp\Bigl(-\frac{(x-x_0)^2}{4 D t}\Bigr)$$
+$$p(z, t)=\frac{1}{\sqrt{4\pi D t}}\exp\Bigl(-\frac{(x-x_0)^2}{4 D t}\Bigr)$$
 
 ### Copying
 
