@@ -121,7 +121,7 @@ In the bounded linear drift problem, it seems quite difficult to
 implement the effect of the wall, without introducing some bias in the
 adaptive Brownian dynamics algorithm.  What seems to work empirically
 is to simulate in the full domain, with a 'reflected' drift speed,
-$`u_z=-\gamma$ for $z>0`$ and $`u_z=+\gamma`$ for $z < 0$.  Then, at
+$`u_z=-\gamma`$ for $z>0$ and $`u_z=+\gamma`$ for $z < 0$.  Then, at
 the end one 'folds' trajectories which end with $z<0$ back into the
 $z>0$ half-space.
 
