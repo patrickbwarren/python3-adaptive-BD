@@ -23,8 +23,7 @@ use with some test cases:
 * bounded Brownian motion (reflecting wall);
 * Brownian motion in a linear drift field;
 * Brownian motion in a harmonic trap (Ornstein-Uhlenbeck problem);
-* Brownian motion in a linear drift field with a reflecting wall 
-                          (Chandrasekhar's sedimentation problem);
+* bounded Brownian motion in a linear drift field (Chandrasekhar's sedimentation problem);
 * Brownian motion with a non-potential drift field (DP trapping).
 
 More to come...
