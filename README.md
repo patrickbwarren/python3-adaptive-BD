@@ -94,7 +94,7 @@ the preceding problems, and can be found in Chandrasekhar's famous
 article (1943).  The result is also given in 
 [lecture notes](https://www.ks.uiuc.edu/Services/Class/PHYS550/LectureNotes.html) 
 (chapter 4) from Klaus Schulten.  The solution comprises three pieces, as
-$`p=p_1+p_2+p_3`$ where
+$`p=p_1+p_2+p_3`$, where
 ```math
 p_1(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
 \exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,,
