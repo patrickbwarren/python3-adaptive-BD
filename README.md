@@ -26,6 +26,19 @@ from the initial commit.  Itcontains both the algorithm and the
 application to DP trapping in the vicinity of slender pipette
 injecting a salt solution.
 
+Codes are designed to run as standalone python scripts and as batch
+jobs within the condor high-throughput computing environment.  Some
+supporting scripts are provided for this.
+
+### Mathematical Results
+
+#### Free diffusion
+
+With diffusion coefficient $D$, starting from position $`x_0`$, and with
+elapsed time $t$, the probability distribution function for the
+trajectory end points is  
+$$p(z, t)=\frac{1}{\sqrt{4\pi D t}\exp\Bigl(-\frac{(x-x_0)^2}{4 D t}\Bigr)$$
+
 ### Copying
 
 This program is free software: you can redistribute it and/or modify
