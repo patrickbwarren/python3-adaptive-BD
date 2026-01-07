@@ -38,8 +38,9 @@ The original code `orig_lsjet_adaptive.py` is retained for regression
 testing from the initial commit.
 
 The driver codes are designed to run as standalone python scripts, or
-as batch jobs within the condor high-throughput computing environment.
-Some supporting scripts are provided for this.  For example
+as batch jobs within the [HTCondor](https://htcondor.org/)
+high-throughput computing environment.  Some supporting scripts are
+provided for this.  For example
 ```bash
 condor_submit condor.job args="-n 100 -b 100" \
 seed=12345 exec=harmonic_trap.py name=htest njobs=50
