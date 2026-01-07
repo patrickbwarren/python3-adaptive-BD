@@ -27,11 +27,10 @@ $`\mathbf{R}_\text{bridge}`$ at what was originally line 30.
 Second, a feature was added to stop the simulation when a desired time
 point is reached.  This is done by checking if the next trial time
 step would take the simulation past the desired time point, and if so,
-reducing the length of the trial time step, so that the desired time
-point is exactly reached if the time step is accepted.  If this time
-step is not accepted, the simulation proceeds as usual with a new
-reduced trial time step (which by definition cannot reach the desired
-time point).
+reducing the length of the time step, so that the desired time point
+would be exactly reached if the time step is accepted (if this time
+step is not accepted, the simulation proceeds as usual, since a further
+reduction cannot reach the desired time point).
 
 The code is split into a module `adaptive_bd.py` which contains the
 adaptive time step algorithm, and drivers for the following test cases:
