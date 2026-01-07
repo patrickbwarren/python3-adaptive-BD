@@ -37,7 +37,7 @@ followed by (when all the jobs have completed)
 ```
 submits 40 jobs, then consolidates the results into a single gzipped data file.
 
-### Mathematical Results
+### Theory
 
 #### Free diffusion
 
@@ -145,18 +145,19 @@ methodology, this does not seem to present much of a problem.
 
 #### Free diffusion
 
-Plot shows binned end points in $x$, $y$, and $z$ directions, for
-$2\times10^5$ trajectories with $D=1$ and end time $t=600$.  The
-measured root mean square displacement is
-```math
-\sqrt{\Delta r^2}=59.94\pm0.06
-```
+Plots show binned end points in $x$, $y$, and $z$ directions, for
+$2\times10^5$ trajectories, with $D=1$ and end time $t=600$.  The
+measured root mean square displacement is 
+$`\sqrt{\Delta r^2}=59.94\pm0.06`$ 
 which should be compared to the exact result $`\sqrt{6 D t}=60`$.
+The red line is the expected distribution from the theory above.
+Results for linear drift are similar.
 
 ![Free diffusion end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest1.png)
 
 ![Free diffusion end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest2.png)
 
+#### 
 
 ### Copying
 
