@@ -178,7 +178,7 @@ Plots show binned end points in the $x$, $y$, and $z$ directions,
 starting from the origin, for $2\times10^5$ trajectories, with $D=1$
 and after a time $t=600$.  The red line is the expected distribution from
 the theory above.  The measured root mean square displacement
-$`\surd{}\langle\Delta r^2\rangle = 59.94 \pm 0.06`$ should be compared to
+$`\sqrt{}\langle\Delta r^2\rangle = 59.94 \pm 0.06`$ should be compared to
 the exact result $`\sqrt{6 D t} = 60`$.  Results with linear drift are
 similar.
 
