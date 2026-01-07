@@ -21,14 +21,15 @@ $`\Delta t_s + \Delta t_f < \Delta t`$,
 and the conditional blocks have been swapped so there is no effect on
 the algorithm.  This subtle change avoids spurious underflow errors
 throwing runtime warnings when taking a square root in generating the
-bridge random displacement.  Second, a feature was added to stop the
-simulation when a desired time point is reached.  This is done by
-checking if the next trial time step would take the simulation past
-the desired time point, and if so, reducing the length of the trial
-time step, so that the desired time point is exactly reached if the
-time step is accepted.  If this time step is not accepted, the
-simulation proceeds as usual with a new reduced trial time step (which
-by definition cannot reach the desired time point).
+bridging random displacement $`\mathbf{R}_\text{bridge}`$.  Second, a
+feature was added to stop the simulation when a desired time point is
+reached.  This is done by checking if the next trial time step would
+take the simulation past the desired time point, and if so, reducing
+the length of the trial time step, so that the desired time point is
+exactly reached if the time step is accepted.  If this time step is
+not accepted, the simulation proceeds as usual with a new reduced
+trial time step (which by definition cannot reach the desired time
+point).
 
 The code is split into a module `adaptive_bd.py` which contains the
 adaptive time step algorithm, and drivers for the following test cases:
