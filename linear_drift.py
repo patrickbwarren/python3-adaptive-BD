@@ -1,13 +1,33 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# This code is part of python3-adaptive-BD.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see
+# <http://www.gnu.org/licenses/>.
+
+# Copyright (c) 2025, 2026 Patrick B Warren
+# Email: patrickbwarren@gmail.com
+
+# Implement linear drift case.
+
 import argparse
 import numpy as np
 import pandas as pd
-
 import adaptive_bd
 
-parser = argparse.ArgumentParser(description='Constant drift field adaptive BD simulator')
+parser = argparse.ArgumentParser(description='Linear drift adaptive BD simulator')
 parser.add_argument('code', nargs='?', default='', help='code name for run')
 parser.add_argument('--seed', default=None, type=int, help='RNG seed')
 parser.add_argument('--Dp', default=1.0, type=float, help='particle diffusion coeff, default 1.0 um^2/s')

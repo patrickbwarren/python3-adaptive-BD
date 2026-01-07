@@ -1,12 +1,30 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Implement adaptive time step Brownian dynamics from
+# This code is part of python3-adaptive-BD.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see
+# <http://www.gnu.org/licenses/>.
+
+# Copyright (c) 2025, 2026 Patrick B Warren
+# Email: patrickbwarren@gmail.com
+
+# This module implements the adaptive time step Brownian dynamics from
 # Sammüller and Schmidt, J. Chem. Phys. 155, 134107 (2021)
-# https://doi.org/10.1063/5.0062396
-# ALGORITHM 2: embedded Heun–Euler trial step.
-# Rejection Sampling with Memory (RSwM3) algorithm.
-# Equation numbers below refer to this paper.
+# [https://doi.org/10.1063/5.0062396], specifically ALGORITHM 2:
+# embedded Heun–Euler trial step.  Rejection Sampling with Memory
+# (RSwM3) algorithm.  Equation numbers below refer to this paper.
 
 import numpy as np
 
