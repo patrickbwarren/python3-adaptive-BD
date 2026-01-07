@@ -150,21 +150,23 @@ adaptive Brownian dynamics algorithm.  What works at least empirically
 is to simulate in the full domain, with a 'reflected' drift speed,
 $`u_z=-\gamma`$ for $z>0$ and $`u_z=+\gamma`$ for $z < 0$.  Then, at
 the end one 'folds' the trajectories which end with $z<0$ back into
-the $z>0$ half-space.  This is because the reflected solution is a
-solution of the original problem from a reflected starting position.
-Since the Fokker-Planck equation is linear, the superposition of the
-original and reflected solutions is also a solution, with starting
-positions at $`z_0`$ and $`-z_0`$.  By symmetry, this superposition
-has zero flux through the $z=0$ plane and so keeping only that part
-with $z\ge 0$ and doubling it up for normalisation, solves the
-original problem with a reflecting wall at $z=0$.  This superposition
-trick is embodied in the Brownian dynamics code by reflecting the
-drift field so that $`u_z(z<0) = -u_z(z>0)`$, keeping _all_ the
-trajectories, and reflecting those which end in $z<0$.  The problem
-with this approach is that the drift field may be discontinuous
-through $z=0$ ; this is so for the bounded linear drift field problem.
-In practice, perhaps particularly with the adaptive time step
-methodology, this does not seem to present much of a problem.
+the $z>0$ half-space.  
+
+This works because the reflected solution is a solution of the
+original problem from a reflected starting position.  Since the
+Fokker-Planck equation is linear, the superposition of the original
+and reflected solutions is also a solution, with starting positions at
+$`z_0`$ and $`-z_0`$.  By symmetry, this superposition has zero flux
+through the $z=0$ plane and so keeping only that part with $z\ge 0$
+and doubling it up for normalisation, solves the original problem with
+a reflecting wall at $z=0$.  This superposition trick is embodied in
+the Brownian dynamics code by reflecting the drift field so that
+$`u_z(z<0) = -u_z(z>0)`$, keeping _all_ the trajectories, and
+reflecting those which end in $z<0$.  The problem with this approach
+is that the drift field may be discontinuous through $z=0$ ; this is
+so for the bounded linear drift field problem.  In practice, perhaps
+particularly with the adaptive time step methodology, this does not
+seem to present much of a problem.
 
 ### Results
 
