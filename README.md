@@ -107,15 +107,15 @@ p_3(z, t)=\frac{\gamma}{2D}\>\exp\Bigl(-\frac{\gamma z}{D}\Bigr)\>
 One can show that the sum of these is normalised, 
 $`\int_0^\infty\text{d}z\,p(z, t)=1`$ for all times.
 
-At late times, $`p_1,\,p_2\to0`$ as the 'centres' of the Gaussians
-drift further and further into the physically inaccesible region
-$z<0$, and $`p_3\to (\gamma/D)\, e^{-\gamma z/D}`$.  If we interpret
-the linear drift as corresponding to a gravitational potential
-$U=mgz$, then the force $`f_z=-\partial U/\partial z=-mg`$ and the
-drift speed $`u_z=-\mu mg`$ where $\mu=\beta D$ is the mobility as
-before. Hence we identify $\gamma=\beta mgD$, and, as in the harmonic
-trap case, the late-stage $`p_3\sim e^{-\gamma z/D}=e^{-\beta
-mgz}`$ is again Boltzmann-distributed.
+At late times, $`p_1,\,p_2\to0`$ as the Gaussians drift further and
+further into the physically inaccessible region $z<0$, and $`p_3\to
+(\gamma/D)\, e^{-\gamma z/D}`$.  If we interpret the linear drift as
+corresponding to a gravitational potential $U=mgz$, then the force
+$`f_z=-\partial U/\partial z=-mg`$ and the drift speed $`u_z=-\mu mg`$
+where $\mu=\beta D$ is the mobility as before. Hence we identify
+$\gamma=\beta mgD$, and, as in the harmonic trap case, the late-stage
+$`p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is again
+Boltzmann-distributed.
 
 ### Reflecting boundary
 
