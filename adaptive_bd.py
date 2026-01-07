@@ -35,7 +35,7 @@ def zero_drift(r): # in case no drift is supplied
 
 class Simulator:
 
-    def __init__(self, rng=None, seed=12345, eps_abs=0.05, eps_rel=0.05, q_min=0.001, q_max=1.2, drift=None):
+    def __init__(self, rng=None, seed=12345, drift=None):
         self.εabs, self.εrel = 0.05, 0.05 # defaults match the paper above
         self.qmin, self.qmax = 0.001, 1.2 # -- ditto --
         self.rng = np.random.default_rng(seed=seed) if rng is None else rng # initialise or copy RNG
