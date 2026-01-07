@@ -113,5 +113,3 @@ class Simulator:
                     R = R + Rgap
                     using_stack.append((Δtgap, Rgap))
         return r, t, Δt, ntrial, nsuccess # final position, time, time step, # trial steps, # successful steps
-
-# That's it (or should be !)
