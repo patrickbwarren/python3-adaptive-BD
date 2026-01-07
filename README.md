@@ -141,6 +141,18 @@ $z=0$, at least for the bounded linear drift field problem.  In
 practice, perhaps particularly with the adaptive time step
 methodology, this does not seem to present much of a problem.
 
+### Results
+
+#### Free diffusion
+
+Plot shows binned end points in $x$, $y$, and $z$ directions, for
+$2\times10^5$ trajectories with $D=1$ and end time $t=600$.  The
+measured root mean square displacement is
+```math
+\sqrt{\Delta r^2}=59.94\pm0.06
+```
+which should be compared to the exact result $`\sqrt{6 D t}=60`$.
+
 ### Copying
 
 This program is free software: you can redistribute it and/or modify
