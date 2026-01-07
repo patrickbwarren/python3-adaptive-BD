@@ -167,7 +167,7 @@ position $`\langle z\rangle = 3.381\pm0.005`$ should be compared to
 the exact result $`z_0\,e^{-kt}\simeq 3.3834`$.  Likewise the measured
 root mean square displacement from the mean position
 $`\sqrt{\langle\Delta z^2\rangle}=3.129\pm0.004`$ should be compared
-to the exact result $`\sqrt{2 D s}=3.1332`$ where $`s=(1-e^{-2k t})/2k\simeq 4.9084`$.
+to the exact result $`\sqrt{2 D s}\simeq3.1332`$ where $`s=(1-e^{-2k t})/2k\simeq 4.9084`$.
 
 ![Harmonic trap end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest1.png)
 

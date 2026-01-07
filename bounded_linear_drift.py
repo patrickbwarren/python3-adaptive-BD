@@ -24,7 +24,6 @@
 import argparse
 import numpy as np
 import pandas as pd
-
 import adaptive_bd
 
 parser = argparse.ArgumentParser(description='Bounded linear drift adaptive BD simulator')
