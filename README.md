@@ -53,7 +53,7 @@ submits 50 jobs, then consolidates the results into a single gzipped data file.
 
 ### Theory
 
-#### Free diffusion
+#### Free diffusion and diffusion with linear drift
 
 With diffusion coefficient $D$, starting from position $`z_0`$, and with
 elapsed time $t$, the probability distribution function for the
