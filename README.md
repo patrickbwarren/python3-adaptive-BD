@@ -114,8 +114,8 @@ the linear drift as corresponding to a gravitational potential
 $U=mgz$, then the force $`f_z=-\partial U/\partial z=-mg`$ and the
 drift speed $`u_z=-\mu mg`$ where $\mu=\beta D$ is the mobility as
 before. Hence we identify $\gamma=\beta mgD$, and, as in the harmonic
-trap case, the late-stage $`p\to p_3\sim e^{-\gamma z/D}=e^{-\beta
-mgz}`$ is Boltzmann-distributed.
+trap case, the late-stage $`p_3\sim e^{-\gamma z/D}=e^{-\beta
+mgz}`$ is again Boltzmann-distributed.
 
 ### Reflecting boundary
 
