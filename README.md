@@ -11,14 +11,15 @@ intended to be partly pedagogical, as well as providing a code
 repository for some simulations related to particle trapping by
 diffusiophoresis (DP).
 
-Equation numbers in the code refer to the above paper.  Some small
-adjustments were made.  First, the logic around line 25 in the listing
-ALGORITHM 2 in the paper has been reversed so the test becomes 
+Equation numbers in the code refer to the above paper.  A couple of
+small adjustments have been made.  First, the logic around line 25 in
+the listing ALGORITHM 2 in the paper has been reversed so the test
+becomes
 $`\Delta t_s + \Delta t_f > \Delta t`$
 rather than
 $`\Delta t_s + \Delta t_f < \Delta t`$,
-and the conditional blocks swapped so there is no effect on the
-algorithm.  This subtle change avoids spurious underflow errors
+and the conditional blocks have been swapped so there is no effect on
+the algorithm.  This subtle change avoids spurious underflow errors
 throwing runtime warnings when taking a square root in generating the
 bridge random displacement.  Second, a feature was added to stop the
 simulation when a desired time point is reached.  This is done by
