@@ -160,10 +160,10 @@ methodology, this does not seem to present much of a problem.
 Plots show binned end points in the $x$, $y$, and $z$ directions,
 starting from the origin, for $2\times10^5$ trajectories, with $D=1$
 and end time $t=600$.  The red line is the expected distribution from
-the theory above.  The measured root mean square displacement is
-$`\sqrt{\langle\Delta r^2\rangle}=59.94\pm0.06`$ which should be
-compared to the exact result $`\sqrt{6 D t}=60`$.  Results for linear
-drift are similar.
+the theory above.  The measured root mean square displacement
+$`\sqrt{\langle\Delta r^2\rangle}=59.94\pm0.06`$ should be compared to
+the exact result $`\sqrt{6 D t}=60`$.  Results with linear drift are
+similar.
 
 ![Free diffusion end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest1.png)
 
@@ -191,8 +191,8 @@ This problem is implemented as indicated above, reflecting the linear
 drift about $z=0$ and reflecting trajectories which end up with $z<0$.
 
 The first plot shows binned end points in the $z$ direction, for
-$5\times10^5$ trajectories, with $D=1$, drift speed $\gamma=0.2$,
-starting position $`z_0=50`$, and end time $t=120$.  The red line is
+$5\times10^5$ trajectories, with $D = 1$, drift speed $\gamma = 0.2$,
+starting position $`z_0=50`$, and end time $t = 120$.  The red line is
 the expected distribution from the theory above.  The measured mean
 position $`\langle z\rangle = 26.44\pm0.02`$ should be compared to the
 result calculated by numerically integrating the distribution,
@@ -200,11 +200,13 @@ $`\langle z\rangle \simeq 26.4337`$.
 
 ![Bounded linear drift end point distribution (t = 120)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/btest1.png)
 
-The second plot shows the situation at $t=1200$, for $10^5$
+The second plot shows the situation at $t = 1200$, for $10^5$
 trajectories, plotted on a log scale.  The expectation is for this to
 be close to the steady state with $`p=(\gamma/D)\, e^{-\gamma z/D}`$
 (red line).  The measured mean position $`\langle z\rangle =
-4.92\pm0.02`$ is close to the expected result $D/\gamma=5$.
+4.92\pm0.02`$ is close to the expected result $D/\gamma = 5$.  The
+small error here is most likely due to the handling of the
+discontinuity in the drift field through $z = 0$.
 
 ![Bounded linear drift end point distribution (t = 1200)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/btest2.png)
 
