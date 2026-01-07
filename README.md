@@ -176,11 +176,12 @@ seem to present much of a problem.
 
 Plots show binned end points in the $x$, $y$, and $z$ directions,
 starting from the origin, for $2\times10^5$ trajectories, with $D=1$
-and after a time $t=600$.  The red line is the expected distribution from
-the theory above.  The measured root mean square displacement
-$`\sqrt{}\langle\Delta r^2\rangle = 59.94 \pm 0.06`$ should be compared to
-the exact result $`\sqrt{6 D t} = 60`$.  Results with linear drift are
-similar.
+and after a time $t=600$.  The red line is the expected distribution
+from the theory above.  The measured root mean square displacement
+$`\sqrt{}\langle\Delta r^2\rangle = 59.94 \pm 0.06`$ should be
+compared to the exact result $`\sqrt{6 D t} = 60`$.  Results with
+linear drift are similar.  The upper plot uses a linear scale whereas
+the lower plot shows the same data with a log scale.
 
 ![Free diffusion end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest1.png)
 
