@@ -160,14 +160,14 @@ drift are similar.
 #### Harmonic trap
 
 Plot shows binned end points in the $z$ directions, for $5\times10^5$
-trajectories, with $D=1$, trapping parameter $k=0.1$, starting
+trajectories, with $D=1$, trapping parameter $`k=0.1`$, starting
 position $`z_0=25`$, and end time $t=20$.  The red line is the
 expected distribution from the theory above.  The measured mean
 position $`\langle z\rangle = 3.381\pm0.005`$ should be compared to
-the exact result $`z_0\exp(-kt)\simeq 3.3834`$.  Likewise the measured
+the exact result $`z_0\,e^{-kt}\simeq 3.3834`$.  Likewise the measured
 root mean square displacement from the mean position
 $`\sqrt{\langle\Delta z^2\rangle}=3.129\pm0.004`$ should be compared
-to the exact result $`\sqrt{2 D s}=3.1332`$.
+to the exact result $`\sqrt{2 D s}=3.1332`$ where $`s=(1-e^{-2k t})/2k\simeq 4.9084`$.
 
 ![Harmonic trap end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest1.png)
 
