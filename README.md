@@ -27,10 +27,10 @@ $`\mathbf{R}_\text{bridge}`$ at what was originally line 30.
 Second, a feature was added to stop the simulation when a desired time
 point is reached.  This is done by checking if the next trial time
 step would take the simulation past the desired time point, and if so,
-reducing the length of the time step, so that the desired time point
-would be exactly reached if the time step is accepted (if this time
-step is not accepted, the simulation proceeds as usual, since a further
-reduction cannot reach the desired time point).
+reducing the length of the time step so that the desired time point
+would be exactly reached if the time step is accepted; if not
+accepted, the simulation can proceed as usual, since a further reduction
+cannot go past the desired time point.
 
 The code is split into a module `adaptive_bd.py` which contains the
 adaptive time step algorithm, and drivers for the following test cases:
@@ -38,7 +38,7 @@ adaptive time step algorithm, and drivers for the following test cases:
 * Brownian motion in a linear drift field;
 * Brownian motion in a harmonic trap (Ornstein-Uhlenbeck problem);
 * bounded Brownian motion in a linear drift field (Chandrasekhar's sedimentation problem);
-* Brownian motion with a non-potential drift field (DP trapping).
+* Brownian motion in a diffusiophoretic trap (non-potential drift field).
 
 The original code `orig_lsjet_adaptive.py` is retained for regression
 testing from the initial commit.
@@ -70,7 +70,7 @@ p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
 ```
 
 In a linear drift field with drift speed $`u_z=-\gamma`$, the corresponding
-expression is
+expression is a displaced Gaussian
 ```math
 p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
 \exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,.
@@ -135,6 +135,11 @@ where $\mu=\beta D$ is the mobility as before. Hence we identify
 $\gamma=\beta mgD$, and, as in the harmonic trap case, the late-stage
 $`p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is again
 Boltzmann-distributed.
+
+#### Diffusiophoretic trap
+
+This problem concerns the diffusiophoretic (DP) trapping of colloidal
+particles and macromolecules.  More to follow...
 
 ### Reflecting boundary
 
