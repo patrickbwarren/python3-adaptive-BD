@@ -19,9 +19,9 @@ $`\Delta t_s + \Delta t_f > \Delta t`$
 rather than
 $`\Delta t_s + \Delta t_f < \Delta t`$,
 The conditional blocks have also been swapped so there is apparently
-no effect on the algorithm, but this subtle change avoids spurious
-underflow errors throwing runtime warnings when taking a square root
-in generating the bridging random displacement
+no effect on the algorithm, but this subtle change avoids runtime
+warnings from spurious underflow errors when taking a square root in
+generating the bridging random displacement
 $`\mathbf{R}_\text{bridge}`$ at what was originally line 30.
 
 Second, a feature was added to stop the simulation when a desired time
