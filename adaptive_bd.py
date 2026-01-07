@@ -55,9 +55,6 @@ class Simulator:
         q = (1 / (2*normE))**2 if normE > 0 else self.qmax # eq 16 ; nominal adaptation factor
         return min(self.qmax, max(self.qmin, q)) # eq 17 ; bounded adaptation factor
 
-    def update(self, r, Δr):
-        return r + Δr
-
     def run(self, r0, Δt_init=0.1, max_steps=100, t_final=10, Dp=1.0):
         self.sqrt2Dp = np.sqrt(2*Dp) # for convenience in Heun-Euler function
         r, t, Δt = r0.copy(), 0.0, Δt_init # initial position, time, time step
@@ -90,8 +87,7 @@ class Simulator:
                 Δt = q*Δt ; R = R - Rs + Rbridge
             else: # q > 1, accept the trial step
                 nsuccess = nsuccess + 1 # number of accepted trial steps
-                r = self.update(r, Δr) # update the position
-                t = t + Δt ; Δt = q*Δt # update the time and time step
+                r = r + Δr ; t = t + Δt ; Δt = q*Δt # update position, time, and time step
                 if reached_final_time: # quit here if final time is now reached
                     break
                 if t + Δt > t_final: # next step would take us past the final time ..
