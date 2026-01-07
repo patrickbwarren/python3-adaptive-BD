@@ -101,16 +101,16 @@ class Simulator:
                 Δts, R = 0.0, np.zeros(3)
                 while future_stack: # the stack is not empty
                     Δtf, Rf = future_stack.pop()
-                    if Δts + Δtf <= Δt: # Sammüller and Schmidt have '<' here, but this avoids runtime warnings ..
-                        Δts = Δts + Δtf ; R = R + Rf
-                        using_stack.append((Δtf, Rf))
-                    else:
+                    if Δts + Δtf > Δt: # S+S have this reversed, but this avoids spurious runtime warnings ..
                         qM = (Δt - Δts) / Δtf
                         Rbridge = qM*Rf + self.rng.normal(0, np.sqrt((1-qM)*qM*Δtf), 3) # .. in the sqrt here.
                         future_stack.append(((1-qM)*Δtf, Rf-Rbridge))
                         using_stack.append((qM*Δtf, Rbridge))
                         Δts = Δts + qM*Δtf ; R = R + Rbridge
                         break
+                    else:
+                        Δts = Δts + Δtf ; R = R + Rf
+                        using_stack.append((Δtf, Rf))
                 Δtgap = Δt - Δts
                 if Δtgap > 0:
                     Rgap = self.rng.normal(0, np.sqrt(Δtgap), 3)
