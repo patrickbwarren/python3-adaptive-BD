@@ -40,8 +40,8 @@ adaptive time step algorithm, and drivers for the following test cases:
 * bounded Brownian motion in a linear drift field (Chandrasekhar's sedimentation problem);
 * Brownian motion in a diffusiophoretic trap (non-potential drift field).
 
-The original code `orig_lsjet_adaptive.py` is retained for regression
-testing from the initial commit.
+The original code `orig_dp_trap.py` is retained for regression testing
+from the initial commit.
 
 The driver codes are designed to run as standalone python scripts, or
 as batch jobs within the [HTCondor](https://htcondor.org/)
@@ -139,7 +139,8 @@ Boltzmann-distributed.
 #### Diffusiophoretic trap
 
 This problem concerns the diffusiophoretic (DP) trapping of colloidal
-particles and macromolecules.  More to follow...
+particles and macromolecules.  
+More to follow...
 
 ### Reflecting boundary
 
@@ -157,11 +158,12 @@ positions at $`z_0`$ and $`-z_0`$.  By symmetry, this superposition
 has zero flux through the $z=0$ plane and so keeping only that part
 with $z\ge 0$ and doubling it up for normalisation, solves the
 original problem with a reflecting wall at $z=0$.  This superposition
-trick is embodied in the Brownian dynamics code by keeping _all_
+trick is embodied in the Brownian dynamics code by reflecting the
+drift field so that $`u_z(z<0) = -u_z(z>0)`$, keeping _all_ the
 trajectories, and reflecting those which end in $z<0$.  The problem
-with this approach is that the drift field is discontinuous through
-$z=0$, at least for the bounded linear drift field problem.  In
-practice, perhaps particularly with the adaptive time step
+with this approach is that the drift field may be discontinuous
+through $z=0$ ; this is so for the bounded linear drift field problem.
+In practice, perhaps particularly with the adaptive time step
 methodology, this does not seem to present much of a problem.
 
 ### Results
