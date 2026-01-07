@@ -153,6 +153,11 @@ measured root mean square displacement is
 ```
 which should be compared to the exact result $`\sqrt{6 D t}=60`$.
 
+![Free diffusion end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest1.png)
+
+![Free diffusion end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest2.png)
+
+
 ### Copying
 
 This program is free software: you can redistribute it and/or modify
