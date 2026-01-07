@@ -17,8 +17,7 @@
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-# Copyright (c) 2025, 2026 Patrick B Warren
-# Email: patrickbwarren@gmail.com
+# Copyright (c) 2025, 2026 Patrick B Warren <patrick.warren@stfc.ac.uk>
 
 # Original implementation, kept for regression testing.
 

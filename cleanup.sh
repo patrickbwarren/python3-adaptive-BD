@@ -16,10 +16,9 @@
 # along with this program.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-# Copyright (c) 2025, 2026 Patrick B Warren
-# Email: patrickbwarren@gmail.com
+# Copyright (c) 2025, 2026 Patrick B Warren <patrick.warren@stfc.ac.uk>
 
-# run with the name of the condor job
+# Clean up files after a condor run.  Run with the name of the condor job.
 
 cat $1_*.out > $1.dat
 gzip $1.dat
