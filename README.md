@@ -20,11 +20,11 @@ coded up so that the simulation stops either when a desired end time
 is reached, or when the maximum number of trial time steps has been
 exceeded.  For the former case, a stopping criterion has been
 introduced to check if the next trial time step would take the
-simulation past the desired end time, and of so reducing the length of
+simulation past the desired end time, and if so reducing the length of
 the trial time step to exactly reach the desired end time.  If this
 trial step is accepted, the simulation ends, otherwise the simulation
-proceeds as usual with a new reduced trial time step (which by
-definition does not reach the desired end time).
+proceeds as usual with a new reduced trial time step (which then by
+definition cannot reach the desired end time).
 
 The code is split into a module `adaptive_bd.py` which contains the
 adaptive time step algorithm, and drivers for the following test cases:
