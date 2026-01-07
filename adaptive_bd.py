@@ -38,8 +38,8 @@ class Simulator:
     def __init__(self, rng=None, seed=12345, drift=None):
         self.εabs, self.εrel = 0.05, 0.05 # defaults match the paper above
         self.qmin, self.qmax = 0.001, 1.2 # -- ditto --
-        self.rng = np.random.default_rng(seed=seed) if rng is None else rng # initialise or copy RNG
-        self.drift = drift if drift is not None else zero_drift
+        self.rng = rng if rng is not None else np.random.default_rng(seed=seed) # initialise or copy RNG
+        self.drift = drift if drift is not None else zero_drift # ditto for drift function
 
     def heun_euler_trial_step(self, r, Δt, R):
         u = self.drift(r)
