@@ -174,14 +174,14 @@ seem to present much of a problem.
 
 #### Free diffusion
 
-Plots show binned end points in the $x$, $y$, and $z$ directions,
-starting from the origin, for $2\times10^5$ trajectories, with $D=1$
-and after a time $t=600$.  The red line is the expected distribution
-from the theory above.  The measured root mean square displacement
-$`\sqrt{}\langle\Delta r^2\rangle = 59.94 \pm 0.06`$ should be
-compared to the exact result $`\sqrt{6 D t} = 60`$.  Results with
-linear drift are similar.  The upper plot uses a linear scale whereas
-the lower plot shows the same data with a log scale.
+The plots below show binned end points in the $x$, $y$, and $z$
+directions, starting from the origin, for $2\times10^5$ trajectories,
+with $D=1$ and after a time $t=600$.  The red line is the expected
+distribution from the theory above.  The measured root mean square
+displacement $`\sqrt{}\langle\Delta r^2\rangle = 59.94 \pm 0.06`$
+should be compared to the exact result $`\sqrt{6 D t} = 60`$.  The
+upper plot uses a linear scale whereas the lower plot shows the same
+data with a log scale.  Results with linear drift are similar.
 
 ![Free diffusion end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest1.png)
 
@@ -189,15 +189,18 @@ the lower plot shows the same data with a log scale.
 
 #### Harmonic trap
 
-Plot shows binned end points in the $z$ direction, for $5\times10^5$
-trajectories, with $D=1$, trapping parameter $`k=0.1`$, starting
-position $`z_0=25`$, and end time $t=20$.  The red line is the
-expected distribution from the theory above.  The measured mean
-position $`\langle z\rangle = 3.381\pm0.005`$ should be compared to
-the exact result $`z_0\,e^{-kt}\simeq 3.3834`$.  Likewise the measured
-root mean square displacement from the mean position
-$`\sqrt{\langle\Delta z^2\rangle}=3.129\pm0.004`$ should be compared
-to the exact result $`\sqrt{2 D s}\simeq3.1332`$ where $`s=(1-e^{-2k t})/2k\simeq 4.9084`$.
+The plots here show binned end points in the $z$ direction, for
+$5\times10^5$ trajectories, with $D=1$, trapping parameter $`k=0.1`$,
+starting position $`z_0=25`$, after a time $t=20$.  The red line is
+the expected distribution from the theory above.  The measured mean
+position $`\langle z\rangle = 3.381 \pm 0.005`$ should be compared to
+the exact result $`z_0\,e^{-kt} \simeq 3.3834`$.  Likewise the
+measured root mean square displacement from the mean position
+$`\sqrt{}\langle\Delta z^2\rangle = 3.129 \pm 0.004`$ should be
+compared to the exact result $`\sqrt{2 D s} \simeq 3.1332`$ where $`s
+= (1-e^{-2k t})/2k \simeq 4.9084`$.  As before, the upper plot uses a
+linear scale whereas the lower plot shows the same data with a log
+scale.
 
 ![Harmonic trap end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest1.png)
 
