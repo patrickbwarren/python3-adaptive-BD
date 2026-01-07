@@ -228,10 +228,10 @@ trajectories, plotted on a log scale.  The expectation is for this to
 be close to the steady state with $`p=(\gamma/D)\, e^{-\gamma z/D}`$
 (red line).  The measured mean position $`\langle z\rangle =
 4.92\pm0.02`$ is close to the expected result $D/\gamma = 5$.  The
-small deviation here is most likely due to a discretisation error the
-handling of the discontinuity in the drift field through $z = 0$.
-Without the barrier, the mean position would have drifted to
-$`z_0-\gamma t=-190`$.
+small deviation here is most likely due to a discretisation error
+arising from the discontinuity in the drift field through $z = 0$ (it
+doesn't go away if $t$ is increased).  Without the barrier, the mean
+position would have drifted to $`z_0-\gamma t=-190`$.
 
 ![Bounded linear drift end point distribution (t = 1200)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/btest2.png)
 
