@@ -53,8 +53,7 @@ local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a l
  
 def reflected_drift(r):
     z = r[2]
-    uz = (-γ) if z > 0 else γ
-    return np.array([0, 0, uz])
+    return np.array([0, 0, -np.copysign(γ, z)])
 
 # Instantiate an adaptive Brownian dynamics trajectory simulator
 
@@ -70,7 +69,7 @@ for block in range(args.nblock):
     for traj in range(args.ntraj):
         r, t, Δt, ntrial, nsuccess = adb.run(r0, Δt_init, max_steps, tf, Dp)
         x, y, z = r[:]
-        raw.append((traj, block, ntrial, nsuccess, t, Δt, x, y, np.abs(z))) # capture data
+        raw.append((traj, block, ntrial, nsuccess, t, Δt, x, y, z)) # capture data
 
 columns = ['traj', 'block', 'ntrial', 'nsuccess', 't', 'Δt_final', 'x', 'y', 'z']
 results = pd.DataFrame(raw, columns=columns).set_index(['block', 'traj'])

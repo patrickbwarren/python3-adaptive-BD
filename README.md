@@ -159,7 +159,7 @@ drift are similar.
 
 #### Harmonic trap
 
-Plot shows binned end points in the $z$ directions, for $5\times10^5$
+Plot shows binned end points in the $z$ direction, for $5\times10^5$
 trajectories, with $D=1$, trapping parameter $`k=0.1`$, starting
 position $`z_0=25`$, and end time $t=20$.  The red line is the
 expected distribution from the theory above.  The measured mean
@@ -173,6 +173,19 @@ to the exact result $`\sqrt{2 D s}\simeq3.1332`$ where $`s=(1-e^{-2k t})/2k\sime
 
 ![Harmonic trap end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest2.png)
 
+#### Bounded linear drift
+
+This problem is implemented as indicated above, reflecting the linear
+drift about $z=0$ and reflecting trajectories which end up with $z<0$.
+The first plot shows binned end points in the $z$ direction, for
+$5\times10^5$ trajectories, with $D=1$, drift speed $\gamma=0.2$,
+starting position $`z_0=50`$, and end time $t=120$.  The red line is
+the expected distribution from the theory above.  The measured mean
+position is $`\langle z\rangle = 26.44\pm0.02`$, which should be
+compared to result calculated by integrating the distribution given
+above, $`\langle z\rangle \simeq 26.4337`$.
+
+![Bounded linear drift end point distribution (t = 120)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/btest1.png)
 
 ### Copying
 
