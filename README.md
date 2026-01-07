@@ -49,8 +49,6 @@ p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
 \exp\Bigl(-\frac{(z-z_0)^2}{4 D t}\Bigr)\,.
 ```
 
-#### Linear drift
-
 In a linear drift field with drift speed $`u_z=-\gamma`$, the corresponding
 expression is
 ```math
