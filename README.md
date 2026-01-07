@@ -217,7 +217,9 @@ starting position $`z_0=50`$, after a time $t = 120$.  The red line is
 the expected distribution from the theory above.  The measured mean
 position $`\langle z\rangle = 26.44 \pm 0.02`$ should be compared to
 the result calculated by numerically integrating the distribution,
-$`\langle z\rangle \simeq 26.4337`$.
+$`\langle z\rangle \simeq 26.4337`$.  Note that without the barrier,
+the mean position would be $`z_0-\gamma t=26`$, so there is a subtle
+slowing down as particles cannot get past the barrier at $z = 0$.
 
 ![Bounded linear drift end point distribution (t = 120)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/btest1.png)
 
