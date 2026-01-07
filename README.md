@@ -13,20 +13,18 @@ diffusiophoresis (DP).
 
 Equation numbers in the code refer to the above paper.
 
-The algorithm is split off into `adaptive_bd.py` and drivers for the
-following test cases are given:
+The code is split into a module `adaptive_bd.py` which contains the
+adaptive time step algorithm, and drivers for the following test cases:
 * pure Brownian motion (free diffusion);
 * Brownian motion in a linear drift field;
 * Brownian motion in a harmonic trap (Ornstein-Uhlenbeck problem);
 * bounded Brownian motion in a linear drift field (Chandrasekhar's sedimentation problem);
 * Brownian motion with a non-potential drift field (DP trapping).
 
-The code `orig_lsjet_adaptive.py` is retained for regression testing
-from the initial commit.  Itcontains both the algorithm and the
-application to DP trapping in the vicinity of slender pipette
-injecting a salt solution.
+The original code `orig_lsjet_adaptive.py` is retained for regression
+testing from the initial commit.
 
-The driver codes are designed to run as standalone python scripts, and
+The driver codes are designed to run as standalone python scripts, or
 as batch jobs within the condor high-throughput computing environment.
 Some supporting scripts are provided for this.  For example
 ```bash
@@ -72,7 +70,7 @@ where the pseudo-time variable $`s=(1-e^{-2k t})/2k`$.
 Note that the solution remains Gaussian at all times, and 'forgets'
 the initial position with decay constant $k$ (which has units of
 inverse time). The pseudo-time crosses over from $s=t$ at $k t\ll 1$
-to the constant value $`s=(2k)^{-1}`$ for $k t\gg 1$.  
+to the constant value $`s=(2k)^{-1}`$ for $k t\gg 1$.
 
 The drift field corresponds to motion in a harmonic trap potential
 $U=\kappa z^2/2$.  The corresponding force $`f_z=-\partial U/\partial
@@ -103,22 +101,21 @@ p_2(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
 \exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0+\gamma t)^2}{4 D t}\Bigr)\,,
 ```
 ```math
-p_3(z, t)=\frac{\gamma\, e^{-\gamma z/D}}{2D}\>
+p_3(z, t)=\frac{\gamma}{2D}\>\exp\Bigl(-\frac{\gamma z}{D}\Bigr)\>
 \text{erfc}\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
 ```
 One can show that the sum of these is normalised, 
 $`\int_0^\infty\text{d}z\,p(z, t)=1`$ for all times.
 
-At late times, one has $`p_1\to0`$ and $`p_2\to0`$ as the 'centres' of
-the Gaussians drift further and further into the physically
-inaccesible region $z<0$, whereas the final contribution $`p_3\to
-\gamma\, e^{-\gamma z/D}/D`$.  If we interpret the linear drift as
-corresponding to a gravitational potential $U=mgz$, then the force
-$`f_z=-\partial U/\partial z=-mg`$ and the drift speed $`u_z=-\mu mg`$
-where $\mu=\beta D$ is the mobility as before. Hence we identify
-$\gamma=\beta mgD$, and as in the harmonic trap case the late-stage
-$`p\to p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is the expected
-Boltzmann distribution.
+At late times, $`p_1,\,p_2\to0`$ as the 'centres' of the Gaussians
+drift further and further into the physically inaccesible region
+$z<0$, and $`p_3\to (\gamma/D)\, e^{-\gamma z/D}`$.  If we interpret
+the linear drift as corresponding to a gravitational potential
+$U=mgz$, then the force $`f_z=-\partial U/\partial z=-mg`$ and the
+drift speed $`u_z=-\mu mg`$ where $\mu=\beta D$ is the mobility as
+before. Hence we identify $\gamma=\beta mgD$, and, as in the harmonic
+trap case, the late-stage $`p\to p_3\sim e^{-\gamma z/D}=e^{-\beta
+mgz}`$ is Boltzmann-distributed.
 
 ### Reflecting boundary
 
@@ -128,22 +125,21 @@ adaptive Brownian dynamics algorithm.  What works at least empirically
 is to simulate in the full domain, with a 'reflected' drift speed,
 $`u_z=-\gamma`$ for $z>0$ and $`u_z=+\gamma`$ for $z < 0$.  Then, at
 the end one 'folds' trajectories which end with $z<0$ back into the
-$z>0$ half-space.  This seems to be because the reflected solution of
-the reflected problem is a solution of the original problem from a
-reflected starting position.  But if the drift field has a reflection
-symmetry, this is also a solution of the original problem, albeit from
-the reflected starting position.  Since the Fokker-Planck equation is
-linear, the superposition is also a solution, with starting positions
-at $`z_0`$ and $`-z_0`$.  By symmetry, this superposition has zero
-flux through the $z=0$ plane and so keeping only that part with $z\ge
-0$ and doubling it up for normalisation, one solves the original
-problem with a reflecting wall at $z=0$.  This superposition trick is
-enabled in the Brownian dynamics code by keeping _all_ trajectories,
-and reflecting those with end points in $z<0$.  The problem with this
-approach is that the drift field is (potentially) discontinuous
-through $z=0$.  In practice, perhaps particularly with the adaptive
-time step methodology, this does not seem to generate a bias or
-present much of a problem.
+$z>0$ half-space.  This is because the reflected solution of the
+reflected problem is a solution of the original problem from a
+reflected starting position.  Since the Fokker-Planck equation is
+linear, the superposition of the original and reflected solutions is
+also a solution, with starting positions at $`z_0`$ and $`-z_0`$.  By
+symmetry, this superposition has zero flux through the $z=0$ plane and
+so keeping only that part with $z\ge 0$ and doubling it up for
+normalisation, solves the original problem with a reflecting wall at
+$z=0$.  This superposition trick is embodied in the Brownian dynamics
+code by keeping _all_ trajectories, and reflecting those which end in
+$z<0$.  The problem with this approach is that the drift field is
+discontinuous through $z=0$, at least for the bounded linear drift
+field problem.  In practice, perhaps particularly with the adaptive
+time step methodology, this does not seem to present much of a
+problem.
 
 ### Copying
 
