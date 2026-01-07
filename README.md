@@ -161,14 +161,14 @@ through the $z=0$ plane, and so keeping only that part with $z\ge 0$
 and doubling it up for normalisation solves the original problem with
 a reflecting wall at $z=0$.
 
-This superposition trick is embodied in the Brownian dynamics code by
-reflecting the drift field so that $`u_z(z<0) = -u_z(z>0)`$, keeping
-_all_ the trajectories, and reflecting those which end in $z<0$.  The
-problem with this approach is that the drift field may be
+This superposition trick can be embodied in the Brownian dynamics code
+by reflecting the drift field so that $`u_z(z<0) = -u_z(z>0)`$,
+keeping _all_ the trajectories, and reflecting those which end in
+$z<0$.  The problem with this approach is that the drift field may be
 discontinuous through $z=0$ ; this is so for the bounded linear drift
-field problem.  In practice, perhaps particularly with the adaptive
-time step methodology, this does not seem to present much of a
-problem.
+field problem for example, as indicated above.  In practice, perhaps
+particularly with the adaptive time step methodology, this does not
+seem to present much of a problem.
 
 ### Results
 
@@ -176,10 +176,10 @@ problem.
 
 Plots show binned end points in the $x$, $y$, and $z$ directions,
 starting from the origin, for $2\times10^5$ trajectories, with $D=1$
-and end time $t=600$.  The red line is the expected distribution from
+and after a time $t=600$.  The red line is the expected distribution from
 the theory above.  The measured root mean square displacement
-$`\sqrt{\langle\Delta r^2\rangle}=59.94\pm0.06`$ should be compared to
-the exact result $`\sqrt{6 D t}=60`$.  Results with linear drift are
+$`\surd\langle\Delta r^2\rangle = 59.94 \pm 0.06`$ should be compared to
+the exact result $`\sqrt{6 D t} = 60`$.  Results with linear drift are
 similar.
 
 ![Free diffusion end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest1.png)
