@@ -29,13 +29,13 @@ as batch jobs within the condor high-throughput computing environment.
 Some supporting scripts are provided for this.  For example
 ```bash
 condor_submit condor.job args="-n 100 -b 100" \
-seed=12345 exec=harmonic_trap.py name=htest njobs=20
+seed=12345 exec=harmonic_trap.py name=htest njobs=50
 ```
 followed by (when all the jobs have completed)
 ```bash
 ./cleanup.sh htest
 ```
-submits 40 jobs, then consolidates the results into a single gzipped data file.
+submits 50 jobs, then consolidates the results into a single gzipped data file.
 
 ### Theory
 
@@ -145,19 +145,34 @@ methodology, this does not seem to present much of a problem.
 
 #### Free diffusion
 
-Plots show binned end points in $x$, $y$, and $z$ directions, for
-$2\times10^5$ trajectories, with $D=1$ and end time $t=600$.  The
-measured root mean square displacement is 
-$`\sqrt{\Delta r^2}=59.94\pm0.06`$ 
-which should be compared to the exact result $`\sqrt{6 D t}=60`$.
-The red line is the expected distribution from the theory above.
-Results for linear drift are similar.
+Plots show binned end points in the $x$, $y$, and $z$ directions,
+starting from the origin, for $2\times10^5$ trajectories, with $D=1$
+and end time $t=600$.  The red line is the expected distribution from
+the theory above.  The measured root mean square displacement is
+$`\sqrt{\langle\Delta r^2\rangle}=59.94\pm0.06`$ which should be
+compared to the exact result $`\sqrt{6 D t}=60`$.  Results for linear
+drift are similar.
 
 ![Free diffusion end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest1.png)
 
 ![Free diffusion end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest2.png)
 
-#### 
+#### Harmonic trap
+
+Plot shows binned end points in the $z$ directions, for $5\times10^5$
+trajectories, with $D=1$, trapping parameter $k=0.1$, starting
+position $`z_0=25`$, and end time $t=20$.  The red line is the
+expected distribution from the theory above.  The measured mean
+position $`\langle z\rangle = 3.381\pm0.005`$ should be compared to
+the exact result $`z_0\exp(-kt)\simeq 3.3834`$.  Likewise the measured
+root mean square displacement from the mean position
+$`\sqrt{\langle\Delta z^2\rangle}=3.129\pm0.004`$ should be compared
+to the exact result $`\sqrt{2 D s}=3.1332`$.
+
+![Harmonic trap end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest1.png)
+
+![Harmonic trap end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest2.png)
+
 
 ### Copying
 

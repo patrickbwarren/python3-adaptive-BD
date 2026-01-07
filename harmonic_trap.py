@@ -29,7 +29,7 @@ import adaptive_bd
 parser = argparse.ArgumentParser(description='Harmonic trap adaptive BD simulator')
 parser.add_argument('code', nargs='?', default='', help='code name for run')
 parser.add_argument('--seed', default=None, type=int, help='RNG seed')
-parser.add_argument('--kappa', default=0.1, type=float, help='confining gradient, default 0.1 s^(-1)')
+parser.add_argument('--k', default=0.1, type=float, help='confining gradient, default 0.1 s^(-1)')
 parser.add_argument('--z0', default=25.0, type=float, help='initial position in z, default 25.0 um')
 parser.add_argument('--Dp', default=1.0, type=float, help='particle diffusion coeff, default 1.0 um^2/s')
 parser.add_argument('--dt-init', default=0.05, type=float, help='initial time step, default 0.05 sec')
@@ -44,7 +44,7 @@ parser.add_argument('-v', '--verbose', action='count', default=0, help='increasi
 args = parser.parse_args()
 
 tf, max_steps = eval(args.tfinal), eval(args.maxsteps) 
-Dp, Δt_init, κ = args.Dp, args.dt_init, args.kappa
+Dp, Δt_init, k = args.Dp, args.dt_init, args.k
 
 pid, njobs = map(int, args.procid.split('/')) # sort out process id and number of jobs
 local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a local RNG stream
@@ -53,7 +53,7 @@ local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a l
  
 def ornstein_uhlenbeck_drift(r):
     z = r[2]
-    return np.array([0, 0, -κ*z])
+    return np.array([0, 0, -k*z])
 
 # Instantiate an adaptive Brownian dynamics trajectory simulator
 
