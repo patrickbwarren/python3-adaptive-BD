@@ -141,9 +141,9 @@ One can show that the mean position satisfies
 \sqrt{\frac{4 Dt}{\pi}}\,
 \exp\Bigl(-\frac{(z_0-\gamma t)^2}{4Dt}\Bigr)
 +\Bigl(x_0+\frac{D}{\gamma}-\gamma t\Bigr)\\
-&\qquad\qquad{}+\Bigl(x_0-\frac{D}{\gamma}-\gamma t\Bigr)\,
+&\qquad\qquad{}+\Bigl(x_0-\frac{D}{\gamma}-\gamma t\Bigr)
 \text{erf}\Bigl(\frac{x_0-\gamma t}{\sqrt{4 Dt}}\Bigl)
--\frac{D}{\gamma}\,\exp\Bigl(\frac{z_0\gamma}{D}\Bigr)\,
+-\frac{D}{\gamma}\,\exp\Bigl(\frac{z_0\gamma}{D}\Bigr)
 \text{erfc}\Bigl(\frac{x_0+\gamma t}{\sqrt{4 Dt}}\Bigl)
 \Bigr]
 \end{align}
