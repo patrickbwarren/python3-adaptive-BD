@@ -140,11 +140,11 @@ One can show that the mean position satisfies
 &\langle z\rangle= \frac{1}{2}\Bigl[
 \sqrt{\frac{4 Dt}{\pi}}\,
 \exp\Bigl(-\frac{(z_0-\gamma t)^2}{4Dt}\Bigr)
-+\Bigl(x_0+\frac{D}{\gamma}-\gamma t\Bigr)\\
-&\qquad\qquad{}+\Bigl(x_0-\frac{D}{\gamma}-\gamma t\Bigr)
-\text{erf}\Bigl(\frac{x_0-\gamma t}{\sqrt{4 Dt}}\Bigl)
++\Bigl(z_0+\frac{D}{\gamma}-\gamma t\Bigr)\\
+&\qquad\qquad{}+\Bigl(z_0-\frac{D}{\gamma}-\gamma t\Bigr)
+\text{erf}\Bigl(\frac{z_0-\gamma t}{\sqrt{4 Dt}}\Bigl)
 -\frac{D}{\gamma}\,\exp\Bigl(\frac{z_0\gamma}{D}\Bigr)
-\text{erfc}\Bigl(\frac{x_0+\gamma t}{\sqrt{4 Dt}}\Bigl)
+\text{erfc}\Bigl(\frac{z_0+\gamma t}{\sqrt{4 Dt}}\Bigl)
 \Bigr]
 \end{align}
 ```
