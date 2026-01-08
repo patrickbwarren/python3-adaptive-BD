@@ -264,8 +264,16 @@ $\langle z\rangle\to D/\gamma$.
 
 #### Diffusiophoretic trap
 
-The plot shows the mean square displacement for particles in the drift
-field given above, as a function of the volumetric injection rate $Q$. Other parameters are $k=500$, $\Gamma=150$, 
+The plot shows box-whisker plots of the mean square displacement for
+particles in the drift field given above, as a function of the
+volumetric injection rate $Q$. Other parameters are $P/Q\eta =
+0.0955$, $k\lambda=2490$, and $\Gamma=150$.  The drift field was cut
+off for $r < 1$.  The elapsed time was $t=3600$.  The diffusion
+coefficient was $D=1$.  dotted line is the free diffusion limit where
+$\sqrt{6Dt}\simeq 147$.  Units in this problem are microns and
+seconds.
+
+![Diffusiophoretic trap rms vs Q](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/dptrap.png)
 
 
 ### Copying
