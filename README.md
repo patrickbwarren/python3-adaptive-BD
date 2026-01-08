@@ -143,7 +143,7 @@ One can show that the mean position satisfies
 +\Bigl(z_0+\frac{D}{\gamma}-\gamma t\Bigr)\\
 &\qquad\qquad{}+\Bigl(z_0-\frac{D}{\gamma}-\gamma t\Bigr)
 \text{erf}\Bigl(\frac{z_0-\gamma t}{\sqrt{4 Dt}}\Bigl)
--\frac{D}{\gamma}\,\exp\Bigl(\frac{z_0\gamma}{D}\Bigr)
+-\frac{D}{\gamma}\,\exp\Bigl(\frac{\gamma z_0}{D}\Bigr)
 \text{erfc}\Bigl(\frac{z_0+\gamma t}{\sqrt{4 Dt}}\Bigl)
 \Bigr]
 \end{align}
