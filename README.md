@@ -136,6 +136,17 @@ $\gamma=\beta mgD$, and, as in the harmonic trap case, the late-stage
 $`p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is again
 Boltzmann-distributed.
 
+One can show that the mean position satisfies
+```math
+\langle z\rangle= \frac{1}{2}\Bigl[
+\sqrt{\frac{4 Dt}{\pi}}\,\exp\Bigl(-\frac{z_0-\gamma t)^2}{4Dt}\Bigr)
++\Bigl(x_0+\frac{D}{\gamma}-\gamma t\Bigr)
++\Bigl(x_0-\frac{D}{\gamma}-\gamma t\Bigr)\,
+\text{erf}\Bigl(\frac{x_0-\gamma t}{\sqrt{4 Dt}\Bigl)
+-\frac{D}{\gamma}\,
+\text{erfc}\Bigl(\frac{x_0+\gamma t}{\sqrt{4 Dt}\Bigl)\Bigr]
+```
+
 #### Diffusiophoretic trap
 
 This problem concerns the diffusiophoretic (DP) trapping of colloidal
@@ -226,14 +237,21 @@ slowing down as particles cannot get past the barrier at $z = 0$.
 The second plot shows the situation at $t = 1200$, for $10^5$
 trajectories, plotted on a log scale.  The expectation is for this to
 be close to the steady state with $`p=(\gamma/D)\, e^{-\gamma z/D}`$
-(red line).  The measured mean position $`\langle z\rangle =
-4.92\pm0.02`$ is close to the expected result $D/\gamma = 5$.  The
-small deviation here is most likely due to a discretisation error
-arising from the discontinuity in the drift field through $z = 0$ (it
-doesn't go away if $t$ is increased).  Without the barrier, the mean
-position would have drifted to $`z_0-\gamma t=-190`$.
+(red line).
 
 ![Bounded linear drift end point distribution (t = 1200)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/btest2.png)
+
+The final plot shows how the mean value $\langle z\rangle$ depends on
+the time $t$.  The marked points are from the adaptive Brownian
+dynamics simulations (each point is from X trajectories, and the
+errors are smaller than the symbols here).  The solid line is the
+theoretical expression given above.  The dashed line is the leading
+behavoir at small $t$, namely $\langle z\rangle = z_0-\gamma t$, and
+the dotted line is the asymptotic value at $t\to\infty$, namely
+$\langle z\rangle\to D/\gamma$.
+
+![Bounded linear drift mean position](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/btest3.png)
+
 
 ### Copying
 
