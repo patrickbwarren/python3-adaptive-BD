@@ -31,7 +31,6 @@ import adaptive_bd
 parser = argparse.ArgumentParser(description='LS jet adaptive BD simulator, units um and s')
 parser.add_argument('code', nargs='?', default='', help='code name for run')
 parser.add_argument('--seed', default=None, type=int, help='RNG seed')
-parser.add_argument('-w', '--width', default=500, type=float, help='width of plotting window, default 500')
 parser.add_argument('-k', '--k', default=200, type=float, help='salt ratio, default 200')
 parser.add_argument('-G', '--Gamma', default=440, type=float, help='value of Gamma, default 440 um^2/s')
 parser.add_argument('-Q', '--Q', default=10, type=float, help='injection rate, units pL/s, default 10')
@@ -48,10 +47,14 @@ parser.add_argument('-t', '--tfinal', default='600', help='duration, default 600
 parser.add_argument('-n', '--ntraj', default=5, type=int, help='number of trajectories, default 5')
 parser.add_argument('-b', '--nblock', default=2, type=int, help='number of blocks, default 2')
 parser.add_argument('-m', '--maxsteps', default='10000', help='max number of trial steps, default 10000')
+parser.add_argument('-p', '--procid', default='0/1', help='process id, default 0 of 1')
 parser.add_argument('-v', '--verbose', action='count', default=0, help='increasing verbosity')
 parser.add_argument('--cart', action='store_true', help='use cartesian drift field expressions')
 parser.add_argument('--info', action='store_true', help='provide info on computed quantities')
 args = parser.parse_args()
+
+pid, njobs = map(int, args.procid.split('/')) # sort out process id and number of jobs
+local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a local RNG stream
 
 tf = eval(args.tfinal) # final time
 max_steps = eval(args.maxsteps) 
@@ -140,7 +143,9 @@ def drift_cartesian(r):
 # Instantiate an adaptive Brownian dynamics trajectory simulator
 
 drift = drift_cartesian if args.cart else drift_spherical
-adb = adaptive_bd.Simulator(seed=args.seed, drift=drift)
+
+adb = adaptive_bd.Simulator(rng=local_rng, drift=drift)
+
 adb.εabs, adb.εrel = eval(f'{args.eps}') # relative and absolute errors
 adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 
@@ -149,15 +154,15 @@ adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 z0 = R1 if np.isnan(root[0]) else root[0]
 r0 = np.array([0, 0, z0]) if args.cart else np.array([1e-6, 2e-6, z0])
 
-raw_results = [] # used to capture raw results
+raw = [] # used to capture raw results
 for block in range(args.nblock):
     for traj in range(args.ntraj):
         r, t, Δt, ntrial, nsuccess = adb.run(r0, Δt_init, max_steps, tf, Dp)
         Δr2 = np.sum((r-r0)**2) # mean square displacement for the present trajectory
-        raw_results.append((traj, block, ntrial, nsuccess, t, Δt, Δr2)) # capture data
+        raw.append((traj, block, ntrial, nsuccess, t, Δt, Δr2)) # capture data
 
 columns = ['traj', 'block', 'ntrial', 'nsuccess', 't', 'Δt_final', 'Δr2']
-results = pd.DataFrame(raw_results, columns=columns).set_index(['block', 'traj'])
+results = pd.DataFrame(raw, columns=columns).set_index(['block', 'traj'])
 results['Δt_mean'] = results.t / results.nsuccess
 results['Δr'] = np.sqrt(results.Δr2)
 

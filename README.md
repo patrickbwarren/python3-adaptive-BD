@@ -152,8 +152,16 @@ One can show that the mean position satisfies
 #### Diffusiophoretic trap
 
 This problem concerns the diffusiophoretic (DP) trapping of colloidal
-particles and macromolecules.  
-More to follow...
+particles and macromolecules.  The drift field in this problem has
+cylindrical symmetry and is given in spherical polar coordinates by
+
+```math
+u_r = \frac{Q}{4\pi r^2} + \frac{P\cos\theta}{4\pi\eta r}
+- \frac{k\lambda\Gamma}{r(r+k\lambda)}\,,
+u_\theta = - \frac{P\sin\theta}{8\pi\eta r}\,,
+```
+where $Q$ is a volumetric injection rate, etc (the details will be
+presented elsewhere in due course).
 
 ### Reflecting boundary
 
@@ -253,6 +261,11 @@ the dotted line is the asymptotic value at $t\to\infty$, namely
 $\langle z\rangle\to D/\gamma$.
 
 ![Bounded linear drift mean position](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/btest3.png)
+
+#### Diffusiophoretic trap
+
+The plot shows the mean square displacement for particles in the drift
+field given above, as a function of the volumetric injection rate $Q$. Other parameters are $k=500$, $\Gamma=150$, 
 
 
 ### Copying
