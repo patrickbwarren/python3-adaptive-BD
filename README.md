@@ -271,7 +271,7 @@ value).  The value of $P$ was taken proportional to $Q$ with
 $P/\eta = 0.0955\,Q$.  Other parameters were $k\lambda=2490$, and
 $\Gamma=150$.  The drift field was cut off for $r < 1$.  The elapsed
 time was $t=3600$ and the diffusion coefficient was $D=1$.  The dotted
-line is the free diffusion limit where $\langle r^2\rangle^{1/2} =
+line is the free diffusion limit where $\sqrt{\langle r^2\rangle} =
 \sqrt{6Dt} \simeq 147$.  Units in this problem are microns and
 seconds.  One can clearly see the trapping regime in the middle where
 the root mean square displacement is of order one.  Note the bimodal
