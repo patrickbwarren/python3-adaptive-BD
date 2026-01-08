@@ -158,7 +158,7 @@ cylindrical symmetry and is given in spherical polar coordinates by
 ```math
 u_r = \frac{Q}{4\pi r^2} + \frac{P\,\cos\,\theta}{4\pi\eta r}
 - \frac{k\lambda\Gamma}{r(r+k\lambda)}\,,
-\qqud u_\theta = - \frac{P\,\sin\,\theta}{8\pi\eta r}\,,
+\qquad u_\theta = - \frac{P\,\sin\,\theta}{8\pi\eta r}\,,
 ```
 where $Q$ is a volumetric injection rate, etc.  The details of all the
 parameters in this problem will be presented elsewhere in due course.
