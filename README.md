@@ -268,10 +268,10 @@ The plot shows box-whisker plots of the mean square displacement for
 particles in the drift field given above, as a function of the
 volumetric injection rate $Q$. Other parameters are $P/Q\eta =
 0.0955$, $k\lambda=2490$, and $\Gamma=150$.  The drift field was cut
-off for $r < 1$.  The elapsed time was $t=3600$.  The diffusion
-coefficient was $D=1$.  dotted line is the free diffusion limit where
-$\sqrt{6Dt}\simeq 147$.  Units in this problem are microns and
-seconds.
+off for $r < 1$.  The elapsed time was $t=3600$ and the diffusion
+coefficient was $D=1$.  The dotted line is the free diffusion limit
+where $\langle r^2\rangle^{1/2} = \sqrt{6Dt} \simeq 147$.  Units in
+this problem are microns and seconds.
 
 ![Diffusiophoretic trap rms vs Q](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/dptrap.png)
 
