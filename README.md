@@ -17,8 +17,8 @@ the listing ALGORITHM 2 in the paper has been reversed so the test
 becomes
 $`\Delta t_s + \Delta t_f > \Delta t`$
 rather than
-$`\Delta t_s + \Delta t_f < \Delta t`$,
-The conditional blocks have also been swapped so there is apparently
+$`\Delta t_s + \Delta t_f < \Delta t`$.
+The conditional blocks have also been swapped so there is
 no effect on the algorithm, but this subtle change avoids runtime
 warnings from spurious underflow errors when taking a square root in
 generating the bridging random displacement
