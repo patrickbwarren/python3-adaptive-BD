@@ -267,8 +267,8 @@ $\langle z\rangle\to D/\gamma$.
 The plot shows box-whisker plots of the mean square displacement for
 particles in the drift field given above, as a function of the
 volumetric injection rate $Q$ (200 trajectories were generated for
-value).  The value of $P$ was taken proportional to $Q$ with $P/\eta =
-0.0955\,Q$.  Other parameters were $k\lambda=2490$, and $\Gamma=150$.
+value).  The value of $P$ was taken proportional to $Q$ with $`P/\eta =
+0.0955\,Q`$.  Other parameters were $k\lambda=2490$, and $\Gamma=150$.
 The drift field was cut off for $r < 1$.  The elapsed time was
 $t=3600$ and the diffusion coefficient was $D=1$.  The dotted line is
 the free diffusion limit where $\sqrt{\langle r^2\rangle} = \sqrt{6Dt}
