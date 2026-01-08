@@ -112,16 +112,14 @@ article (1943).  The result is also given in
 (chapter 4) from Klaus Schulten.  The solution comprises three pieces, as
 $`p=p_1+p_2+p_3`$, where
 ```math
-p_1(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
-\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,,
-```
-```math
-p_2(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
-\exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0+\gamma t)^2}{4 D t}\Bigr)\,,
-```
-```math
-p_3(z, t)=\frac{\gamma}{2D}\>\exp\Bigl(-\frac{\gamma z}{D}\Bigr)\>
+\begin{align}
+&p_1(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
+\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,,\\
+&p_2(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
+\exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0+\gamma t)^2}{4 D t}\Bigr)\,,\\
+&p_3(z, t)=\frac{\gamma}{2D}\>\exp\Bigl(-\frac{\gamma z}{D}\Bigr)\>
 \text{erfc}\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
+\end{align}
 ```
 One can show that the sum of these is normalised, 
 $`\int_0^\infty\text{d}z\,p(z, t)=1`$ for all times.
@@ -138,15 +136,17 @@ Boltzmann-distributed.
 
 One can show that the mean position satisfies
 ```math
-\langle z\rangle= \frac{1}{2}\Bigl[
+\begin{align}
+&\langle z\rangle= \frac{1}{2}\Bigl[
 \sqrt{\frac{4 Dt}{\pi}}\,
-\exp\Bigl(-\frac{z_0-\gamma t)^2}{4Dt}\Bigr)
-+\Bigl(x_0+\frac{D}{\gamma}-\gamma t\Bigr)
-+\Bigl(x_0-\frac{D}{\gamma}-\gamma t\Bigr)\,
+\exp\Bigl(-\frac{(z_0-\gamma t)^2}{4Dt}\Bigr)
++\Bigl(x_0+\frac{D}{\gamma}-\gamma t\Bigr)\\
+&+\Bigl(x_0-\frac{D}{\gamma}-\gamma t\Bigr)\,
 \text{erf}\Bigl(\frac{x_0-\gamma t}{\sqrt{4 Dt}}\Bigl)
 -\frac{D}{\gamma}\,
 \text{erfc}\Bigl(\frac{x_0+\gamma t}{\sqrt{4 Dt}}\Bigl)
 \Bigr]
+\end{align}
 ```
 
 #### Diffusiophoretic trap
