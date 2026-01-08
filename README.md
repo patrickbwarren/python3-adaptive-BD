@@ -247,7 +247,7 @@ The final plot shows how the mean value $\langle z\rangle$ depends on
 the time $t$.  The marked points are from the adaptive Brownian
 dynamics simulations (each point is from $10^4$ trajectories, and the
 errors are smaller than the symbols here).  The solid line is the
-theoretical expression given above.  The dashed line is the leading
+theoretical expression given above, the dashed line is the leading
 behavior at $t\to 0$, namely $\langle z\rangle = z_0-\gamma t$, and
 the dotted line is the asymptotic value at $t\to\infty$, namely
 $\langle z\rangle\to D/\gamma$.
