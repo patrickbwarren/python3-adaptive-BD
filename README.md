@@ -140,7 +140,7 @@ One can show that the mean position satisfies
 &\langle z\rangle= \frac{1}{2}\Bigl[
 \sqrt{\frac{4 Dt}{\pi}}\,
 \exp\Bigl(-\frac{(z_0-\gamma t)^2}{4Dt}\Bigr)
-+\Bigl(z_0+\frac{D}{\gamma}-\gamma t\Bigr)\\
++z_0+\frac{D}{\gamma}-\gamma t\\
 &\qquad\qquad{}+\Bigl(z_0-\frac{D}{\gamma}-\gamma t\Bigr)
 \text{erf}\Bigl(\frac{z_0-\gamma t}{\sqrt{4 Dt}}\Bigl)
 -\frac{D}{\gamma}\,\exp\Bigl(\frac{\gamma z_0}{D}\Bigr)
