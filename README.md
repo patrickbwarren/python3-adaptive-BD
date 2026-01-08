@@ -275,7 +275,8 @@ the free diffusion limit where $\sqrt{\langle r^2\rangle} = \sqrt{6Dt}
 \simeq 147$.  One can clearly see the trapping regime in the middle
 where the root mean square displacement is of order one.  Note the
 bimodal nature of the distribution on the left hand side of the
-trapping regime indicating a barrier escape problem.
+trapping regime indicating a barrier escape problem. Units are microns
+and seconds.
 
 ![Diffusiophoretic trap rms vs
 Q](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/dptrap.png)
