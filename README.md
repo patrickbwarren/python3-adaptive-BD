@@ -122,6 +122,7 @@ article (1943).  The result is also given in
 \end{align}
 ```
 One can show that $`\int_0^\infty\text{d}z\,p(z, t)=1`$ for all times.
+
 At late times $`p\to (\gamma/D)\, e^{-\gamma z/D}`$, as the first two
 terms (both Gaussians) drift further and further into the physically
 inaccessible region $z<0$, and only the third term survives.  If we
@@ -224,6 +225,12 @@ scale.
 ![Harmonic trap end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest1.png)
 
 ![Harmonic trap end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest2.png)
+
+The final figure shows how the mean position decays towards zero.  The
+red line is $`\langle z\range = z_0\,e^{-kt}`$.  Each point is an
+average over $10^5$ trajectories.
+
+![Harmonic trap mean position](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htrap.png)
 
 #### Bounded linear drift
 
