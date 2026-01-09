@@ -109,30 +109,29 @@ the preceding problems, and can be found in Chandrasekhar's famous
 [Rev Mod Phys](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.15.1)
 article (1943).  The result is also given in 
 [lecture notes](https://www.ks.uiuc.edu/Services/Class/PHYS550/LectureNotes.html) 
-(chapter 4) from Klaus Schulten.  The solution comprises three pieces, as
-$`p=p_1+p_2+p_3`$, where
+(chapter 4) from Klaus Schulten.  The solution comprises three terms
 ```math
 \begin{align}
-&p_1(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
-\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,,\\
-&p_2(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
-\exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0+\gamma t)^2}{4 D t}\Bigr)\,,\\
-&p_3(z, t)=\frac{\gamma}{2D}\>\exp\Bigl(-\frac{\gamma z}{D}\Bigr)\>
+&p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
+\exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\\
+&\qquad\qqaud{} + \frac{1}{\sqrt{4\pi D t}}\>
+\exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0+\gamma t)^2}{4 D t}\Bigr)\\
+&\qquad\qquad {}+\frac{\gamma}{2D}\>
+\exp\Bigl(-\frac{\gamma z}{D}\Bigr)\>
 \text{erfc}\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
 \end{align}
 ```
-One can show that the sum of these is normalised, 
-$`\int_0^\infty\text{d}z\,p(z, t)=1`$ for all times.
+One can show that $`\int_0^\infty\text{d}z\,p(z, t)=1`$ for all times.
 
-At late times, $`p_1,\,p_2\to0`$ as the Gaussians drift further and
-further into the physically inaccessible region $z<0$, and $`p_3\to
-(\gamma/D)\, e^{-\gamma z/D}`$.  If we interpret the linear drift as
-corresponding to a gravitational potential $U=mgz$, then the force
-$`f_z=-\partial U/\partial z=-mg`$ and the drift speed $`u_z=-\mu mg`$
-where $\mu=\beta D$ is the mobility as before. Hence we identify
-$\gamma=\beta mgD$, and, as in the harmonic trap case, the late-stage
-$`p_3\sim e^{-\gamma z/D}=e^{-\beta mgz}`$ is again
-Boltzmann-distributed.
+At late times $`p\to (\gamma/D)\, e^{-\gamma z/D}`$, as the first two
+terms (both Gaussians) drift further and further into the physically
+inaccessible region $z<0$ and only the third term survives.  If we
+interpret the linear drift as corresponding to a gravitational
+potential $U=mgz$, then the force $`f_z=-\partial U/\partial z=-mg`$
+and the drift speed $`u_z=-\mu mg`$ where $\mu=\beta D$ is the
+mobility as before. Hence we identify $\gamma=\beta mgD$, and, as in
+the harmonic trap case, the late-stage $`p_3\sim e^{-\gamma
+z/D}=e^{-\beta mgz}`$ is again Boltzmann-distributed.
 
 One can show that the mean position satisfies
 ```math
