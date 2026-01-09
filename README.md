@@ -114,9 +114,9 @@ article (1943).  The result is also given in
 \begin{align}
 &p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
 \exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\\
-&\qquad\qqaud{} + \frac{1}{\sqrt{4\pi D t}}\>
+&\qquad\qquad{} + \frac{1}{\sqrt{4\pi D t}}\>
 \exp\Bigl(\frac{\gamma z_0}{D}-\frac{(z+z_0+\gamma t)^2}{4 D t}\Bigr)\\
-&\qquad\qquad {}+\frac{\gamma}{2D}\>
+&\qquad\qquad\qquad {}+\frac{\gamma}{2D}\>
 \exp\Bigl(-\frac{\gamma z}{D}\Bigr)\>
 \text{erfc}\Bigl(\frac{z+z_0-\gamma t}{\sqrt{4 D t}}\Bigr)\,.
 \end{align}
