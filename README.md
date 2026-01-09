@@ -122,10 +122,9 @@ article (1943).  The result is also given in
 \end{align}
 ```
 One can show that $`\int_0^\infty\text{d}z\,p(z, t)=1`$ for all times.
-
 At late times $`p\to (\gamma/D)\, e^{-\gamma z/D}`$, as the first two
 terms (both Gaussians) drift further and further into the physically
-inaccessible region $z<0$ and only the third term survives.  If we
+inaccessible region $z<0$, and only the third term survives.  If we
 interpret the linear drift as corresponding to a gravitational
 potential $U=mgz$, then the force $`f_z=-\partial U/\partial z=-mg`$
 and the drift speed $`u_z=-\mu mg`$ where $\mu=\beta D$ is the
