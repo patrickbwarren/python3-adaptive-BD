@@ -227,8 +227,8 @@ scale.
 ![Harmonic trap end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest2.png)
 
 The final figure shows how the mean position decays towards zero.  The
-red line is $`\langle z\range = z_0\,e^{-kt}`$.  Each point is an
-average over $10^5$ trajectories.
+red line is $`\langle z\rangle = z_0\,e^{-kt}`$.  Each data point is
+an average over $10^5$ trajectories.
 
 ![Harmonic trap mean position](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest3.png)
 
