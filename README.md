@@ -230,7 +230,7 @@ The final figure shows how the mean position decays towards zero.  The
 red line is $`\langle z\range = z_0\,e^{-kt}`$.  Each point is an
 average over $10^5$ trajectories.
 
-![Harmonic trap mean position](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htrap.png)
+![Harmonic trap mean position](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest3.png)
 
 #### Bounded linear drift
 
