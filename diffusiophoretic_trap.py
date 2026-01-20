@@ -37,7 +37,7 @@ parser.add_argument('-Q', '--Q', default=10, type=float, help='injection rate, u
 parser.add_argument('--log10Q', default=None, help='log10 injection rate, units pL/s, default unset')
 parser.add_argument('--Ds', default=1600, type=float, help='salt diffusion coeff, default 1600 um^2/s')
 parser.add_argument('--Dp', default=2.0, type=float, help='particle diffusion coeff, default 2.0 um^2/s')
-parser.add_argument('--R1', default=0.5, type=float, help='pipette radius, default 0.5 um')
+parser.add_argument('--Rt', default=0.5, type=float, help='pipette radius, default 0.5 um')
 parser.add_argument('--alpha', default=0.3, type=float, help='value of alpha, default 0.3')
 parser.add_argument('--rcut', default=None, help='cut off in um for regularisation, default none')
 parser.add_argument('--dt-init', default=0.05, type=float, help='initial time step, default 0.05 sec')
@@ -59,7 +59,7 @@ local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a l
 tf = eval(args.tfinal) # final time
 max_steps = eval(args.maxsteps) 
 
-k, Γ, Ds, Dp, R1, α, Δt_init = args.k, args.Gamma, args.Ds, args.Dp, args.R1, args.alpha, args.dt_init
+k, Γ, Ds, Dp, Rt, α, Δt_init = args.k, args.Gamma, args.Ds, args.Dp, args.Rt, args.alpha, args.dt_init
 
 Q = args.Q if args.log10Q is None else eval(f'10**({args.log10Q})') # extract from command line arguments
 
@@ -69,9 +69,9 @@ rc = 0 if args.rcut is None else eval(args.rcut)
 
 # derived quantities
 
-rstar = π*R1/α # where stokeslet and radial outflow match
-v1 = Q / (π*R1**2) # flow speed (definition)
-Pbyη = α*R1*v1 # from Secchi et al, should also = Q / r*
+rstar = π*Rt/α # where stokeslet and radial outflow match
+vt = Q / (π*Rt**2) # flow speed (definition)
+Pbyη = α*Rt*vt # from Secchi et al, should also = Q / r*
 Pe = Pbyη / (4*π*Ds) # definition from Secchi et al
 λ = Q / (4*π*Ds) # definition
 λstar = λ / rstar # should be the same as Pe (salt)
@@ -90,10 +90,10 @@ else:
 
 if args.info:
     um, umpers, umsqpers, none = 'µm', 'µm/s', 'µm²/s', ''
-    names = ['k', 'Γ', 'Ds', 'Γ / Ds', 'Dp', 'Q', 'Qcrit', 'R1', 'α', 'v1', 'P/η',
+    names = ['k', 'Γ', 'Ds', 'Γ / Ds', 'Dp', 'Q', 'Qcrit', 'Rt', 'α', 'vt', 'P/η',
              'r_c', 'r*', 'r1', 'r2', 'λ', 'λ*', 'Pe(salt)', 'Pe(part)', 'Δt(init)', 't_final',
              'max steps', '# traj', '# block', 'RNG seed']
-    values = [k, Γ, Ds, Γ/Ds, Dp, 1e-3*Q, 1e-3*Qcrit, R1, α, 1e-3*v1, Pbyη,
+    values = [k, Γ, Ds, Γ/Ds, Dp, 1e-3*Q, 1e-3*Qcrit, Rt, α, 1e-3*vt, Pbyη,
               rc, rstar, root[0], root[1], λ, λstar, Pe, Pe*Ds/Dp, Δt_init, tf,
               max_steps, args.ntraj, args.nblock, args.seed]
     units = [none, umsqpers, umsqpers, none, umsqpers, 'pL/s', 'pL/s', um, none, 'mm/s', umsqpers,
@@ -151,7 +151,7 @@ adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 
 # initial position on-axis (cartesian method) or slightly off-axis (spherical polars)
 
-z0 = R1 if np.isnan(root[0]) else root[0]
+z0 = Rt if np.isnan(root[0]) else root[0]
 r0 = np.array([0, 0, z0]) if args.cart else np.array([1e-6, 2e-6, z0])
 
 raw = [] # used to capture raw results
@@ -175,7 +175,7 @@ if args.verbose > 1:
 if args.verbose:
     print(results[selected_cols].mean())
     print('Q =', 1e-3*Q, 'pL/s')
-    print('sqrt(α*Q*t) =', np.sqrt(α*Q*tf/(2*π**2*R1))) # estimate assuming deterministic advection
+    print('sqrt(α*Q*t) =', np.sqrt(α*Q*tf/(2*π**2*Rt))) # estimate assuming deterministic advection
     print('sqrt(6 Dp t) =', np.sqrt(6*Dp*tf)) # estimate assuming pure Brownian motion
     rms = np.sqrt(results.Δr2.mean()) # root mean square (rms) displacement
     err = np.sqrt(results.Δr2.var() / args.ntraj) / (2*rms) # the error in the rms value
@@ -185,7 +185,7 @@ if args.code:
     for block, traj in results.index:
         row = results.loc[block, traj]
         if not any(row.isna()):
-            data = (k, Γ, Ds, Dp, R1, α, Q*1e-3, rc, tf,
+            data = (k, Γ, Ds, Dp, Rt, α, Q*1e-3, rc, tf,
                     row.ntrial, row.nsuccess, row.t, row.Δt_final, row.Δr2,
                     traj, block, args.ntraj, args.nblock, args.code)
             forms = ('%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g',
