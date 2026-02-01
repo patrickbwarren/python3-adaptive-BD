@@ -23,10 +23,10 @@
 
 import sys
 import argparse
+import adaptive_bd
 import numpy as np
 import pandas as pd
 from numpy import pi as π
-import adaptive_bd
 
 parser = argparse.ArgumentParser(description='LS jet adaptive BD simulator, units um and s')
 parser.add_argument('code', nargs='?', default='', help='code name for run')
