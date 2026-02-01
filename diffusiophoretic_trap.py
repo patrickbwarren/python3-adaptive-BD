@@ -49,7 +49,6 @@ parser.add_argument('-b', '--nblock', default=2, type=int, help='number of block
 parser.add_argument('-m', '--maxsteps', default='10000', help='max number of trial steps, default 10000')
 parser.add_argument('-p', '--procid', default='0/1', help='process id, default 0 of 1')
 parser.add_argument('-v', '--verbose', action='count', default=0, help='increasing verbosity')
-parser.add_argument('--cart', action='store_true', help='use cartesian drift field expressions')
 parser.add_argument('--info', action='store_true', help='provide info on computed quantities')
 args = parser.parse_args()
 
@@ -111,38 +110,21 @@ if args.info:
 #    print(table.transpose())
     exit()
 
-# Expressions for drift field in LS jet problem
+# Drift field in LS jet problem (regularised)
  
-def drift_spherical(r):
-    x, y, z = r[:] # z is normal distance = r cosθ
-    xy = np.sqrt(x**2 + y**2) # in-plane distance = r sinθ
-    rr = np.sqrt(x**2 + y**2 + z**2) # radial distance from origin
-    cosθ, sinθ = z/rr, xy/rr # polar angle, as cos and sin
-    if rr < rc: # crude regularisation
-        u = np.zeros_like(r)
-    else:
-        ur = Q/(4*π*rr**2) + Pbyη*cosθ/(4*π*rr) - k*λ*Γ/(rr*(rr+k*λ))
-        uθ = - Pbyη*sinθ/(8*π*rr)
-        uxy = ur*sinθ + uθ*cosθ # parallel xy-component of velocity
-        uz = ur*cosθ - uθ*sinθ # normal z-component of velocity
-        ux, uy = uxy*x/xy, uxy*y/xy # resolved x, y components
-        u = np.array((ux, uy, uz))
-    return u
-
-def drift_cartesian(r):
-    x, y, z = r[:] 
-    rr = np.sqrt(x**2 + y**2 + z**2) # radial distance from origin
-    if rr < rc: # crude regularisation
-        u = np.zeros_like(r)
-    else:
-        A = Pbyη/(8*π*rr**3)
-        B = Q/(4*π*rr**3) - k*λ*Γ/(rr**2*(rr+k*λ))
-        u = np.array((A*x*z + B*x, A*y*z + B*y, A*(x**2 + y**2 + 2*z**2) + B*z))
-    return u
+def drift(rvec):
+    x, y, z = rvec[:] # z is normal distance = r cosθ
+    ρ = np.sqrt(x**2 + y**2) # in-plane distance = r sinθ
+    r = np.sqrt(x**2 + y**2 + z**2) # radial distance from origin
+    cosθ, sinθ = z/r, ρ/r # polar angle, as cos and sin
+    sinθ_cosφ, sinθ_sinφ = x/r, y/r # avoids dividing by ρ which may be zero at the start
+    ur = Q/(4*π*r**2) + Pbyη*cosθ/(4*π*r) - k*λ*Γ/(r*(r+k*λ)) # radial drift velocity
+    ux = ur*sinθ_cosφ - Pbyη*sinθ_cosφ*cosθ/(8*π*r) # radial components
+    uy = ur*sinθ_sinφ - Pbyη*sinθ_sinφ*cosθ/(8*π*r) # avoiding dividing by ρ
+    uz = ur*cosθ + Pbyη*sinθ**2/(8*π*r) # normal z-component of velocity
+    return np.zeros_like(rvec) if r < rc else np.array((ux, uy, uz))
 
 # Instantiate an adaptive Brownian dynamics trajectory simulator
-
-drift = drift_cartesian if args.cart else drift_spherical
 
 adb = adaptive_bd.Simulator(rng=local_rng, drift=drift)
 
