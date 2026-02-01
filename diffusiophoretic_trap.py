@@ -131,10 +131,10 @@ adb = adaptive_bd.Simulator(rng=local_rng, drift=drift)
 adb.εabs, adb.εrel = eval(f'{args.eps}') # relative and absolute errors
 adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 
-# initial position on-axis (cartesian method) or slightly off-axis (spherical polars)
+# initial position on-axis at stable fixed point or Rt
 
 z0 = Rt if np.isnan(root[0]) else root[0]
-r0 = np.array([0, 0, z0]) if args.cart else np.array([1e-6, 2e-6, z0])
+r0 = np.array([0, 0, z0])
 
 raw = [] # used to capture raw results
 for block in range(args.nblock):
