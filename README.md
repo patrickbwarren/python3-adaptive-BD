@@ -57,7 +57,7 @@ followed by (when all the jobs have completed)
 ```
 submits 50 jobs, then consolidates the results into a single gzipped data file.
 
-### Theory
+### Examples
 
 #### Free diffusion and diffusion with linear drift
 
