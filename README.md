@@ -75,6 +75,22 @@ expression is a displaced Gaussian
 p(z, t)=\frac{1}{\sqrt{4\pi D t}}\>
 \exp\Bigl(-\frac{(z-z_0+\gamma t)^2}{4 D t}\Bigr)\,.
 ```
+
+The plots below show binned end points in the $x$, $y$, and $z$
+directions, starting from the origin, for $2\times10^5$ trajectories,
+with $D=1$ and after a time $t=600$, for particles undergoing free
+diffusion.  The red line is the expected distribution from the theory
+above.  The measured root mean square displacement
+$`\sqrt{}\langle\Delta r^2\rangle = 59.94 \pm 0.06`$ should be
+compared to the exact result $`\sqrt{6 D t} = 60`$.  The upper plot
+uses a linear scale whereas the lower plot shows the same data with a
+log scale.  Results with linear drift are similar.
+
+![Free diffusion end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest1.png)
+
+![Free diffusion end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest2.png)
+
+
 #### Harmonic trap
 
 This is the well-known 
@@ -99,6 +115,29 @@ inverse temperature in units of Boltzmann's constant.  Hence we
 identify $k=\beta D\kappa$, and the long-time limit of the above
 expression $p\sim\exp(-k z^2/2D)=\exp(-\beta\kappa x^2/2)$ is
 Boltzmann-distributed, as expected.
+
+The plots here show binned end points in the $z$ direction, for
+$5\times10^5$ trajectories, with $D=1$, trapping parameter $`k=0.1`$,
+starting position $`z_0=25`$, after a time $t=20$.  The red line is
+the expected distribution from the theory above.  The measured mean
+position $`\langle z\rangle = 3.381 \pm 0.005`$ should be compared to
+the exact result $`z_0\,e^{-kt} \simeq 3.3834`$.  Likewise the
+measured root mean square displacement from the mean position
+$`\sqrt{}\langle\Delta z^2\rangle = 3.129 \pm 0.004`$ should be
+compared to the exact result $`\sqrt{2 D s} \simeq 3.1332`$ where $`s
+= (1-e^{-2k t})/2k \simeq 4.9084`$.  As before, the upper plot uses a
+linear scale whereas the lower plot shows the same data with a log
+scale.
+
+![Harmonic trap end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest1.png)
+
+![Harmonic trap end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest2.png)
+
+The final figure shows how the mean position decays towards zero.  The
+red line is $`\langle z\rangle = z_0\,e^{-kt}`$.  Each data point is
+an average over $10^5$ trajectories.
+
+![Harmonic trap mean position](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest3.png)
 
 #### Bounded linear drift
 
@@ -148,93 +187,7 @@ One can show that the mean position satisfies
 \end{align}
 ```
 
-#### Diffusiophoretic trap
-
-This problem concerns the diffusiophoretic (DP) trapping of colloidal
-particles and macromolecules.  The drift field in this problem has
-cylindrical symmetry and is given in spherical polar coordinates by
-
-```math
-u_r = \frac{Q}{4\pi r^2} + \frac{P\,\cos\,\theta}{4\pi\eta r}
-- \frac{k\lambda\Gamma}{r(r+k\lambda)}\,,
-\qquad u_\theta = - \frac{P\,\sin\,\theta}{8\pi\eta r}\,,
-```
-where $Q$ is a volumetric injection rate, etc.  The details of all the
-parameters in this problem will be presented elsewhere in due course.
-
-### Reflecting boundary
-
-In the bounded linear drift problem, it seems quite difficult to
-implement the effect of the wall, without introducing some bias in the
-adaptive Brownian dynamics algorithm.  What works at least empirically
-is to simulate in the full domain, with a 'reflected' drift speed,
-$`u_z=-\gamma`$ for $z>0$ and $`u_z=+\gamma`$ for $z < 0$.  Then, at
-the end one 'folds' the trajectories which end with $z<0$ back into
-the $z>0$ half-space.
-
-This works because the reflected solution is a solution of the
-original problem from a reflected starting position.  Since the
-Fokker-Planck equation is linear, the superposition of the original
-and reflected solutions is also a solution, with starting positions at
-$`z_0`$ and $`-z_0`$.  By symmetry, this superposition has zero flux
-through the $z=0$ plane, and so keeping only that part with $z\ge 0$
-and doubling it up for normalisation solves the original problem with
-a reflecting wall at $z=0$.
-
-This superposition trick can be embodied in the Brownian dynamics code
-by reflecting the drift field so that $`u_z(z<0) = -u_z(z>0)`$,
-keeping _all_ the trajectories, and reflecting those which end in
-$z<0$.  The problem with this approach is that the drift field may be
-discontinuous through $z=0$ ; this is so for the bounded linear drift
-field problem for example, as indicated above.  In practice, perhaps
-particularly with the adaptive time step methodology, this does not
-seem to present much of a problem.
-
-### Results
-
-#### Free diffusion
-
-The plots below show binned end points in the $x$, $y$, and $z$
-directions, starting from the origin, for $2\times10^5$ trajectories,
-with $D=1$ and after a time $t=600$.  The red line is the expected
-distribution from the theory above.  The measured root mean square
-displacement $`\sqrt{}\langle\Delta r^2\rangle = 59.94 \pm 0.06`$
-should be compared to the exact result $`\sqrt{6 D t} = 60`$.  The
-upper plot uses a linear scale whereas the lower plot shows the same
-data with a log scale.  Results with linear drift are similar.
-
-![Free diffusion end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest1.png)
-
-![Free diffusion end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/ftest2.png)
-
-#### Harmonic trap
-
-The plots here show binned end points in the $z$ direction, for
-$5\times10^5$ trajectories, with $D=1$, trapping parameter $`k=0.1`$,
-starting position $`z_0=25`$, after a time $t=20$.  The red line is
-the expected distribution from the theory above.  The measured mean
-position $`\langle z\rangle = 3.381 \pm 0.005`$ should be compared to
-the exact result $`z_0\,e^{-kt} \simeq 3.3834`$.  Likewise the
-measured root mean square displacement from the mean position
-$`\sqrt{}\langle\Delta z^2\rangle = 3.129 \pm 0.004`$ should be
-compared to the exact result $`\sqrt{2 D s} \simeq 3.1332`$ where $`s
-= (1-e^{-2k t})/2k \simeq 4.9084`$.  As before, the upper plot uses a
-linear scale whereas the lower plot shows the same data with a log
-scale.
-
-![Harmonic trap end point distribution (linear scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest1.png)
-
-![Harmonic trap end point distribution (log scale)](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest2.png)
-
-The final figure shows how the mean position decays towards zero.  The
-red line is $`\langle z\rangle = z_0\,e^{-kt}`$.  Each data point is
-an average over $10^5$ trajectories.
-
-![Harmonic trap mean position](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/htest3.png)
-
-#### Bounded linear drift
-
-This problem is implemented as indicated above, reflecting the linear
+This problem is implemented as indicated below, reflecting the linear
 drift about $z=0$ and reflecting trajectories which end up with $z<0$.
 
 The first plot shows binned end points in the $z$ direction, for
@@ -267,7 +220,20 @@ $\langle z\rangle\to D/\gamma$.
 
 ![Bounded linear drift mean position](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/btest3.png)
 
+
 #### Diffusiophoretic trap
+
+This problem concerns the diffusiophoretic (DP) trapping of colloidal
+particles and macromolecules.  The drift field in this problem has
+cylindrical symmetry and is given in spherical polar coordinates by
+
+```math
+u_r = \frac{Q}{4\pi r^2} + \frac{P\,\cos\,\theta}{4\pi\eta r}
+- \frac{k\lambda\Gamma}{r(r+k\lambda)}\,,
+\qquad u_\theta = - \frac{P\,\sin\,\theta}{8\pi\eta r}\,,
+```
+where $Q$ is a volumetric injection rate, etc.  The details of all the
+parameters in this problem will be presented elsewhere in due course.
 
 The plot shows the mean square displacement for particles in the drift
 field given above, as a function of the volumetric injection rate $Q$,
@@ -286,6 +252,33 @@ seconds.
 ![Diffusiophoretic trap rms vs
 Q](https://github.com/patrickbwarren/python3-adaptive-BD/blob/main/figures/dptrap.png)
 
+### Reflecting boundary
+
+In the bounded linear drift problem, it seems quite difficult to
+implement the effect of the wall, without introducing some bias in the
+adaptive Brownian dynamics algorithm.  What works at least empirically
+is to simulate in the full domain, with a 'reflected' drift speed,
+$`u_z=-\gamma`$ for $z>0$ and $`u_z=+\gamma`$ for $z < 0$.  Then, at
+the end one 'folds' the trajectories which end with $z<0$ back into
+the $z>0$ half-space.
+
+This works because the reflected solution is a solution of the
+original problem from a reflected starting position.  Since the
+Fokker-Planck equation is linear, the superposition of the original
+and reflected solutions is also a solution, with starting positions at
+$`z_0`$ and $`-z_0`$.  By symmetry, this superposition has zero flux
+through the $z=0$ plane, and so keeping only that part with $z\ge 0$
+and doubling it up for normalisation solves the original problem with
+a reflecting wall at $z=0$.
+
+This superposition trick can be embodied in the Brownian dynamics code
+by reflecting the drift field so that $`u_z(z<0) = -u_z(z>0)`$,
+keeping _all_ the trajectories, and reflecting those which end in
+$z<0$.  The problem with this approach is that the drift field may be
+discontinuous through $z=0$ ; this is so for the bounded linear drift
+field problem for example, as indicated above.  In practice, perhaps
+particularly with the adaptive time step methodology, this does not
+seem to present much of a problem.
 
 ### Copying
 
