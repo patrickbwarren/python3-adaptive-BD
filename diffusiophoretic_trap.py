@@ -79,11 +79,9 @@ adb = adaptive_bd.Simulator(rng=local_rng, drift=pip.drift)
 adb.εabs, adb.εrel = eval(f'{args.eps}') # relative and absolute errors
 adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 
-# initial position on-axis at stable fixed point or Rt, plus a small perturbation
+# initial position on-axis at Rt, plus a small perturbation
 
-z0 = pip.fixed_points[0] if pip.fixed_points is not None else args.Rt
-
-r0 = np.array([0, 0, z0]) + local_rng.normal(0, args.perturb, 3)
+r0 = np.array([0, 0, args.Rt]) + local_rng.normal(0, args.perturb, 3)
 
 raw = [] # used to capture raw results
 for block in range(args.nblock):
