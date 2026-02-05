@@ -31,6 +31,7 @@ df2.reset_index(inplace=True) # pull multilevel index back to columns
 
 ser1 = df2[['Q', 'Dp', 'RMSD']].groupby(['Q', 'Dp']).mean()['RMSD'] # the global mean RMSD
 ser2 = df2[['Q', 'Dp', 'RMSD']].groupby(['Q', 'Dp']).sem()['RMSD'].rename('std_err') # std error in mean
+
 df3 = pd.concat([ser1, ser2], axis=1).reset_index() # compile these into a new dataframe, pulling index (Q) back to a column
 
 if args.output:
