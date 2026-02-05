@@ -27,22 +27,24 @@ import adaptive_bd
 import numpy as np
 import pandas as pd
 from numpy import pi as π
+from models import Model
 
-parser = argparse.ArgumentParser(description='LS jet adaptive BD simulator, units um and s')
+parser = argparse.ArgumentParser(description='pipette model adaptive BD simulator, units um and s')
 parser.add_argument('code', nargs='?', default='', help='code name for run')
 parser.add_argument('--seed', default=None, type=int, help='RNG seed')
 parser.add_argument('-k', '--k', default=200, type=float, help='salt ratio, default 200')
-parser.add_argument('-G', '--Gamma', default=440, type=float, help='value of Gamma, default 440 um^2/s')
+parser.add_argument('-G', '--Gamma', default=150, type=float, help='value of Gamma, default 150 um^2/s')
 parser.add_argument('-Q', '--Q', default=10, type=float, help='injection rate, units pL/s, default 10')
 parser.add_argument('--log10Q', default=None, help='log10 injection rate, units pL/s, default unset')
-parser.add_argument('--Ds', default=1600, type=float, help='salt diffusion coeff, default 1600 um^2/s')
+parser.add_argument('--Ds', default=1610, type=float, help='salt diffusion coeff, default 1610 um^2/s')
 parser.add_argument('--Dp', default=2.0, type=float, help='particle diffusion coeff, default 2.0 um^2/s')
-parser.add_argument('--Rt', default=0.5, type=float, help='pipette radius, default 0.5 um')
+parser.add_argument('--Rt', default=1.0, type=float, help='pipette radius, default 1.0 um')
 parser.add_argument('--alpha', default=0.3, type=float, help='value of alpha, default 0.3')
-parser.add_argument('--rcut', default=None, help='cut off in um for regularisation, default none')
+parser.add_argument('--rc', default=1.0, type=float, help='cut off in um for regularisation, default 1.0')
 parser.add_argument('--dt-init', default=0.05, type=float, help='initial time step, default 0.05 sec')
 parser.add_argument('--eps', default='0.05,0.05', help='absolute and relative error, default 0.05 um and 0.05')
 parser.add_argument('--q-lims', default='0.001,1.2', help='q limits, default as per article 0.001,1.2')
+parser.add_argument('--perturb', default=1e-6, type=float, help='small perturbation to start, default 1e-6')
 parser.add_argument('-t', '--tfinal', default='600', help='duration, default 600 sec')
 parser.add_argument('-n', '--ntraj', default=5, type=int, help='number of trajectories, default 5')
 parser.add_argument('-b', '--nblock', default=2, type=int, help='number of blocks, default 2')
@@ -53,88 +55,35 @@ parser.add_argument('--info', action='store_true', help='provide info on compute
 args = parser.parse_args()
 
 pid, njobs = map(int, args.procid.split('/')) # sort out process id and number of jobs
+
 local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a local RNG stream
 
 tf = eval(args.tfinal) # final time
+
 max_steps = eval(args.maxsteps) 
 
-k, Γ, Ds, Dp, Rt, α, Δt_init = args.k, args.Gamma, args.Ds, args.Dp, args.Rt, args.alpha, args.dt_init
+Dp, Δt_init = args.Dp, args.dt_init
 
 Q = args.Q if args.log10Q is None else eval(f'10**({args.log10Q})') # extract from command line arguments
 
-Q = 1e3 * Q # convert to um^3/s
-
-rc = 0 if args.rcut is None else eval(args.rcut)
-
-# derived quantities
-
-rstar = π*Rt/α # where stokeslet and radial outflow match
-vt = Q / (π*Rt**2) # flow speed (definition)
-Pbyη = α*Rt*vt # from Secchi et al, should also = Q / r*
-Pe = Pbyη / (4*π*Ds) # definition from Secchi et al
-λ = Q / (4*π*Ds) # definition
-λstar = λ / rstar # should be the same as Pe (salt)
-
-Qcrit = 4*π*Ds*rstar*(np.sqrt(Γ/Ds)-np.sqrt(1/k))**2 # critical upper bound on Q
-
-# the quadratic for the roots in units of r* is r^2 − (kΓbyD − kλ* − 1)r + kλ* = 0
-
-b = k*Γ/Ds - k*λstar - 1 # the equation is r^2 − br + c = 0
-Δ = b**2 - 4*k*λstar # discriminant of above
-
-if Q > 0 and Δ > 0 and b > 0: # condition for roots to exist
-    root = np.array((0.5*rstar*(b-np.sqrt(Δ)), 0.5*rstar*(b+np.sqrt(Δ))))
-else:
-    root = np.array((np.nan, np.nan))
+pip = Model('pipette').update(Q=Q, Γ=args.Gamma, k=args.k, Ds=args.Ds, R1=args.Rt, α=args.alpha, rc=args.rc)
 
 if args.info:
-    um, umpers, umsqpers, none = 'µm', 'µm/s', 'µm²/s', ''
-    names = ['k', 'Γ', 'Ds', 'Γ / Ds', 'Dp', 'Q', 'Qcrit', 'Rt', 'α', 'vt', 'P/η',
-             'r_c', 'r*', 'r1', 'r2', 'λ', 'λ*', 'Pe(salt)', 'Pe(part)', 'Δt(init)', 't_final',
-             'max steps', '# traj', '# block', 'RNG seed']
-    values = [k, Γ, Ds, Γ/Ds, Dp, 1e-3*Q, 1e-3*Qcrit, Rt, α, 1e-3*vt, Pbyη,
-              rc, rstar, root[0], root[1], λ, λstar, Pe, Pe*Ds/Dp, Δt_init, tf,
-              max_steps, args.ntraj, args.nblock, args.seed]
-    units = [none, umsqpers, umsqpers, none, umsqpers, 'pL/s', 'pL/s', um, none, 'mm/s', umsqpers,
-             um, um, um, um, um, none, none, none, 's', 's',
-             none, none, none, none]
-    table_d = {'name':pd.Series(names, dtype=str),
-               'value':pd.Series(values, dtype=float),
-               'unit':pd.Series(units, dtype=str)}
-    table = pd.DataFrame(table_d).set_index('name')
-    table.value = table.value.apply(lambda x: round(x, 3))
-    pd.set_option('display.max_columns', None)
-    print(sys.executable, ' '.join(sys.argv))
-    print('\n'.join(table.to_string().split('\n')[2:])) # lose the first two lines
-#    print(table)
-#    print(table.transpose())
+    print(pip.info)
     exit()
-
-# Drift field in LS jet problem (regularised)
- 
-def drift(rvec):
-    x, y, z = rvec[:] # z is normal distance = r cosθ
-    ρ = np.sqrt(x**2 + y**2) # in-plane distance = r sinθ
-    r = np.sqrt(x**2 + y**2 + z**2) # radial distance from origin
-    cosθ, sinθ = z/r, ρ/r # polar angle, as cos and sin
-    sinθ_cosφ, sinθ_sinφ = x/r, y/r # avoids dividing by ρ which may be zero at the start
-    ur = Q/(4*π*r**2) + Pbyη*cosθ/(4*π*r) - k*λ*Γ/(r*(r+k*λ)) # radial drift velocity
-    ux = ur*sinθ_cosφ - Pbyη*sinθ_cosφ*cosθ/(8*π*r) # radial components
-    uy = ur*sinθ_sinφ - Pbyη*sinθ_sinφ*cosθ/(8*π*r) # avoiding dividing by ρ
-    uz = ur*cosθ + Pbyη*sinθ**2/(8*π*r) # normal z-component of velocity
-    return np.zeros_like(rvec) if r < rc else np.array((ux, uy, uz))
 
 # Instantiate an adaptive Brownian dynamics trajectory simulator
 
-adb = adaptive_bd.Simulator(rng=local_rng, drift=drift)
+adb = adaptive_bd.Simulator(rng=local_rng, drift=pip.drift)
 
 adb.εabs, adb.εrel = eval(f'{args.eps}') # relative and absolute errors
 adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 
-# initial position on-axis at stable fixed point or Rt
+# initial position on-axis at stable fixed point or Rt, plus a small perturbation
 
-z0 = Rt if np.isnan(root[0]) else root[0]
-r0 = np.array([0, 0, z0])
+z0 = pip.fixed_points[0] if pip.fixed_points is not None else args.Rt
+
+r0 = np.array([0, 0, z0]) + local_rng.normal(0, args.perturb, 3)
 
 raw = [] # used to capture raw results
 for block in range(args.nblock):
@@ -156,18 +105,18 @@ if args.verbose > 1:
     
 if args.verbose:
     print(results[selected_cols].mean())
-    print('Q =', 1e-3*Q, 'pL/s')
-    print('sqrt(α*Q*t) =', np.sqrt(α*Q*tf/(2*π**2*Rt))) # estimate assuming deterministic advection
+    print('Q =', 1e-3*pip.Q, 'pL/s')
+    print('sqrt(α*Q*t) =', np.sqrt(pip.α*pip.Q*tf/(2*π**2*pip.R1))) # estimate assuming deterministic advection
     print('sqrt(6 Dp t) =', np.sqrt(6*Dp*tf)) # estimate assuming pure Brownian motion
     rms = np.sqrt(results.Δr2.mean()) # root mean square (rms) displacement
     err = np.sqrt(results.Δr2.var() / args.ntraj) / (2*rms) # the error in the rms value
-    print('rms Δr =', rms, '±', err, '(rc =', rc, ')')
+    print('rms Δr =', rms, '±', err, '(rc =', pip.rc, ')')
 
 if args.code:
     for block, traj in results.index:
         row = results.loc[block, traj]
         if not any(row.isna()):
-            data = (k, Γ, Ds, Dp, Rt, α, Q*1e-3, rc, tf,
+            data = (pip.k, pip.Γ, pip.Ds, Dp, pip.R1, pip.α, 1e-3*pip.Q, pip.rc, tf,
                     row.ntrial, row.nsuccess, row.t, row.Δt_final, row.Δr2,
                     traj, block, args.ntraj, args.nblock, args.code)
             forms = ('%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g',
