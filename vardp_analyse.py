@@ -11,8 +11,8 @@ import adaptive_bd
 import numpy as np
 import pandas as pd
 
-parser = argparse.ArgumentParser(description='figure 1 in manuscript')
-parser.add_argument('datafile', help='input data file, eg *.dat.gz')
+parser = argparse.ArgumentParser(description='compile raw BD data to a spreadsheet')
+parser.add_argument('datafile', help='raw input data file, eg *.dat.gz')
 parser.add_argument('-o', '--output', help='output compiled data to a spreadsheet, eg .ods, .xlsx')
 args = parser.parse_args()
 
@@ -37,7 +37,7 @@ df3 = pd.concat([ser1, ser2], axis=1).reset_index() # compile these into a new d
 if args.output:
     with pd.ExcelWriter(args.output) as writer:
         for Dp in df3.Dp.unique():
-            df3[df3.Dp == Dp].to_excel(writer, sheet_name=f'Dp={Dp}', index=False)
+            df3[df3.Dp == Dp].drop('Dp', axis=1).to_excel(writer, sheet_name=f'Dp={Dp}', index=False)
     print('Data written to', args.output)
 else:
     print(df3)
