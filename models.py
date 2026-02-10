@@ -35,7 +35,7 @@ class Model:
         self.update() # has the effect of setting all the defaults, per the next function
 
     def update(self, Q=1e-3, Γ=150, k=200, Ds=1610, R1=1.0, α=0.3, rc=1.0): # add more here as required
-        self.Q = 1e3*Q # injection rate, convert to um^3/sec
+        self.Q = 1e3*Q # injection rate in pL/s, convert to um^3/sec
         self.Γ = Γ # drift coefficient, here for DNA in LiCl
         self.k = k # in um^3/sec ; note conversion 1 pL/sec = 10^3 um^3/sec
         self.Ds = Ds # for NaCl
@@ -74,13 +74,15 @@ class Model:
         x, y, z = rvec[:] # z is normal distance = r cosθ
         ρ = np.sqrt(x**2 + y**2) # in-plane distance = r sinθ
         r = np.sqrt(ρ**2 + z**2) # radial distance from origin
+        if r < self.rc: # cut off the entire drift field ..
+            return np.zeros_like(rvec) # .. and return early
         cosθ, sinθ = z/r, ρ/r # polar angle, as cos and sin
         ur = self.Q/(4*π*r**2) + self.Pbyη*cosθ/(4*π*r) - self.kλΓ/(r*(r+self.kλ))
         uθ = - self.Pbyη*sinθ/(8*π*r)
         uρ = ur*sinθ + uθ*cosθ # parallel ρ-component of velocity
         uz = ur*cosθ - uθ*sinθ # normal z-component of velocity
         ux, uy = uρ*x/ρ, uρ*y/ρ # resolved x, y components
-        return np.zeros_like(rvec) if r < self.rc else np.array((ux, uy, uz))
+        return np.array((ux, uy, uz))
 
     def pore_refresh(self): # (re)calculate derived quantities for pore
         self.generic_refresh()
@@ -108,10 +110,11 @@ class Model:
         prefac = 3*self.Q/(2*π*self.R1**2) # prefac for Sampson flow field
         vρ = prefac * λ*ζ**2 / (λ**2 + ζ**2) * np.sqrt((1-ζ**2) / (1+λ**2))
         vz = prefac * ζ**3 / (λ**2 + ζ**2) # this and the above are the flow field components 
-        fac = - 2*self.kλΓ/(r*(r+2*self.kλ)) if r > self.rc else 0 # note the extra factors of '2'
-        uρ, uz = vρ + fac*sinθ, vz + fac*cosθ # resolved radial and axial components
+        fac = o if r < self.rc else 2*self.kλΓ/(r*(r+2*self.kλ)) # note the extra factors of '2'
+        uρ = vρ - fac*sinθ # resolved radial ..
+        uz = vz - fac*cosθ # .. and axial components
         ux, uy = uρ*x/ρ, uρ*y/ρ # final pieces of cartesian components
-        return np.array((ux, uy, uz))
+        return np.array((ux, uy, uz)) # note that only the DP contribution is cut off
 
     # Below here, to do with reporting parameters for information
 
