@@ -60,7 +60,7 @@ local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a l
 
 tf = eval(args.tfinal) # final time
 
-max_steps = eval(args.maxsteps) 
+max_steps = eval('int(%s)' % args.maxsteps.replace('k', '*1e3').replace('M', '*1e6'))
 
 Dp, Δt_init = args.Dp, args.dt_init
 

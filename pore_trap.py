@@ -59,7 +59,7 @@ local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a l
 
 tf = eval(args.tfinal) # final time
 
-max_steps = eval(args.maxsteps) 
+max_steps = eval('int(%s)' % args.maxsteps.replace('k', '*1e3').replace('M', '*1e6'))
 
 Dp, Δt_init = args.Dp, args.dt_init
 
@@ -86,6 +86,8 @@ raw = [] # used to capture raw results
 for block in range(args.nblock):
     for traj in range(args.ntraj):
         r, t, Δt, ntrial, nsuccess = adb.run(r0, Δt_init, max_steps, tf, Dp)
+        x, y, z = r[:]
+        r = np.array([x, y, abs(z)])
         Δr2 = np.sum((r-r0)**2) # mean square displacement for the present trajectory
         raw.append((traj, block, ntrial, nsuccess, t, Δt, Δr2)) # capture data
 

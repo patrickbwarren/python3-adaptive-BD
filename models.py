@@ -107,7 +107,7 @@ class Model:
         R1 = np.sqrt((ρ - self.R1)**2 + z**2) # used in the construction ..
         R2 = np.sqrt((ρ + self.R1)**2 + z**2) # .. of the oblate spheroidal coords ..
         λ = np.sqrt((R1 + R2)**2/(4*self.R1**2) - 1) # .. which are ..
-        ζ = np.sqrt(1 - (R2 - R1)**2/(4*self.R1**2)) # .. these two quantities
+        ζ = np.sqrt(abs(1 - (R2 - R1)**2/(4*self.R1**2))) # .. these two quantities
         prefac = 3*self.Q/(2*π*self.R1**2) # prefac for Sampson flow field
         vρ = prefac * λ*ζ**2 / (λ**2 + ζ**2) * np.sqrt((1-ζ**2) / (1+λ**2))
         vz = prefac * ζ**3 / (λ**2 + ζ**2) # this and the above are the flow field components 
