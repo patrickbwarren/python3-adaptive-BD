@@ -65,22 +65,22 @@ Dp, Δt_init = args.Dp, args.dt_init
 
 Q = args.Q if args.log10Q is None else eval(f'10**({args.log10Q})') # extract from command line arguments
 
-pip = Model('pipette').update(Q=Q, Γ=args.Gamma, k=args.k, Ds=args.Ds, R1=args.Rt, α=args.alpha, rc=args.rc)
+pore = Model('pore').update(Q=Q, Γ=args.Gamma, k=args.k, Ds=args.Ds, R1=args.Rp, rc=args.rc)
 
 if args.info:
-    print(pip.info)
+    print(pore.info)
     exit()
 
 # Instantiate an adaptive Brownian dynamics trajectory simulator
 
-adb = adaptive_bd.Simulator(rng=local_rng, drift=pip.drift)
+adb = adaptive_bd.Simulator(rng=local_rng, drift=pore.reflected_drift)
 
 adb.εabs, adb.εrel = eval(f'{args.eps}') # relative and absolute errors
 adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 
 # initial position on-axis at Rt, plus a small perturbation
 
-r0 = np.array([0, 0, args.Rt]) + local_rng.normal(0, args.perturb, 3)
+r0 = np.array([0, 0, args.Rp]) + local_rng.normal(0, args.perturb, 3)
 
 raw = [] # used to capture raw results
 for block in range(args.nblock):
@@ -102,21 +102,20 @@ if args.verbose > 1:
     
 if args.verbose:
     print(results[selected_cols].mean())
-    print('Q =', 1e-3*pip.Q, 'pL/s')
-    print('sqrt(α*Q*t) =', np.sqrt(pip.α*pip.Q*tf/(2*π**2*pip.R1))) # estimate assuming deterministic advection
+    print('Q =', 1e-3*pore.Q, 'pL/s')
     print('sqrt(6 Dp t) =', np.sqrt(6*Dp*tf)) # estimate assuming pure Brownian motion
     rms = np.sqrt(results.Δr2.mean()) # root mean square (rms) displacement
     err = np.sqrt(results.Δr2.var() / args.ntraj) / (2*rms) # the error in the rms value
-    print('rms Δr =', rms, '±', err, '(rc =', pip.rc, ')')
+    print('rms Δr =', rms, '±', err, '(rc =', pore.rc, ')')
 
 if args.code:
     for block, traj in results.index:
         row = results.loc[block, traj]
         if not any(row.isna()):
-            data = (pip.k, pip.Γ, pip.Ds, Dp, pip.R1, pip.α, 1e-3*pip.Q, pip.rc, tf,
+            data = (pore.k, pore.Γ, pore.Ds, Dp, pore.R1, 1e-3*pore.Q, pore.rc, tf,
                     row.ntrial, row.nsuccess, row.t, row.Δt_final, row.Δr2,
                     traj, block, args.ntraj, args.nblock, args.code)
-            forms = ('%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g',
+            forms = ('%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g',
                      '%i', '%i', '%g', '%e', '%e',
                      '%i', '%i', '%i', '%i', '%s')
             print('\t'.join(forms) % data)

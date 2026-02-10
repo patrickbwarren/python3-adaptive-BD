@@ -31,6 +31,7 @@ class Model:
         pipette = injector == 'pipette' # true or false
         pore = injector == 'pore' # -- ditto --
         self.drift = self.pipette_drift if pipette else self.pore_drift if pore else None
+        self.reflected_drift = self.pore_drift_reflected if pore else None
         self.refresh = self.pipette_refresh if pipette else self.pore_refresh if pore else None
         self.update() # has the effect of setting all the defaults, per the next function
 
@@ -110,11 +111,16 @@ class Model:
         prefac = 3*self.Q/(2*π*self.R1**2) # prefac for Sampson flow field
         vρ = prefac * λ*ζ**2 / (λ**2 + ζ**2) * np.sqrt((1-ζ**2) / (1+λ**2))
         vz = prefac * ζ**3 / (λ**2 + ζ**2) # this and the above are the flow field components 
-        fac = o if r < self.rc else 2*self.kλΓ/(r*(r+2*self.kλ)) # note the extra factors of '2'
+        fac = 0 if r < self.rc else 2*self.kλΓ/(r*(r+2*self.kλ)) # note the extra factors of '2'
         uρ = vρ - fac*sinθ # resolved radial ..
         uz = vz - fac*cosθ # .. and axial components
         ux, uy = uρ*x/ρ, uρ*y/ρ # final pieces of cartesian components
         return np.array((ux, uy, uz)) # note that only the DP contribution is cut off
+
+    def pore_drift_reflected(self, rvec): # above drift field reflected in z=0 plane
+        x, y, z = rvec[:]
+        ux, uy, uz = self.pore_drift(np.array([x, y, abs(z)]))
+        return np.array([ux, uy, -uz]) if z < 0 else np.array([ux, uy, uz])                                     
 
     # Below here, to do with reporting parameters for information
 

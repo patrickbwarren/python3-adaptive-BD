@@ -1,0 +1,35 @@
+#!/usr/bin/env condor_submit
+
+# submit with seed=<seed> name=<name> njobs=<njobs>
+# The number of jobs should be >= the actual number !
+
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+notification = never
+universe = vanilla
+transfer_input_files = adaptive_bd.py,models.py
+executable = pipette_trap.py
+args = -n 50 -b 10 -t 3600 --Dp $(dp)
+arguments = $(args) --log10Q $(log10Q) --seed $(seed) -p $(Process)/$(njobs) $(name)
+header = $(name)_$(Process)
+output = $(header).out
+error = $(header).err
+log = $(header).log
+
+dp = 1.0
+queue log10Q from seq -4 0.1 2 |
+
+dp = 2.0
+queue log10Q from seq -4 0.1 2 |
+
+dp = 5.0
+queue log10Q from seq -4 0.1 2 |
+
+dp = 10.0
+queue log10Q from seq -4 0.1 2 |
+
+dp = 20.0
+queue log10Q from seq -4 0.1 2 |
+
+dp = 50.0
+queue log10Q from seq -4 0.1 2 |
