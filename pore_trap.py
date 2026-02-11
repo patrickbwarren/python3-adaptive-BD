@@ -47,7 +47,7 @@ parser.add_argument('--perturb', default=1e-6, type=float, help='small perturbat
 parser.add_argument('-t', '--tfinal', default='600', help='duration, default 600 sec')
 parser.add_argument('-n', '--ntraj', default=5, type=int, help='number of trajectories, default 5')
 parser.add_argument('-b', '--nblock', default=2, type=int, help='number of blocks, default 2')
-parser.add_argument('-m', '--maxsteps', default='10000', help='max number of trial steps, default 10000')
+parser.add_argument('-m', '--maxsteps', default='10k', help='max number of trial steps, default 10000')
 parser.add_argument('-p', '--procid', default='0/1', help='process id, default 0 of 1')
 parser.add_argument('-v', '--verbose', action='count', default=0, help='increasing verbosity')
 parser.add_argument('--info', action='store_true', help='provide info on computed quantities')
