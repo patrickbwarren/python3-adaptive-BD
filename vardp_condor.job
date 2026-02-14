@@ -9,7 +9,7 @@ notification = never
 universe = vanilla
 transfer_input_files = adaptive_bd.py,models.py
 executable = pipette_trap.py
-args = -n 50 -b 10 -t 3600 --Dp $(dp)
+args = -n 50 -b 10 -t 3600 -m 100k --Dp $(dp)
 arguments = $(args) --log10Q $(log10Q) --seed $(seed) -p $(Process)/$(njobs) $(name)
 header = $(name)_$(Process)
 output = $(header).out
@@ -32,4 +32,7 @@ dp = 20.0
 queue log10Q from seq -4 0.1 2 |
 
 dp = 50.0
+queue log10Q from seq -4 0.1 2 |
+
+dp = 100.0
 queue log10Q from seq -4 0.1 2 |
