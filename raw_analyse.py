@@ -16,7 +16,7 @@ def range_str(v, vals): # convert a list of values to a singleton, several value
     return v, '  '+s, f'{len(vals):10}'
 
 parser = argparse.ArgumentParser(description='compile raw BD data to a spreadsheet')
-parser.add_argument('datafile', help='raw input data file, eg *.dat.gz')
+parser.add_argument('dataset', help='raw input data file, eg *.dat.gz')
 parser.add_argument('-c', '--column', default='Dp', help='select data column, default Dp')
 parser.add_argument('-d', '--describe', action='store_true', help='print a summary of the columns in the raw data')
 parser.add_argument('-o', '--output', help='output compiled data to a spreadsheet, eg .ods, .xlsx')
@@ -29,7 +29,7 @@ schema= {'k':float, 'Γ':float, 'Ds':float, 'Dp':float, 'R1':float,
          'ntrial':int, 'nsuccess':int, 't':float, 'Δt_final':float, 'Δr2':float, 
          'traj':int, 'block':int, 'ntraj':int, 'nblock':int, 'code':str}
 
-df = pd.read_csv(args.datafile, sep='\t', names=schema.keys(), dtype=schema)
+df = pd.read_csv(args.dataset, sep='\t', names=schema.keys(), dtype=schema)
 df.sort_values([v, 'Q', 'traj'], inplace=True)
 
 if args.describe:
@@ -37,6 +37,7 @@ if args.describe:
     header_row = pd.DataFrame(index=[-1], columns=dff.columns)
     dff = pd.concat([header_row, dff])
     dff.loc[-1] = dff.columns
+    print('Dataset', args.dataset)
     print('\n'.join(dff.to_string(justify='left', index=False).split('\n')[1:]))
     exit()
 
