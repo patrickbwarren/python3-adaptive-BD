@@ -6,6 +6,7 @@
 
 # ./vardp_analyse.py data/vardp.dat.gz -o vardp_results.ods
 
+import gzip
 import argparse
 import numpy as np
 import pandas as pd
@@ -18,25 +19,27 @@ parser = argparse.ArgumentParser(description='compile raw BD data to a spreadshe
 parser.add_argument('dataset', help='raw input data file, eg *.dat.gz')
 parser.add_argument('-c', '--column', default='Dp', help='select data column, default Dp')
 parser.add_argument('-d', '--describe', action='store_true', help='print a summary of the columns in the raw data')
-parser.add_argument('-p', '--pore', action='store_true', help='use pore schema for loading raw data')
 parser.add_argument('-o', '--output', help='output compiled data to a spreadsheet, eg .ods, .xlsx')
 args = parser.parse_args()
-
-c = args.column
 
 schema= {'k':float, 'Γ':float, 'Ds':float, 'Dp':float, 'R1':float, 
          'α':float, 'Q':float, 'rc':float, 't_final':float, 
          'ntrial':int, 'nsuccess':int, 't':float, 'Δt_final':float, 'Δr2':float, 
          'traj':int, 'block':int, 'ntraj':int, 'nblock':int, 'code':str}
 
-if args.pore:
-    del schema['α']
+with gzip.open(args.dataset, 'rt') as f:
+    first_line = f.readline()
+
+if len(first_line.split('\t')) < len(schema): # wrangle dataset type, pipette or wall pore
+    del schema['α'] # if wall pore then there is no α column
+
+col = args.column
 
 df = pd.read_csv(args.dataset, sep='\t', names=schema.keys(), dtype=schema)
-df.sort_values([c, 'Q', 'traj'], inplace=True)
+df.sort_values([col, 'Q', 'traj'], inplace=True)
 
 if args.describe:
-    df2 = pd.DataFrame([range_str(c, df[c].unique()) for c in df.columns], columns=['column', 'range', 'count'])
+    df2 = pd.DataFrame([range_str(col, df[col].unique()) for col in df.columns], columns=['column', 'range', 'count'])
     header_row = pd.DataFrame(index=[-1], columns=df2.columns)
     df2 = pd.concat([header_row, df2])
     df2.loc[-1] = df2.columns
@@ -44,21 +47,21 @@ if args.describe:
     print('\n'.join(df2.to_string(justify='left', index=False).split('\n')[1:]))
     exit()
 
-df2 = df[['Q', c, 'block', 'Δr2']].groupby(['Q', c, 'block']).mean() # calculate mean square displacement per block
+df2 = df[['Q', col, 'block', 'Δr2']].groupby(['Q', col, 'block']).mean() # calculate mean square displacement per block
 
 df2['RMSD'] = np.sqrt(df2.Δr2) # root mean square displacement (RMSD), per block
 df2.reset_index(inplace=True) # pull multilevel index back to columns
 
-ser1 = df2[['Q', c, 'RMSD']].groupby(['Q', c]).mean()['RMSD'] # the global mean RMSD
-ser2 = df2[['Q', c, 'RMSD']].groupby(['Q', c]).sem()['RMSD'].rename('std_err') # std error in mean
+ser1 = df2[['Q', col, 'RMSD']].groupby(['Q', col]).mean()['RMSD'] # the global mean RMSD
+ser2 = df2[['Q', col, 'RMSD']].groupby(['Q', col]).sem()['RMSD'].rename('std_err') # std error in mean
 
 df3 = pd.concat([ser1, ser2], axis=1).reset_index() # compile these into a new dataframe, pulling index (Q) back to a column
 
 if args.output:
     with pd.ExcelWriter(args.output) as writer:
-        for x in df3[c].unique():
-            df3[df3[c] == x].drop(c, axis=1).to_excel(writer, sheet_name=f'{c}={x}', index=False)
-    vals = ', '.join([str(x) for x in df[c].unique()])
-    print(f'Data for {c} = {vals} written to', args.output)
+        for val in df3[col].unique():
+            df3[df3[col] == val].drop(col, axis=1).to_excel(writer, sheet_name=f'{col}={val}', index=False)
+    vals = ', '.join([str(val) for val in df[col].unique()])
+    print(f'Data for {col} = {vals} written to', args.output)
 else:
     print(df3)
