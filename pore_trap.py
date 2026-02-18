@@ -78,7 +78,7 @@ adb = adaptive_bd.Simulator(rng=local_rng, drift=pore.reflected_drift)
 adb.εabs, adb.εrel = eval(f'{args.eps}') # relative and absolute errors
 adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 
-# initial position on-axis at Rt, plus a small perturbation
+# initial position on-axis at Rp, plus a small perturbation
 
 r0 = np.array([0, 0, args.Rp]) + local_rng.normal(0, args.perturb, 3)
 
