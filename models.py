@@ -38,7 +38,7 @@ class Model:
     def update(self, Q=1e-3, Γ=150, k=200, Ds=1610, R1=1.0, α=0.3, rc=1.0): # add more here as required
         self.Q = 1e3*Q # injection rate in pL/s, convert to um^3/sec
         self.Γ = Γ # drift coefficient, here for DNA in LiCl
-        self.k = k # in um^3/sec ; note conversion 1 pL/sec = 10^3 um^3/sec
+        self.k = k # relative salt contrast ratio, dimensionless
         self.Ds = Ds # for NaCl
         self.R1 = R1 # pipette radius, or pore radius
         self.α = α # from Secchi at al
