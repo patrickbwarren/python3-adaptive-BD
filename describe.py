@@ -28,7 +28,7 @@ df = pd.read_csv(args.dataset, sep='\t', names=schema.keys(), dtype=schema)
 df.sort_values(['Dp', 'Q', 'traj'], inplace=True)
 
 def range_str(v, vals): # convert a list of values to a singleton, several values, or a range
-    s = ', '.join([str(x) for x in vals]) if len(vals) < 10 else '--'.join([str(f(vals)) for f in [min, max]])
+    s = ', '.join([str(x) for x in np.sort(vals)]) if len(vals) < 10 else '--'.join([str(f(vals)) for f in [min, max]])
     return v, '  '+s, f'{len(vals):10}'
 
 df2 = pd.DataFrame([range_str(col, df[col].unique()) for col in df.columns], columns=['column', 'range', 'count'])

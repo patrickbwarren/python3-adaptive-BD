@@ -87,7 +87,7 @@ class Model:
 
     def pore_refresh(self): # (re)calculate derived quantities for pore
         self.generic_refresh()
-        self.Qcrit = 4*π*self.Ds*self.R1/(3*self.k)*np.sqrt(self.ΓkbyDs*(self.ΓkbyDs-3))
+        self.Qcrit = np.nan if self.ΓkbyDs < 3 else 4*π*self.Ds*self.R1/(3*self.k)*np.sqrt(self.ΓkbyDs*(self.ΓkbyDs-3))
         # the quadratic for the roots is (1/2)(ΓkbyD-3)z^2 − 3kλz + (1/2)c^2 ΓkbyD = 0
         Δ = 9*self.kλ**2 - self.R1**2*self.ΓkbyDs*(self.ΓkbyDs - 3) # the discriminant
         if self.Q > 0 and Δ > 0: # condition for roots to exist
