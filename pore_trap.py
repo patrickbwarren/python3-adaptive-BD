@@ -44,6 +44,7 @@ parser.add_argument('--dt-init', default=0.05, type=float, help='initial time st
 parser.add_argument('--eps', default='0.05,0.05', help='absolute and relative error, default 0.05 um and 0.05')
 parser.add_argument('--q-lims', default='0.001,1.2', help='q limits, default as per article 0.001,1.2')
 parser.add_argument('--perturb', default=1e-6, type=float, help='small perturbation to start, default 1e-6')
+parser.add_argument('-f', '--fixed-pt', action='store_true', help='start at stable fixed point, if present')
 parser.add_argument('-t', '--tfinal', default='600', help='duration, default 600 sec')
 parser.add_argument('-n', '--ntraj', default=5, type=int, help='number of trajectories, default 5')
 parser.add_argument('-b', '--nblock', default=2, type=int, help='number of blocks, default 2')
@@ -57,7 +58,7 @@ pid, njobs = map(int, args.procid.split('/')) # sort out process id and number o
 
 local_rng = np.random.default_rng(seed=args.seed).spawn(njobs)[pid] # select a local RNG stream
 
-tf = eval(args.tfinal) # final time
+tf = eval(args.tfinal.replace('h', '*3600').replace('m', '*60')) # final time
 
 max_steps = eval('int(%s)' % args.maxsteps.replace('k', '*1e3').replace('M', '*1e6'))
 
@@ -79,15 +80,18 @@ adb.εabs, adb.εrel = eval(f'{args.eps}') # relative and absolute errors
 adb.qmin, adb.qmax = eval(f'{args.q_lims}') # bounds for adaptation factor
 
 # initial position on-axis at Rp, plus a small perturbation
+# or at the stable fixed point in the pore problem
 
 r0 = np.array([0, 0, args.Rp]) + local_rng.normal(0, args.perturb, 3)
+
+if args.fixed_pt and pore.fixed_points is not None:
+    r0[2] = pore.fixed_points[1]
 
 raw = [] # used to capture raw results
 for block in range(args.nblock):
     for traj in range(args.ntraj):
         r, t, Δt, ntrial, nsuccess = adb.run(r0, Δt_init, max_steps, tf, Dp)
-        x, y, z = r[:]
-        r = np.array([x, y, abs(z)])
+        r[2] = abs(r[2])
         Δr2 = np.sum((r-r0)**2) # mean square displacement for the present trajectory
         raw.append((traj, block, ntrial, nsuccess, t, Δt, Δr2)) # capture data
 
@@ -114,10 +118,10 @@ if args.code:
     for block, traj in results.index:
         row = results.loc[block, traj]
         if not any(row.isna()):
-            data = (pore.k, pore.Γ, pore.Ds, Dp, pore.R1, 1e-3*pore.Q, pore.rc, tf,
+            data = (pore.k, pore.Γ, pore.Ds, Dp, pore.R1, 1e-3*pore.Q, pore.rc, tf, max_steps,
                     row.ntrial, row.nsuccess, row.t, row.Δt_final, row.Δr2,
                     traj, block, args.ntraj, args.nblock, args.code)
-            forms = ('%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g',
+            forms = ('%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g',
                      '%i', '%i', '%g', '%e', '%e',
                      '%i', '%i', '%i', '%i', '%s')
             print('\t'.join(forms) % data)

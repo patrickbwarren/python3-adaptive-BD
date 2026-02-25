@@ -9,30 +9,30 @@ notification = never
 universe = vanilla
 transfer_input_files = adaptive_bd.py,models.py
 executable = pore_trap.py
-args = -n 50 -b 10 -t 3600 --Dp $(dp)
+args = -n 50 -b 10 -t 3600 -m 10k --Dp $(Dp)
 arguments = $(args) --log10Q $(log10Q) --seed $(seed) -p $(Process)/$(njobs) $(name)
 header = $(name)_$(Process)
 output = $(header).out
 error = $(header).err
 log = $(header).log
 
-dp = 1.0
+Dp = 1.0
 queue log10Q from seq -4 0.1 2 |
 
-dp = 2.0
+Dp = 2.0
 queue log10Q from seq -4 0.1 2 |
 
-dp = 5.0
+Dp = 5.0
 queue log10Q from seq -4 0.1 2 |
 
-dp = 10.0
+Dp = 10.0
 queue log10Q from seq -4 0.1 2 |
 
-dp = 20.0
+Dp = 20.0
 queue log10Q from seq -4 0.1 2 |
 
-dp = 50.0
+Dp = 50.0
 queue log10Q from seq -4 0.1 2 |
 
-dp = 100.0
+Dp = 100.0
 queue log10Q from seq -4 0.1 2 |
