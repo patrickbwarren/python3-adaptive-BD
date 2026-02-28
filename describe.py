@@ -11,15 +11,16 @@ import pandas as pd
 
 parser = argparse.ArgumentParser(description='describe raw BD dataset')
 parser.add_argument('dataset', help='raw input data file, eg *.dat.gz')
+parser.add_argument('-s', '--show-dataset', action='store_true', help='also report dataset name')
 args = parser.parse_args()
 
-schema= {'k':float, 'Γ':float, 'Ds':float, 'Dp':float, 'R1':float, 
-         'α':float, 'Q':float, 'rc':float, 't_final':float, 
-         'ntrial':int, 'nsuccess':int, 't':float, 'Δt_final':float, 'Δr2':float, 
-         'traj':int, 'block':int, 'ntraj':int, 'nblock':int, 'code':str}
+schema = {'k':float, 'Γ':float, 'Ds':float, 'Dp':float, 'R1':float,
+          'α':float, 'Q':float, 'rc':float, 't_final':float, 'maxsteps':int,
+          'ntrial':int, 'nsuccess':int, 't':float, 'Δt_final':float, 'Δr2':float,
+          'traj':int, 'block':int, 'ntraj':int, 'nblock':int, 'code':str}
 
-with gzip.open(args.dataset, 'rt') as f:
-    first_line = f.readline()
+with gzip.open(args.dataset, 'rt') as fp:
+    first_line = fp.readline()
 
 if len(first_line.split('\t')) < len(schema): # wrangle dataset type, pipette or wall pore
     del schema['α'] # if wall pore then there is no α column
@@ -32,6 +33,8 @@ def range_str(v, vals): # convert a list of values to a singleton, several value
     return v, '  '+s, f'{len(vals):10}'
 
 df2 = pd.DataFrame([range_str(col, df[col].unique()) for col in df.columns], columns=['column', 'range', 'count'])
+if args.show_dataset:
+    df2.insert(0, 'dataset', args.dataset)
 header_row = pd.DataFrame(index=[-1], columns=df2.columns)
 df2 = pd.concat([header_row, df2])
 df2.loc[-1] = df2.columns

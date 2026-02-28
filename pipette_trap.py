@@ -114,10 +114,10 @@ if args.code:
     for block, traj in results.index:
         row = results.loc[block, traj]
         if not any(row.isna()):
-            data = (pip.k, pip.Γ, pip.Ds, Dp, pip.R1, pip.α, 1e-3*pip.Q, pip.rc, tf,
+            data = (pip.k, pip.Γ, pip.Ds, Dp, pip.R1, pip.α, 1e-3*pip.Q, pip.rc, tf, max_steps,
                     row.ntrial, row.nsuccess, row.t, row.Δt_final, row.Δr2,
                     traj, block, args.ntraj, args.nblock, args.code)
-            forms = ('%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g',
+            forms = ('%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g', '%g',
                      '%i', '%i', '%g', '%e', '%e',
                      '%i', '%i', '%i', '%i', '%s')
             print('\t'.join(forms) % data)

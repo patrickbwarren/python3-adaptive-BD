@@ -16,13 +16,13 @@ parser.add_argument('-f', '--filter', default=None, help='filter on a data colum
 parser.add_argument('-o', '--output', help='output compiled data to a spreadsheet, eg .ods, .xlsx')
 args = parser.parse_args()
 
-schema= {'k':float, 'Γ':float, 'Ds':float, 'Dp':float, 'R1':float, 
-         'α':float, 'Q':float, 'rc':float, 't_final':float, 
-         'ntrial':int, 'nsuccess':int, 't':float, 'Δt_final':float, 'Δr2':float, 
-         'traj':int, 'block':int, 'ntraj':int, 'nblock':int, 'code':str}
+schema = {'k':float, 'Γ':float, 'Ds':float, 'Dp':float, 'R1':float,
+          'α':float, 'Q':float, 'rc':float, 't_final':float, 'maxsteps':int,
+          'ntrial':int, 'nsuccess':int, 't':float, 'Δt_final':float, 'Δr2':float,
+          'traj':int, 'block':int, 'ntraj':int, 'nblock':int, 'code':str}
 
-with gzip.open(args.dataset, 'rt') as f:
-    first_line = f.readline()
+with gzip.open(args.dataset, 'rt') as fp:
+    first_line = fp.readline()
 
 if len(first_line.split('\t')) < len(schema): # wrangle dataset type, pipette or wall pore
     del schema['α'] # if wall pore then there is no α column
